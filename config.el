@@ -72,8 +72,7 @@
   (setq dashboard-items '((recents . 5)
                           (agenda . 5 )
                           (bookmarks . 5)
-                          (projects . 4)
-                          (registers . 5)))
+                          (projects . 4)))
   :config
   (dashboard-setup-startup-hook)
   (dashboard-modify-heading-icons '((recents . "file-text")
@@ -81,6 +80,14 @@
 
 (require 'elfeed-goodies)
 (elfeed-goodies/setup)
+(setq elfeed-goodies/entry-pane-size 0.5)
+(add-hook 'elfeed-show-mode-hook 'visual-line-mode)
+(evil-define-key 'normal elfeed-show-mode-map
+  (kbd "J") 'elfeed-goodies/split-show-next
+  (kbd "K") 'elfeed-goodies/split-show-prev)
+(evil-define-key 'normal elfeed-search-mode-map
+  (kbd "J") 'elfeed-goodies/split-show-next
+  (kbd "K") 'elfeed-goodies/split-show-prev)
 ;; (setq elfeed-goodies/entry-pane-size 0.5)
 (setq elfeed-feeds (quote
                     (("https://pluralistic.net/feed/")
@@ -108,108 +115,3 @@
 
 (setq gnutls-verify-error 'nil)
 
-(use-package olivetti
-  :ensure
-  :defer
-  :diminish
-  :config
-  (setq olivetti-body-width 0.65)
-  (setq olivetti-minimum-body-width 72)
-  (setq olivetti-recall-visual-line-mode-entry-state t)
-
-  (define-minor-mode prot/olivetti-mode
-    "Toggle buffer-local `olivetti-mode' with additional parameters.
-
-Fringes are disabled.  The modeline is hidden, except for
-`prog-mode' buffers (see `prot/hidden-mode-line-mode').  The
-default typeface is set to a proportionately-spaced family,
-except for programming modes (see `prot/variable-pitch-mode').
-The cursor becomes a blinking bar, per `prot/cursor-type-mode'."
-    :init-value nil
-    :global nil
-    (if prot/olivetti-mode
-        (progn
-          (olivetti-mode 1)
-          (set-window-fringes (selected-window) 0 0)
-          (prot/variable-pitch-mode 1)
-          (prot/cursor-type-mode 1)
-          (unless (derived-mode-p 'prog-mode)
-            (prot/hidden-mode-line-mode 1)))
-      (olivetti-mode -1)
-      (set-window-fringes (selected-window) nil) ; Use default width
-      (prot/variable-pitch-mode -1)
-      (prot/cursor-type-mode -1)
-      (unless (derived-mode-p 'prog-mode)
-        (prot/hidden-mode-line-mode -1))))
-  :bind ("C-c o" . prot/olivetti-mode))
-
-(use-package emacs
-  :commands prot/hidden-mode-line-mode
-  :config
-  (setq mode-line-percent-position '(-3 "%p"))
-  (setq mode-line-defining-kbd-macro
-        (propertize " Macro" 'face 'mode-line-emphasis))
-  (setq-default mode-line-format
-                '("%e"
-                  mode-line-front-space
-                  mode-line-mule-info
-                  mode-line-client
-                  mode-line-modified
-                  mode-line-remote
-                  mode-line-frame-identification
-                  mode-line-buffer-identification
-                  "  "
-                  mode-line-position
-                  (vc-mode vc-mode)
-                  " "
-                  mode-line-modes
-                  " "
-                  mode-line-misc-info
-                  mode-line-end-spaces))
-
-  (define-minor-mode prot/hidden-mode-line-mode
-    "Toggle modeline visibility in the current buffer."
-    :init-value nil
-    :global nil
-    (if prot/hidden-mode-line-mode
-        (setq-local mode-line-format nil)
-      (kill-local-variable 'mode-line-format)
-      (force-mode-line-update))))
-
-(use-package face-remap
-  :diminish buffer-face-mode            ; the actual mode
-  :commands prot/variable-pitch-mode
-  :config
-  (define-minor-mode prot/variable-pitch-mode
-    "Toggle `variable-pitch-mode', except for `prog-mode'."
-    :init-value nil
-    :global nil
-    (if prot/variable-pitch-mode
-        (unless (derived-mode-p 'prog-mode)
-          (variable-pitch-mode 1))
-      (variable-pitch-mode -1))))
-
-(use-package emacs
-  :config
-  (setq-default scroll-preserve-screen-position t)
-  (setq-default scroll-conservatively 1) ; affects `scroll-step'
-  (setq-default scroll-margin 0)
-
-  (define-minor-mode prot/scroll-centre-cursor-mode
-    "Toggle centred cursor scrolling behaviour."
-    :init-value nil
-    :lighter " S="
-    :global nil
-    (if prot/scroll-centre-cursor-mode
-        (setq-local scroll-margin (* (frame-height) 2)
-                    scroll-conservatively 0
-                    maximum-scroll-margin 0.5)
-      (dolist (local '(scroll-preserve-screen-position
-                       scroll-conservatively
-                       maximum-scroll-margin
-                       scroll-margin))
-        (kill-local-variable `,local))))
-
-  ;; C-c l is used for `org-store-link'.  The mnemonic for this is to
-  ;; focus the Line and also works as a variant of C-l.
-  :bind ("C-c L" . prot/scroll-centre-cursor-mode))
