@@ -57,3 +57,4 @@
 (package! gemini-mode)
 (package! pandoc-mode)
 (package! olivetti)
+(package! dashboard)

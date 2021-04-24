@@ -20,6 +20,7 @@
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
 (setq doom-font (font-spec :family "FiraMono Nerd Font Mono" :size 16))
+(setq doom-variable-pitch-font (font-spec :family "Latin Modern Sans" :size 16))
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
@@ -34,6 +35,50 @@
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type 'relative)
+
+;; Here are some additional functions/macros that could help you configure Doom:
+;;
+;; - `load!' for loading external *.el files relative to this one
+;; - `use-package!' for configuring packages
+;; - `after!' for running code after a package has loaded
+;; - `add-load-path!' for adding directories to the `load-path', relative to
+;;   this file. Emacs searches the `load-path' when you load packages with
+;;   `require' or `use-package'.
+        ;; - `map!' for binding new keys
+;;
+;; To get information about any of these functions/macros, move the cursor over
+;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
+;; This will open documentation for it, including demos of how they are used.
+;;
+;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
+;; they are implemented.
+;; (use-package org-bullets)
+;;(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+;; (use-package toc-org
+;;   :commands toc-org-enable
+;;   :init (add-hook 'org-mode-hook 'toc-org-enable))
+;; (Use-package writeroom-mode)
+;; (use-package pandoc-mode
+
+
+(use-package dashboard
+  :init      ;; tweak dashboard config before loading it
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-banner-logo-title "Box Three Spool Five")
+  ;;(setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
+  (setq dashboard-startup-banner "~/splashimg.png")  ;; use custom image as banner
+  (setq dashboard-center-content nil) ;; set to 't' for centered content
+  (setq dashboard-items '((recents . 5)
+                          (agenda . 5 )
+                          (bookmarks . 5)
+                          (projects . 4)
+                          (registers . 5)))
+  :config
+  (dashboard-setup-startup-hook)
+  (dashboard-modify-heading-icons '((recents . "file-text")
+			      (bookmarks . "book"))))
+
 (require 'elfeed-goodies)
 (elfeed-goodies/setup)
 ;; (setq elfeed-goodies/entry-pane-size 0.5)
@@ -63,29 +108,6 @@
 
 (setq gnutls-verify-error 'nil)
 
-;; Here are some additional functions/macros that could help you configure Doom:
-;;
-;; - `load!' for loading external *.el files relative to this one
-;; - `use-package!' for configuring packages
-;; - `after!' for running code after a package has loaded
-;; - `add-load-path!' for adding directories to the `load-path', relative to
-;;   this file. Emacs searches the `load-path' when you load packages with
-;;   `require' or `use-package'.
-        ;; - `map!' for binding new keys
-;;
-;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
-;; This will open documentation for it, including demos of how they are used.
-;;
-;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
-;; they are implemented.
-;; (use-package org-bullets)
-;;(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-;; (use-package toc-org
-;;   :commands toc-org-enable
-;;   :init (add-hook 'org-mode-hook 'toc-org-enable))
-;; (Use-package writeroom-mode)
-;; (use-package pandoc-mode
 (use-package olivetti
   :ensure
   :defer
