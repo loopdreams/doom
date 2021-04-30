@@ -3,7 +3,6 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
-
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
 (setq user-full-name "Eoin Carney"
@@ -54,64 +53,60 @@
 ;; they are implemented.
 ;; (use-package org-bullets)
 ;;(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-;; (use-package toc-org
-;;   :commands toc-org-enable
-;;   :init (add-hook 'org-mode-hook 'toc-org-enable))
 ;; (Use-package writeroom-mode)
 ;; (use-package pandoc-mode
 
+(setq gnutls-verify-error 'nil)
+(require 'org-superstar)
+        (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 
 (use-package dashboard
-  :init      ;; tweak dashboard config before loading it
-  (setq dashboard-set-heading-icons t)
-  (setq dashboard-set-file-icons t)
-  (setq dashboard-banner-logo-title "Box Three Spool Five")
-  ;;(setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
-  (setq dashboard-startup-banner "~/splashimg.png")  ;; use custom image as banner
-  (setq dashboard-center-content nil) ;; set to 't' for centered content
-  (setq dashboard-items '((recents . 5)
-                          (agenda . 5 )
-                          (bookmarks . 5)
-                          (projects . 4)))
-  :config
-  (dashboard-setup-startup-hook)
-  (dashboard-modify-heading-icons '((recents . "file-text")
-			      (bookmarks . "book"))))
+        :init      ;; tweak dashboard config before loading it
+        (setq dashboard-set-heading-icons t)
+        (setq dashboard-set-file-icons t)
+        (setq dashboard-banner-logo-title "Box Three Spool Five")
+        ;;(setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
+        (setq dashboard-startup-banner "~/splashimg.png")  ;; use custom image as banner
+        (setq dashboard-center-content nil) ;; set to 't' for centered content
+        (setq dashboard-items '((recents . 5)
+                                (agenda . 5 )
+                                (bookmarks . 5)
+                                (projects . 4)))
+        :config
+        (dashboard-setup-startup-hook)
+        (dashboard-modify-heading-icons '((recents . "file-text")
+                                        (bookmarks . "book"))))
 
 (require 'elfeed-goodies)
-(elfeed-goodies/setup)
-(setq elfeed-goodies/entry-pane-size 0.5)
-(add-hook 'elfeed-show-mode-hook 'visual-line-mode)
-(evil-define-key 'normal elfeed-show-mode-map
-  (kbd "J") 'elfeed-goodies/split-show-next
-  (kbd "K") 'elfeed-goodies/split-show-prev)
-(evil-define-key 'normal elfeed-search-mode-map
-  (kbd "J") 'elfeed-goodies/split-show-next
-  (kbd "K") 'elfeed-goodies/split-show-prev)
-;; (setq elfeed-goodies/entry-pane-size 0.5)
-(setq elfeed-feeds (quote
-                    (("https://pluralistic.net/feed/")
-                     ("https://cosmic.voyage/rss.xml")
-                     ("https://www.theatlantic.com/feed/best-of/")
-                     ("https://davidmenestres.com/feed/podcast/")
-                     ("https://feeds.feedburner.com/therestisnoise")
-                     ("https://aeon.co/feed.rss")
-                     ("https://inkdroid.org/feed.xml")
-                     ("https://computer.rip/rss.xml")
-                     ("https://www.3ammagazine.com/3am/feed/")
-                     ("https://anneboyer.substack.com/feed")
-                     ("https://sfj.substack.com/feed music")
-                     ("https://network23.org/ainriail/feed/")
-                     ("https://www.jamesrwilliams.net/feed/")
-                     ("https://videos.lukesmith.xyz/feeds/videos.xml?accountId=3")
-                     ("https://efforg.libsyn.com/rss")
-                     ("https://www.jamesrwilliams.net/feed/")
-                     ("https://cdn.jwz.org/blog/feed/")
-                     ("http://ajroach42.com/feed.xml")
-                     ("https://solar.lowtechmagazine.com/feeds/all-en.atom.xml")
-                     ("https://100r.co/links/rss.xml")
-                     ("https://feeds.feedburner.com/arstechnica/index/")
-                     ("https://spool-five.com/rss.xml"))))
-
-(setq gnutls-verify-error 'nil)
-
+        (elfeed-goodies/setup)
+        (setq elfeed-goodies/entry-pane-size 0.7)
+;; ;; (add-hook 'elfeed-show-mode-hook 'visual-line-mode)
+;; (evil-define-key 'normal elfeed-show-mode-map
+;;   (kbd "J") 'elfeed-goodies/split-show-next
+;;   (kbd "K") 'elfeed-goodies/split-show-prev)
+;; (evil-define-key 'normal elfeed-search-mode-map
+;;   (kbd "J") 'elfeed-goodies/split-show-next
+;;   (kbd "K") 'elfeed-goodies/split-show-prev)
+;; ;; (setq elfeed-goodies/entry-pane-size 0.5)
+(setq elfeed-feeds '("https://pluralistic.net/feed/"
+                     "https://cosmic.voyage/rss.xml"
+                     "https://www.theatlantic.com/feed/best-of/"
+                     "https://davidmenestres.com/feed/podcast/"
+                     "https://feeds.feedburner.com/therestisnoise"
+                     "https://aeon.co/feed.rss"
+                     "https://inkdroid.org/feed.xml"
+                     "https://computer.rip/rss.xml"
+                     "https://www.3ammagazine.com/3am/feed/"
+                     "https://anneboyer.substack.com/feed"
+                     "https://sfj.substack.com/feed music"
+                     "https://network23.org/ainriail/feed/"
+                     "https://www.jamesrwilliams.net/feed/"
+                     "https://videos.lukesmith.xyz/feeds/videos.xml?accountId=3"
+                     "https://efforg.libsyn.com/rss"
+                     "https://www.jamesrwilliams.net/feed/"
+                     "https://cdn.jwz.org/blog/feed/"
+                     "http://ajroach42.com/feed.xml"
+                     "https://solar.lowtechmagazine.com/feeds/all-en.atom.xml"
+                     "https://100r.co/links/rss.xml"
+                     "https://feeds.feedburner.com/arstechnica/index/"
+                     "https://spool-five.com/rss.xml"))

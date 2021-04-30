@@ -4,7 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(org-agenda-files
-   '("~/sci/txt/notes.org" "~/sci/txt/witness.org" "~/sci/txt/index.org" "~/sci/txt/orestes.org" "~/org-basics.org"))
+   '("~/sci/txt/index.org" "~/sci/txt/notes.org" "~/sci/txt/witness.org" "~/sci/txt/orestes.org"))
  '(package-selected-packages '(gemini-mode elpher)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
