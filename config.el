@@ -57,6 +57,7 @@
 ;; (use-package pandoc-mode
 
 (setq gnutls-verify-error 'nil)
+
 (require 'org-superstar)
         (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 

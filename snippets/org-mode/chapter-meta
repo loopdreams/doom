@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: chatper-meta
+# uuid: chapter-meta
+# key: /chapter
+# condition: t
+# --
+** [ ] Chapter ${1:Chapter Name}
+*** Notes:
++ Setting: :: ${2:Setting}
++ Date: :: ${3:Date}
++ Characters: :: ${4:Characters}
++ Summary: :: ${5:Sum}
+*** Draft
+    
