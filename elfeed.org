@@ -1,0 +1,25 @@
+#+TITLE: Elfeed
+
+* Blogs :elfeed:
+
+** https://pluralistic.net/feed/
+** https://cosmic.voyage/rss.xml
+** https://www.theatlantic.com/feed/best-of/
+** https://davidmenestres.com/feed/podcast/
+** https://feeds.feedburner.com/therestisnoise
+** https://aeon.co/feed.rss
+** https://inkdroid.org/feed.xml
+** https://computer.rip/rss.xml
+** https://www.3ammagazine.com/3am/feed/
+** https://anneboyer.substack.com/feed/
+** https://sfj.substack.com/feed
+** https://www.jamesrwilliams.net/feed/
+** https://videos.lukesmith.xyz/feeds/videos.xml?accountId
+** https://efforg.libsyn.com/rss
+** https://www.jamesrwilliams.net/feed/
+** https://cdn.jwz.org/blog/feed/
+** http://ajroach42.com/feed.xml
+** https://solar.lowtechmagazine.com/feeds/all-en.atom.xml
+** https://100r.co/links/rss.xml
+** https://feeds.feedburner.com/arstechnica/index/
+** https://spool-five.com/rss.xml

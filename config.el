@@ -78,9 +78,6 @@
         (dashboard-modify-heading-icons '((recents . "file-text")
                                         (bookmarks . "book"))))
 
-(require 'elfeed-goodies)
-        (elfeed-goodies/setup)
-        (setq elfeed-goodies/entry-pane-size 0.7)
 ;; ;; (add-hook 'elfeed-show-mode-hook 'visual-line-mode)
 ;; (evil-define-key 'normal elfeed-show-mode-map
 ;;   (kbd "J") 'elfeed-goodies/split-show-next
@@ -89,25 +86,39 @@
 ;;   (kbd "J") 'elfeed-goodies/split-show-next
 ;;   (kbd "K") 'elfeed-goodies/split-show-prev)
 ;; ;; (setq elfeed-goodies/entry-pane-size 0.5)
-(setq elfeed-feeds '("https://pluralistic.net/feed/"
-                     "https://cosmic.voyage/rss.xml"
-                     "https://www.theatlantic.com/feed/best-of/"
-                     "https://davidmenestres.com/feed/podcast/"
-                     "https://feeds.feedburner.com/therestisnoise"
-                     "https://aeon.co/feed.rss"
-                     "https://inkdroid.org/feed.xml"
-                     "https://computer.rip/rss.xml"
-                     "https://www.3ammagazine.com/3am/feed/"
-                     "https://anneboyer.substack.com/feed"
-                     "https://sfj.substack.com/feed music"
-                     "https://network23.org/ainriail/feed/"
-                     "https://www.jamesrwilliams.net/feed/"
-                     "https://videos.lukesmith.xyz/feeds/videos.xml?accountId=3"
-                     "https://efforg.libsyn.com/rss"
-                     "https://www.jamesrwilliams.net/feed/"
-                     "https://cdn.jwz.org/blog/feed/"
-                     "http://ajroach42.com/feed.xml"
-                     "https://solar.lowtechmagazine.com/feeds/all-en.atom.xml"
-                     "https://100r.co/links/rss.xml"
-                     "https://feeds.feedburner.com/arstechnica/index/"
-                     "https://spool-five.com/rss.xml"))
+;; Load elfeed-org
+(require 'elfeed-org)
+;; Initialize elfeed-org
+;; This hooks up elfeed-org to read the configuration when elfeed
+;; is started with =M-x elfeed=
+(elfeed-org)
+(setq rmh-elfeed-org-files (list "~/.doom.d/elfeed.org"))
+
+
+;; (setq elfeed-feeds
+;;       '("https://pluralistic.net/feed/"
+;;         "https://cosmic.voyage/rss.xml"
+;;         "https://www.theatlantic.com/feed/best-of/"
+;;         "https://davidmenestres.com/feed/podcast/"
+;;         "https://feeds.feedburner.com/therestisnoise"
+;;         "https://aeon.co/feed.rss"
+;;         "https://inkdroid.org/feed.xml"
+;;         "https://computer.rip/rss.xml"
+;;         "https://www.3ammagazine.com/3am/feed/"
+;;         "https://anneboyer.substack.com/feed"
+;;         "https://sfj.substack.com/feed music"
+;;         "https://network23.org/ainriail/feed/"
+;;         "https://www.jamesrwilliams.net/feed/"
+;;         "https://videos.lukesmith.xyz/feeds/videos.xml?accountId=3"
+;;         "https://efforg.libsyn.com/rss"
+;;         "https://www.jamesrwilliams.net/feed/"
+;;         "https://cdn.jwz.org/blog/feed/"
+;;         "http://ajroach42.com/feed.xml"
+;;         "https://solar.lowtechmagazine.com/feeds/all-en.atom.xml"
+;;         "https://100r.co/links/rss.xml"
+;;         "https://feeds.feedburner.com/arstechnica/index/"
+;;         "https://spool-five.com/rss.xml"))
+
+(require 'elfeed-goodies)
+        (elfeed-goodies/setup)
+        (setq elfeed-goodies/entry-pane-size 0.7)
