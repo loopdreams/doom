@@ -2,24 +2,52 @@
 
 * Blogs :elfeed:
 
-** https://pluralistic.net/feed/
-** https://cosmic.voyage/rss.xml
-** https://www.theatlantic.com/feed/best-of/
-** https://davidmenestres.com/feed/podcast/
-** https://feeds.feedburner.com/therestisnoise
-** https://aeon.co/feed.rss
-** https://inkdroid.org/feed.xml
-** https://computer.rip/rss.xml
-** https://www.3ammagazine.com/3am/feed/
-** https://anneboyer.substack.com/feed/
-** https://sfj.substack.com/feed
-** https://www.jamesrwilliams.net/feed/
-** https://videos.lukesmith.xyz/feeds/videos.xml?accountId
-** https://efforg.libsyn.com/rss
-** https://www.jamesrwilliams.net/feed/
-** https://cdn.jwz.org/blog/feed/
-** http://ajroach42.com/feed.xml
-** https://solar.lowtechmagazine.com/feeds/all-en.atom.xml
-** https://100r.co/links/rss.xml
-** https://feeds.feedburner.com/arstechnica/index/
-** https://spool-five.com/rss.xml
+** Favorites :fav:
+*** https://pluralistic.net/feed/
+*** https://cosmic.voyage/rss.xml
+*** [[https://www.theatlantic.com/feed/best-of/][Atlantic]]
+*** https://www.jamesrwilliams.net/feed/ :philosophy:
+*** https://feeds.feedburner.com/therestisnoise
+*** https://davidmenestres.com/feed/podcast/
+** People :people:
+*** https://anneboyer.substack.com/feed/
+*** https://spool-five.com/rss.xml
+*** https://100r.co/links/rss.xml
+*** http://ajroach42.com/feed.xml
+*** https://cdn.jwz.org/blog/feed/
+*** https://videos.lukesmith.xyz/feeds/videos.xml?accountId
+*** https://www.youtube.com/feeds/videos.xml?channel_id=UCNvsIonJdJ5E4EXMa65VYpA
+*** https://inkdroid.org/feed.xml
+*** https://computer.rip/rss.xml
+*** https://efforg.libsyn.com/rss
+** Philosophy :philosophy:
+*** https://bluelabyrinths.com/feed/
+*** https://feeds.feedburner.com/typepad/UbBI
+*** https://habermas-rawls.blogspot.com/feeds/posts/default?alt=rss
+*** https://www.journal-psychoanalysis.eu/feed/
+*** https://www.lacan.com/perfumeblog/?feed=rss2
+*** https://www.urbanomic.com/feed/
+*** https://aeon.co/feed.rss
+*** https://www.3ammagazine.com/3am/feed/
+** Music :music:
+*** https://www.outofyourheadrecords.com/news?format=rss
+*** http://schoenblog.com/?feed=rss2
+*** http://soundsignature.net/feed/
+*** https://toneglow.substack.com/feed
+*** http://www.louthcms.org/feed/
+*** https://boulezian.blogspot.com/feeds/posts/default?alt=rss
+*** https://feeds.feedburner.com/TheClassicalReview
+*** https://feeds.feedburner.com/TheWagnerian
+*** https://johncagetrust.blogspot.com/feeds/posts/default
+*** https://keithfullertonwhitman.com/news?format=rss
+*** https://nialler9.com/news/feed/
+*** https://pitchfork.com/rss/reviews/albums/
+*** https://thequietus.com/news?format=atom
+*** https://thequietus.com/reviews.atom
+*** https://sfj.substack.com/feed
+*** https://nightafternight.substack.com/feed
+*** http://radiofrance-podcast.net/podcast09/rss_18081.xml
+** Tech :tech:
+*** https://www.archlinux.org/feeds/news/
+*** https://feeds.feedburner.com/arstechnica/index/
+*** https://solar.lowtechmagazine.com/feeds/all-en.atom.xml
