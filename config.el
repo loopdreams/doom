@@ -1,10 +1,5 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
-
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets.
 (setq user-full-name "Eoin Carney"
       user-mail-address "eoin@spool-five.com")
 
@@ -18,22 +13,24 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "FiraMono Nerd Font Mono" :size 16))
-(setq doom-variable-pitch-font (font-spec :family "Latin Modern Sans" :size 16))
+
+(setq doom-font (font-spec :family "Source Code Pro" :size 20)
+      doom-big-font (font-spec :family "Source Code Pro" :size 36)
+      doom-variable-pitch-font (font-spec :family "Overpass" :size 20)
+      doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-miramare)
-
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org")
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type 'relative)
+
+(setq evil-vsplit-window-right t
+      evil-split-window-below t)
+
+;; for  browsing gemini in elpher...
+(setq gnutls-verify-error 'nil)
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
@@ -51,12 +48,16 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
-;; (use-package org-bullets)
-;;(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-;; (Use-package writeroom-mode)
-;; (use-package pandoc-mode
 
-(setq gnutls-verify-error 'nil)
+;; preview window split
+(defadvice! prompt-for-buffer (&rest _)
+  :after '(evil-window-split evil-window-vsplit)
+  (+ivy/switch-buffer))
+; buffer preview
+(setq +ivy-buffer-preview t)
+
+(setq-default major-mode 'org-mode)
+
 
 (require 'org-superstar)
         (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
@@ -78,46 +79,10 @@
         (dashboard-modify-heading-icons '((recents . "file-text")
                                         (bookmarks . "book"))))
 
-;; ;; (add-hook 'elfeed-show-mode-hook 'visual-line-mode)
-;; (evil-define-key 'normal elfeed-show-mode-map
-;;   (kbd "J") 'elfeed-goodies/split-show-next
-;;   (kbd "K") 'elfeed-goodies/split-show-prev)
-;; (evil-define-key 'normal elfeed-search-mode-map
-;;   (kbd "J") 'elfeed-goodies/split-show-next
-;;   (kbd "K") 'elfeed-goodies/split-show-prev)
-;; ;; (setq elfeed-goodies/entry-pane-size 0.5)
-;; Load elfeed-org
 (require 'elfeed-org)
-;; Initialize elfeed-org
-;; This hooks up elfeed-org to read the configuration when elfeed
-;; is started with =M-x elfeed=
-(elfeed-org)
-(setq rmh-elfeed-org-files (list "~/.doom.d/elfeed.org"))
+         (elfeed-org)
+         (setq rmh-elfeed-org-files (list "~/.doom.d/elfeed.org"))
 
-
-;; (setq elfeed-feeds
-;;       '("https://pluralistic.net/feed/"
-;;         "https://cosmic.voyage/rss.xml"
-;;         "https://www.theatlantic.com/feed/best-of/"
-;;         "https://davidmenestres.com/feed/podcast/"
-;;         "https://feeds.feedburner.com/therestisnoise"
-;;         "https://aeon.co/feed.rss"
-;;         "https://inkdroid.org/feed.xml"
-;;         "https://computer.rip/rss.xml"
-;;         "https://www.3ammagazine.com/3am/feed/"
-;;         "https://anneboyer.substack.com/feed"
-;;         "https://sfj.substack.com/feed music"
-;;         "https://network23.org/ainriail/feed/"
-;;         "https://www.jamesrwilliams.net/feed/"
-;;         "https://videos.lukesmith.xyz/feeds/videos.xml?accountId=3"
-;;         "https://efforg.libsyn.com/rss"
-;;         "https://www.jamesrwilliams.net/feed/"
-;;         "https://cdn.jwz.org/blog/feed/"
-;;         "http://ajroach42.com/feed.xml"
-;;         "https://solar.lowtechmagazine.com/feeds/all-en.atom.xml"
-;;         "https://100r.co/links/rss.xml"
-;;         "https://feeds.feedburner.com/arstechnica/index/"
-;;         "https://spool-five.com/rss.xml"))
 
 (require 'elfeed-goodies)
         (elfeed-goodies/setup)
@@ -127,7 +92,7 @@
 ;; (setcar org-emphasis-regexp-components " \t('\"{[:alpha:]")
 ;; (setcar (nthcdr 1 org-emphasis-regexp-components) "[:alpha:]- \t.,:!?;'\")}\\")
 ;; (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
-;;
+
 ;; Use Msmtp to send mail
 (setq sendmail-program "/usr/bin/msmtp"
       send-mail-function 'smtpmail-send-it
@@ -135,7 +100,37 @@
       message-sendmail-extra-arguments '("--read-envelope-from")
       message-send-mail-function 'message-send-mail-with-sendmail)
 
+;; For crashes:
 (after! evil
-
   (evil-add-command-properties 'org-export-dispatch :repeat nil)
   (evil-add-command-properties 'org-latex-export-to-pdf :repeat nil))
+
+;; trying to figure out some 'writerroom' stuff...
+(setq +zen-text-scale 0.8)
+
+(use-package emacs
+  :config
+  (setq-default scroll-preserve-screen-position t)
+  (setq-default scroll-conservatively 1) ; affects `scroll-step'
+  (setq-default scroll-margin 0)
+
+  (define-minor-mode scroll-centre-cursor-mode
+    "Toggle centred cursor scrolling behaviour."
+    :init-value nil
+    :lighter " S="
+    :global nil
+    (if scroll-centre-cursor-mode
+        (setq-local scroll-margin (* (frame-height) 2)
+                    scroll-conservatively 0
+                    maximum-scroll-margin 0.5)
+      (dolist (local '(scroll-preserve-screen-position
+                       scroll-conservatively
+                       maximum-scroll-margin
+                       scroll-margin))
+        (kill-local-variable `,local))))
+  ;; C-c l is used for `org-store-link'.  The mnemonic for this is to
+  ;; focus the Line and also works as a variant of C-l.
+  :bind ("C-c L" . scroll-centre-cursor-mode))
+
+
+(add-hook 'writeroom-mode-hook 'scroll-centre-cursor-mode )

@@ -55,6 +55,7 @@
 (package! org-superstar)
 (package! elfeed)
 (package! elpher)
+(package! elfeed-org)
 (package! gemini-mode)
 (package! pandoc-mode)
 (package! olivetti)
