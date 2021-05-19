@@ -127,3 +127,15 @@
 ;; (setcar org-emphasis-regexp-components " \t('\"{[:alpha:]")
 ;; (setcar (nthcdr 1 org-emphasis-regexp-components) "[:alpha:]- \t.,:!?;'\")}\\")
 ;; (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
+;;
+;; Use Msmtp to send mail
+(setq sendmail-program "/usr/bin/msmtp"
+      send-mail-function 'smtpmail-send-it
+      message-sendmail-f-is-evil t
+      message-sendmail-extra-arguments '("--read-envelope-from")
+      message-send-mail-function 'message-send-mail-with-sendmail)
+
+(after! evil
+
+  (evil-add-command-properties 'org-export-dispatch :repeat nil)
+  (evil-add-command-properties 'org-latex-export-to-pdf :repeat nil))

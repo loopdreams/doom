@@ -22,6 +22,7 @@
 *** https://efforg.libsyn.com/rss
 ** Philosophy :philosophy:
 *** https://bluelabyrinths.com/feed/
+*** https://www.philosophy2u.com/blog-feed.xml
 *** https://feeds.feedburner.com/typepad/UbBI
 *** https://habermas-rawls.blogspot.com/feeds/posts/default?alt=rss
 *** https://www.journal-psychoanalysis.eu/feed/
