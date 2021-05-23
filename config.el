@@ -139,13 +139,13 @@
 
 ;; (add-hook 'writeroom-mode-hook 'scroll-centre-cursor-mode )
 
-(setq rcirc-server-alist
-      '("irc.libera.chat"
-        :nick ("loopdreams")))
-
-(setq rcirc-authinfo '(("libera" nickserv "loopdreams" "KindleTodayNobody887*")))
 ;; (setq rcirc-server-alist
-;;              '(("irc.freenode.net"
-;;                :nick ("loopdreams")
-;;                :channels ("#emacs" "#anime" "#gemini" "#bitreich-en"))))
-;; (setq rcirc-authinfo '(("freenode" nickserv "loopdreams" "Washer76BottleCup")))
+;;       '(("irc.libera.chat"
+;;         :nick ("loopdreams"))))
+
+;; (setq rcirc-authinfo '(("libera" nickserv "loopdreams" "KindleTodayNobody887*")))
+(setq rcirc-server-alist
+             '(("irc.freenode.net"
+               :nick ("loopdreams")
+               :channels ("#emacs" "#anime" "#gemini" "#bitreich-en"))))
+(setq rcirc-authinfo '(("freenode" nickserv "loopdreams" "Washer76BottleCup")))
