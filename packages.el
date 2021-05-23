@@ -14,8 +14,8 @@
 ;; https://github.com/raxod502/straight.el#the-recipe-format
 ;(package! another-package
 ;  :recipe (:host github :repo "username/repo"))
-(package! another-package
-:recipe (:host github :repo "sachac/artbollocks-mode"))
+;; (package! another-package
+;; :recipe (:host github :repo "sachac/artbollocks-mode"))
 
 
 ;; If the package you are trying to install does not contain a PACKAGENAME.el
@@ -56,7 +56,7 @@
 (package! elfeed)
 (package! elpher)
 (package! elfeed-org)
-(package! gemini-mode)
+;; (package! gemini-mode)
 (package! pandoc-mode)
 (package! olivetti)
 (package! dashboard)

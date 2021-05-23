@@ -14,16 +14,19 @@
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
 
-(setq doom-font (font-spec :family "Source Code Pro" :size 20)
-      doom-big-font (font-spec :family "Source Code Pro" :size 36)
-      doom-variable-pitch-font (font-spec :family "Overpass" :size 20)
-      doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
+(setq doom-font (font-spec :family "Source Code Pro" :size 20))
+      ;; doom-big-font (font-spec :family "Source Code Pro" :size 36)
+      ;; doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light)
+        ;; doom-variable-pitch-font (font-spec :family "Overpass" :size 20)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
 (setq doom-theme 'doom-miramare)
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org")
+(custom-set-variables
+ '(org-directory "~/sci/txt/")
+ '(org-agenda-files (list org-directory)))
+
 (setq display-line-numbers-type 'relative)
 
 (setq evil-vsplit-window-right t
@@ -31,7 +34,8 @@
 
 ;; for  browsing gemini in elpher...
 (setq gnutls-verify-error 'nil)
-
+;; Disable transparency (for xcompmgr)
+(doom/set-frame-opacity 90)
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
@@ -53,10 +57,10 @@
 (defadvice! prompt-for-buffer (&rest _)
   :after '(evil-window-split evil-window-vsplit)
   (+ivy/switch-buffer))
-; buffer preview
+;; buffer preview
 (setq +ivy-buffer-preview t)
 
-(setq-default major-mode 'org-mode)
+;; (setq-default major-mode 'org-mode)
 
 
 (require 'org-superstar)
@@ -108,29 +112,40 @@
 ;; trying to figure out some 'writerroom' stuff...
 (setq +zen-text-scale 0.8)
 
-(use-package emacs
-  :config
-  (setq-default scroll-preserve-screen-position t)
-  (setq-default scroll-conservatively 1) ; affects `scroll-step'
-  (setq-default scroll-margin 0)
+;; (use-package! emacs
+;;   :config
+;;   (setq-default scroll-preserve-screen-position t)
+;;   (setq-default scroll-conservatively 1) ; affects `scroll-step'
+;;   (setq-default scroll-margin 0)
 
-  (define-minor-mode scroll-centre-cursor-mode
-    "Toggle centred cursor scrolling behaviour."
-    :init-value nil
-    :lighter " S="
-    :global nil
-    (if scroll-centre-cursor-mode
-        (setq-local scroll-margin (* (frame-height) 2)
-                    scroll-conservatively 0
-                    maximum-scroll-margin 0.5)
-      (dolist (local '(scroll-preserve-screen-position
-                       scroll-conservatively
-                       maximum-scroll-margin
-                       scroll-margin))
-        (kill-local-variable `,local))))
-  ;; C-c l is used for `org-store-link'.  The mnemonic for this is to
-  ;; focus the Line and also works as a variant of C-l.
-  :bind ("C-c L" . scroll-centre-cursor-mode))
+;;   (define-minor-mode scroll-centre-cursor-mode
+;;     "Toggle centred cursor scrolling behaviour."
+;;     :init-value nil
+;;     :lighter " S="
+;;     :global nil
+;;     (if scroll-centre-cursor-mode
+;;         (setq-local scroll-margin (* (frame-height) 2)
+;;                     scroll-conservatively 0
+;;                     maximum-scroll-margin 0.5)
+;;       (dolist (local '(scroll-preserve-screen-position
+;;                        scroll-conservatively
+;;                        maximum-scroll-margin
+;;                        scroll-margin))
+;;         (kill-local-variable `,local))))
+;;   ;; C-c l is used for `org-store-link'.  The mnemonic for this is to
+;;   ;; focus the Line and also works as a variant of C-l.
+;;   :bind ("C-c L" . scroll-centre-cursor-mode))
 
 
-(add-hook 'writeroom-mode-hook 'scroll-centre-cursor-mode )
+;; (add-hook 'writeroom-mode-hook 'scroll-centre-cursor-mode )
+
+(setq rcirc-server-alist
+      '("irc.libera.chat"
+        :nick ("loopdreams")))
+
+(setq rcirc-authinfo '(("libera" nickserv "loopdreams" "KindleTodayNobody887*")))
+;; (setq rcirc-server-alist
+;;              '(("irc.freenode.net"
+;;                :nick ("loopdreams")
+;;                :channels ("#emacs" "#anime" "#gemini" "#bitreich-en"))))
+;; (setq rcirc-authinfo '(("freenode" nickserv "loopdreams" "Washer76BottleCup")))
