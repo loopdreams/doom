@@ -137,12 +137,3 @@ Things to include with zen/writerroom mode (Space-t-z/Z)
 
 #+END_SRC
 
-* Irc
-Not set up properly yet...
-#+BEGIN_SRC emacs-lisp
-(setq rcirc-server-alist
-             '(("irc.freenode.net"
-               :nick ("loopdreams")
-               :channels ("#emacs" "#anime" "#gemini" "#bitreich-en"))))
-(setq rcirc-authinfo '(("freenode" nickserv "loopdreams" "Washer76BottleCup")))
-#+END_SRC
