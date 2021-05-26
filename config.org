@@ -1,10 +1,27 @@
+#+TITLE: Emacs Config
+
+
+* Personal Information
+#+BEGIN_SRC emacs-lisp
 (setq user-full-name "Eoin Carney"
       user-mail-address "eoin@spool-five.com")
+#+END_SRC
 
+* Font
+#+BEGIN_SRC emacs-lisp
 (setq doom-font (font-spec :family "Source Code Pro" :size 20))
-
+#+END_SRC
+* Theme
+#+BEGIN_SRC emacs-lisp
 (setq doom-theme 'doom-miramare)
-
+#+END_SRC
+* General Settings
++ Relative line numbers
++ Set opacity here so it works with Xcompmgr
++ Gnutls-verify-error is for browsing gemini with elpher. There is probably a better way of doing this.
++ Setup for buffer selection and previews when opening split window (is this necessary?)
++ Set qutebrowser as defualt url handler
+#+BEGIN_SRC emacs-lisp
 (setq display-line-numbers-type 'relative)
 
 (doom/set-frame-opacity 90)
@@ -21,13 +38,17 @@
 
 (setq browse-url-generic-program "/usr/bin/qutebrowser")
 (setq browse-url-browser-function 'browse-url-generic)
-
+#+END_SRC
+* Org
+#+BEGIN_SRC emacs-lisp
 (custom-set-variables
  '(org-directory "~/sci/txt/")
  '(org-agenda-files (list org-directory)))
 (require 'org-superstar)
         (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
-
+#+END_SRC
+* Elfeed
+#+BEGIN_SRC emacs-lisp
 (require 'elfeed-org)
          (elfeed-org)
          (setq rmh-elfeed-org-files (list "~/.doom.d/elfeed.org"))
@@ -36,7 +57,13 @@
 (require 'elfeed-goodies)
         (elfeed-goodies/setup)
         (setq elfeed-goodies/entry-pane-size 0.7)
+#+END_SRC
 
+
+
+* Dashboard
+
+#+BEGIN_SRC emacs-lisp
 (use-package dashboard
   :init      ;; tweak dashboard config before loading it
   (setq dashboard-set-heading-icons t)
@@ -53,13 +80,23 @@
   (dashboard-modify-heading-icons '((recents . "file-text")
 			      (bookmarks . "book"))))
 (setq doom-fallback-buffer "*dashboard*")
+#+END_SRC
 
+* Mail
+
+Outgoing mail settings.
+#+BEGIN_SRC emacs-lisp
 (setq sendmail-program "/usr/bin/msmtp"
       send-mail-function 'smtpmail-send-it
       message-sendmail-f-is-evil t
       message-sendmail-extra-arguments '("--read-envelope-from")
       message-send-mail-function 'message-send-mail-with-sendmail)
+#+END_SRC
 
+* Writing mode
+
+Things to include with zen/writerroom mode (Space-t-z/Z)
+#+BEGIN_SRC emacs-lisp
 (after! evil
   (evil-add-command-properties 'org-export-dispatch :repeat nil)
   (evil-add-command-properties 'org-latex-export-to-pdf :repeat nil))
@@ -98,8 +135,14 @@
   centered-point-mode-on)
 (add-hook 'writeroom-mode-hook 'centered-point-mode)
 
+#+END_SRC
+
+* Irc
+Not set up properly yet...
+#+BEGIN_SRC emacs-lisp
 (setq rcirc-server-alist
              '(("irc.freenode.net"
                :nick ("loopdreams")
                :channels ("#emacs" "#anime" "#gemini" "#bitreich-en"))))
 (setq rcirc-authinfo '(("freenode" nickserv "loopdreams" "Washer76BottleCup")))
+#+END_SRC

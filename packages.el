@@ -62,3 +62,4 @@
 (package! dashboard)
 (package! org-sidebar)
 (package! eww)
+(package! dashboard)
