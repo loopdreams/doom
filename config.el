@@ -52,6 +52,7 @@
   (dashboard-setup-startup-hook)
   (dashboard-modify-heading-icons '((recents . "file-text")
 			      (bookmarks . "book"))))
+
 (setq doom-fallback-buffer "*dashboard*")
 
 (setq sendmail-program "/usr/bin/msmtp"
@@ -97,9 +98,3 @@
 (define-globalized-minor-mode global-centered-point-mode centered-point-mode
   centered-point-mode-on)
 (add-hook 'writeroom-mode-hook 'centered-point-mode)
-
-(setq rcirc-server-alist
-             '(("irc.freenode.net"
-               :nick ("loopdreams")
-               :channels ("#emacs" "#anime" "#gemini" "#bitreich-en"))))
-(setq rcirc-authinfo '(("freenode" nickserv "loopdreams" "Washer76BottleCup")))

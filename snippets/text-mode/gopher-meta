@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: gopher-meta
+# uuid: gopher-meta
+# key: /gopher
+# condition: t
+# --
+===================================================================
+Title:          ${1:TITLE}
+Date:           ${2:DATE}
+Tags:           ${3:TAGS}
+Word Count:     ${`(count-words (point-min) (point-max))`}
+===================================================================

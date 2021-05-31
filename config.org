@@ -59,8 +59,6 @@
         (setq elfeed-goodies/entry-pane-size 0.7)
 #+END_SRC
 
-
-
 * Dashboard
 
 #+BEGIN_SRC emacs-lisp
@@ -79,12 +77,13 @@
   (dashboard-setup-startup-hook)
   (dashboard-modify-heading-icons '((recents . "file-text")
 			      (bookmarks . "book"))))
+
 (setq doom-fallback-buffer "*dashboard*")
 #+END_SRC
 
 * Mail
 
-Outgoing mail settings.
+Outgoing mail settings. Set to use msmtp.
 #+BEGIN_SRC emacs-lisp
 (setq sendmail-program "/usr/bin/msmtp"
       send-mail-function 'smtpmail-send-it

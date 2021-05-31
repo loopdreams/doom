@@ -15,7 +15,7 @@
 *** https://100r.co/links/rss.xml
 *** http://ajroach42.com/feed.xml
 *** https://cdn.jwz.org/blog/feed/
-*** https://videos.lukesmith.xyz/feeds/videos.xml?accountId
+*** https://lukesmith.xyz/rss.xml
 *** https://www.youtube.com/feeds/videos.xml?channel_id=UCNvsIonJdJ5E4EXMa65VYpA
 *** https://inkdroid.org/feed.xml
 *** https://computer.rip/rss.xml
