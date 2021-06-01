@@ -9,7 +9,8 @@
 
 * Font
 #+BEGIN_SRC emacs-lisp
-(setq doom-font (font-spec :family "Source Code Pro" :size 20))
+(setq doom-font (font-spec :family "Source Code Pro" :size 20)
+      doom-variable-pitch-font (font-spec :family "Source Sans Variable"))
 #+END_SRC
 * Theme
 #+BEGIN_SRC emacs-lisp
