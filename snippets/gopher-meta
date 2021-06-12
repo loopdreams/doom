@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: gopher-meta
+# uuid: gopher-meta
+# key: /gopher
+# condition: t
+# --
+===================================================================
+Title:
+Date:
+Tags:
+Word Count:
+===================================================================

@@ -23,8 +23,11 @@
 (setq browse-url-generic-program "/usr/bin/qutebrowser")
 (setq browse-url-browser-function 'browse-url-generic)
 
+(define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
+(define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
+
 (custom-set-variables
- '(org-directory "~/sci/txt/")
+ '(org-directory "~/sci")
  '(org-agenda-files (list org-directory)))
 (require 'org-superstar)
         (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
@@ -66,7 +69,7 @@
   (evil-add-command-properties 'org-export-dispatch :repeat nil)
   (evil-add-command-properties 'org-latex-export-to-pdf :repeat nil))
 
-(setq +zen-text-scale 0.8)
+;; (setq +zen-text-scale 0.8)
 
 (defcustom centered-point-position 0.35
   "Percentage of screen where `centered-point-mode' keeps point."
@@ -99,3 +102,12 @@
 (define-globalized-minor-mode global-centered-point-mode centered-point-mode
   centered-point-mode-on)
 (add-hook 'writeroom-mode-hook 'centered-point-mode)
+
+;; (defun write-hook ()
+;;   (centered-point-mode)
+;;   (doom/set-frame-opacity 100)
+;;   (visual-line-mode)
+;;   (setq display-fill-column-indicator nil
+;;         display-line-numbers nil))
+;; (add-hook 'writeroom-mode-hook 'write-hook)
+;; (add-hook 'text-mode-hook 'set-fill-column 67)
