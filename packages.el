@@ -59,7 +59,7 @@
 ;; (package! gemini-mode)
 (package! pandoc-mode)
 (package! olivetti)
-(package! dashboard)
 (package! org-sidebar)
+(package! org-roam)
 (package! eww)
 (package! dashboard)

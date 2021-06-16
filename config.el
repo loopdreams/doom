@@ -2,7 +2,7 @@
       user-mail-address "eoin@spool-five.com")
 
 (setq doom-font (font-spec :family "Source Code Pro" :size 20)
-      doom-variable-pitch-font (font-spec :family "Source Sans Variable"))
+      doom-variable-pitch-font (font-spec :family "Source Sans Variable" :size 20))
 
 (setq doom-theme 'doom-miramare)
 
@@ -26,38 +26,113 @@
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
 (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
 
+(add-to-list 'org-modules 'org-id)
+
 (custom-set-variables
- '(org-directory "~/sci")
+ '(org-directory "~/sci/notes")
  '(org-agenda-files (list org-directory)))
+
 (require 'org-superstar)
         (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 
-(require 'elfeed-org)
-         (elfeed-org)
-         (setq rmh-elfeed-org-files (list "~/.doom.d/elfeed.org"))
+(after! org
+  (set-face-attribute 'org-level-1 nil
+                      :height 1.2)
+  (set-face-attribute 'org-document-title nil
+                      :height 1.5
+                      :weight 'bold))
 
+(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'visual-fill-column-mode)
+
+(setq org-todo-keywords '((sequence "TODO(t)" "PROG(p)" "WAIT(w)" "IDEA(i)" "|" "DONE(d)" "CANCELLED(c)")))
+
+(setq org-roam-directory "~/sci/notes")
+(use-package! org-roam
+  :ensure t
+  :hook
+  (after-init . org-roam-mode))
+;;   :custom
+;;   (org-roam-directory ("~/sci/notes"))
+;;   :bind (:map org-roam-mode-map
+;;               (("C-c n l" . org-roam)
+;;                ("C-c n f" . org-roam-find-file)
+;;                ("C-c n c" . org-roam-capture)
+;;                ("C-c n b" . org-roam-buffer-toggle-display))
+;;               :map org-mode-map
+;;               (("C-c n i" . org-roam-insert))
+;;               (("C-c n I" . org-roam-insert-immediate)))
+  (map! :map org-roam-mode-map
+        :leader
+        (:prefix-map ("r" . "Org Roam")
+        "l" #'org-roam
+        "f" #'org-roam-find-file
+        "c" #'org-roam-capture
+        "b" #'org-roam-buffer-toggle-display
+        "i" #'org-roam-insert
+        "I" #'org-roam-insert-immediate))
+
+(after! org-roam
+  (set-face-attribute 'org-roam-link nil :foreground "#458588"))
+
+(setq-default elfeed-search-filter "@1-week-ago +unread ")
+(use-package! elfeed-org
+  :after elfeed
+  :init
+  (setq rmh-elfeed-org-files (list "~/.doom.d/elfeed.org")))
+
+;; (require 'elfeed-org)
+;;          (elfeed-org)
+;;          (setq rmh-elfeed-org-files (list "~/.doom.d/elfeed.org"))
 
 (require 'elfeed-goodies)
         (elfeed-goodies/setup)
         (setq elfeed-goodies/entry-pane-size 0.7)
 
-(use-package dashboard
-  :init      ;; tweak dashboard config before loading it
-  (setq dashboard-set-heading-icons t)
-  (setq dashboard-set-file-icons t)
-  (setq dashboard-banner-logo-title "Box Three Spool Five")
-  ;;(setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
-  (setq dashboard-startup-banner "~/.doom.d/splashimg.png")  ;; use custom image as banner
-  (setq dashboard-center-content t) ;; set to 't' for centered content
-  (setq dashboard-items '((recents . 5)
-                          (agenda . 5 )
-                          (bookmarks . 5)))
-  :config
-  (dashboard-setup-startup-hook)
-  (dashboard-modify-heading-icons '((recents . "file-text")
-			      (bookmarks . "book"))))
+;; (setq +doom-dashboard-banner-file (expand-file-name "splashimg.png" doom-private-dir))
+;; (use-package dashboard
+;;   :init      ;; tweak dashboard config before loading it
+;;   (setq dashboard-set-heading-icons t)
+;;   (setq dashboard-set-file-icons t)
+;;   (setq dashboard-banner-logo-title "Box Three Spool Five")
+;;   ;;(setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
+;;   (setq dashboard-startup-banner "~/.doom.d/splashimg.png")  ;; use custom image as banner
+;;   (setq dashboard-center-content t) ;; set to 't' for centered content
+;;   (setq dashboard-items '((recents . 5)
+;;                           (agenda . 5 )
+;;                           (bookmarks . 5)))
+;;   :config
+;;   (dashboard-setup-startup-hook)
+;;   (dashboard-modify-heading-icons '((recents . "file-text")
+;; 			      (bookmarks . "book"))))
 
-(setq doom-fallback-buffer "*dashboard*")
+;; (setq doom-fallback-buffer "*dashboard*")
+
+(defun doom-dashboard-draw-ascii-emacs-banner-fn ()
+  (let* ((banner
+            '(" Y88b      /     "
+              "  Y88b    /      "
+              "   Y88b  /       "
+              "    Y888/        "
+              "     Y8/         "
+              "      Y          "))
+
+         (longest-line (apply #'max (mapcar #'length banner))))
+    (put-text-property
+     (point)
+     (dolist (line banner (point))
+       (insert (+doom-dashboard--center
+                +doom-dashboard--width
+                (concat
+                 line (make-string (max 0 (- longest-line (length line)))
+                                   32)))
+               "\n"))
+     'face 'doom-dashboard-banner)))
+
+;; (unless (display-graphic-p) ; for some reason this messes up the graphical splash screen atm
+  (setq +doom-dashboard-ascii-banner-fn #'doom-dashboard-draw-ascii-emacs-banner-fn)
+
+(custom-set-faces!
+  '(doom-dashboard-banner :foreground "slategray"))
 
 (setq sendmail-program "/usr/bin/msmtp"
       send-mail-function 'smtpmail-send-it
