@@ -60,6 +60,5 @@
 (package! pandoc-mode)
 (package! olivetti)
 (package! org-sidebar)
-(package! org-roam)
 (package! eww)
 (package! dashboard)

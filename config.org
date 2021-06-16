@@ -24,6 +24,7 @@
 + Set qutebrowser as defualt url handler
 + Map J/K as gj/gk
 + Org IDs
++ Remove /home as project root
 #+BEGIN_SRC emacs-lisp
 (setq display-line-numbers-type 'relative)
 
@@ -46,6 +47,10 @@
 (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
 
 (add-to-list 'org-modules 'org-id)
+
+(after! projectile
+  (setq projectile-project-root-files-bottom-up
+        (remove ".git" projectile-project-root-files-bottom-up)))
 #+END_SRC
 * Org
 ** Org directory
@@ -81,30 +86,6 @@ Org superstar and changing height of headings
 *** Directory and temporary (?) Bindings
 #+begin_src emacs-lisp
 (setq org-roam-directory "~/sci/notes")
-(use-package! org-roam
-  :ensure t
-  :hook
-  (after-init . org-roam-mode))
-;;   :custom
-;;   (org-roam-directory ("~/sci/notes"))
-;;   :bind (:map org-roam-mode-map
-;;               (("C-c n l" . org-roam)
-;;                ("C-c n f" . org-roam-find-file)
-;;                ("C-c n c" . org-roam-capture)
-;;                ("C-c n b" . org-roam-buffer-toggle-display))
-;;               :map org-mode-map
-;;               (("C-c n i" . org-roam-insert))
-;;               (("C-c n I" . org-roam-insert-immediate)))
-  (map! :map org-roam-mode-map
-        :leader
-        (:prefix-map ("r" . "Org Roam")
-        "l" #'org-roam
-        "f" #'org-roam-find-file
-        "c" #'org-roam-capture
-        "b" #'org-roam-buffer-toggle-display
-        "i" #'org-roam-insert
-        "I" #'org-roam-insert-immediate))
-
 #+end_src
 
 *** Link font face

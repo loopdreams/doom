@@ -28,6 +28,10 @@
 
 (add-to-list 'org-modules 'org-id)
 
+(after! projectile
+  (setq projectile-project-root-files-bottom-up
+        (remove ".git" projectile-project-root-files-bottom-up)))
+
 (custom-set-variables
  '(org-directory "~/sci/notes")
  '(org-agenda-files (list org-directory)))
@@ -47,29 +51,6 @@
 (setq org-todo-keywords '((sequence "TODO(t)" "PROG(p)" "WAIT(w)" "IDEA(i)" "|" "DONE(d)" "CANCELLED(c)")))
 
 (setq org-roam-directory "~/sci/notes")
-(use-package! org-roam
-  :ensure t
-  :hook
-  (after-init . org-roam-mode))
-;;   :custom
-;;   (org-roam-directory ("~/sci/notes"))
-;;   :bind (:map org-roam-mode-map
-;;               (("C-c n l" . org-roam)
-;;                ("C-c n f" . org-roam-find-file)
-;;                ("C-c n c" . org-roam-capture)
-;;                ("C-c n b" . org-roam-buffer-toggle-display))
-;;               :map org-mode-map
-;;               (("C-c n i" . org-roam-insert))
-;;               (("C-c n I" . org-roam-insert-immediate)))
-  (map! :map org-roam-mode-map
-        :leader
-        (:prefix-map ("r" . "Org Roam")
-        "l" #'org-roam
-        "f" #'org-roam-find-file
-        "c" #'org-roam-capture
-        "b" #'org-roam-buffer-toggle-display
-        "i" #'org-roam-insert
-        "I" #'org-roam-insert-immediate))
 
 (after! org-roam
   (set-face-attribute 'org-roam-link nil :foreground "#458588"))
