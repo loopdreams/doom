@@ -32,9 +32,8 @@
   (setq projectile-project-root-files-bottom-up
         (remove ".git" projectile-project-root-files-bottom-up)))
 
-(custom-set-variables
- '(org-directory "~/sci/notes")
- '(org-agenda-files (list org-directory)))
+(setq org-directory "~/sci/"
+      org-roam-directory (concat org-directory "notes/"))
 
 (require 'org-superstar)
         (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
@@ -50,10 +49,49 @@
 
 (setq org-todo-keywords '((sequence "TODO(t)" "PROG(p)" "WAIT(w)" "IDEA(i)" "|" "DONE(d)" "CANCELLED(c)")))
 
-(setq org-roam-directory "~/sci/notes")
+;; (map! :leader "n r B" '#org-roam-buffer-toggle-display)
+(map! :map org-roam-mode-map
+      :m "C-h /" 'org-roam-find-file
+      :m "C-h i" 'org-roam-insert
+      :m "C-h I" 'org-roam-insert-immediate
+      :m "C-h c" 'org-roam-capture
+      :m "C-h b" 'org-roam-buffer-toggle-display
+      :m "C-h u" 'org-roam-db-build-cache
+      :m "C-h t" 'org-roam-tag-add)
 
 (after! org-roam
   (set-face-attribute 'org-roam-link nil :foreground "#458588"))
+
+(after! org-roam
+  (setq org-roam-capture-templates
+        '(("d" "default" plain (function org-roam--capture-get-point)
+           "%?"
+           :file-name "${slug}"
+           :head "#+TITLE: ${title}\n#+CREATED: %u\n#+Modified: %U\n#+ROAM_TAGS:%^{org-roam-tags}\n\n* ${title}\n"
+           :unnarrowed t
+           :jump-to-captured t)
+        ("l" "clipboard" plain (function org-roam--capture-get-point)
+           "%i%a"
+           :file-name "${slug}"
+           :head "#+TITLE: ${title}\n#+CREATED: %u\n#+Modified: %U\n#+ROAM_TAGS:%^{org-roam-tags}\n\n* ${title}\n"
+           :unnarrowed t
+           :prepend t
+           :jump-to-captured t))))
+
+;; (use-package! org-roam-server
+;;   :after org-roam
+;;   :config
+;;   (setq org-roam-server-host "127.0.0.1"
+;;         org-roam-server-port 8080
+;;         org-roam-server-authenticate nil
+;;         org-roam-server-export-inline-images t
+;;         org-roam-server-serve-files nil
+;;         org-roam-server-served-file-extensions '("pdf" "mp4" "ogv")
+;;         org-roam-server-network-poll t
+;;         org-roam-server-network-arrows nil
+;;         org-roam-server-network-label-truncate t
+;;         org-roam-server-network-label-truncate-length 60
+;;         org-roam-server-network-label-wrap-length 20))
 
 (setq-default elfeed-search-filter "@1-week-ago +unread ")
 (use-package! elfeed-org
