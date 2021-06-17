@@ -93,6 +93,10 @@
 ;;         org-roam-server-network-label-truncate-length 60
 ;;         org-roam-server-network-label-wrap-length 20))
 
+(setq deft-extensions '("txt" "tex" "org" "md")
+      deft-directory "~/sci/notes"
+      deft-recursive t)
+
 (setq-default elfeed-search-filter "@1-week-ago +unread ")
 (use-package! elfeed-org
   :after elfeed
