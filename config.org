@@ -25,6 +25,7 @@
 + Map J/K as gj/gk
 + Org IDs
 + Remove /home as project root
++ open .gmi in markdown mode
 #+BEGIN_SRC emacs-lisp
 (setq display-line-numbers-type 'relative)
 
@@ -51,6 +52,8 @@
 (after! projectile
   (setq projectile-project-root-files-bottom-up
         (remove ".git" projectile-project-root-files-bottom-up)))
+
+(add-to-list 'auto-mode-alist '("\\.gmi\\'" . markdown-mode))
 #+END_SRC
 * Org
 ** Org directory

@@ -32,6 +32,8 @@
   (setq projectile-project-root-files-bottom-up
         (remove ".git" projectile-project-root-files-bottom-up)))
 
+(add-to-list 'auto-mode-alist '("\\.gmi\\'" . markdown-mode))
+
 (setq org-directory "~/sci/"
       org-roam-directory (concat org-directory "notes/"))
 
