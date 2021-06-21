@@ -58,7 +58,7 @@
 (package! elfeed-org)
 ;; (package! gemini-mode)
 (package! pandoc-mode)
-;; (package! org-roam-server)
+(package! org-roam-server)
 (package! olivetti)
 (package! org-sidebar)
 (package! eww)

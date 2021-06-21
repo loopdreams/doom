@@ -21,6 +21,7 @@
 *** https://computer.rip/rss.xml
 *** https://efforg.libsyn.com/rss
 *** https://sachachua.com/blog/feed/
+*** https://www.lunduke.com/feed/
 ** Philosophy :philosophy:
 *** https://bluelabyrinths.com/feed/
 *** https://www.philosophy2u.com/blog-feed.xml
