@@ -26,6 +26,7 @@
 + Org IDs
 + Remove /home as project root
 + open .gmi in markdown mode
++ bibtex completion list
 #+BEGIN_SRC emacs-lisp
 (setq display-line-numbers-type 'relative)
 
@@ -54,6 +55,11 @@
         (remove ".git" projectile-project-root-files-bottom-up)))
 
 (add-to-list 'auto-mode-alist '("\\.gmi\\'" . markdown-mode))
+
+(setq org-ref-default-bibliography
+      '("~/sci/lib.bib"))
+(setq bibtex-completion-bibliography
+      '("~/sci/lib.bib"))
 #+END_SRC
 * Org
 ** Org directory
@@ -141,6 +147,15 @@ To distinguish them from org links
         org-roam-server-network-label-truncate t
         org-roam-server-network-label-truncate-length 60
         org-roam-server-network-label-wrap-length 20))
+#+end_src
+*** Org-roam bibtex
+#+begin_src emacs-lisp
+(use-package! org-roam-bibtex
+  :after org-roam
+  :hook (org-roam-mode . org-roam-bibtex-mode)
+  :config
+  (require 'org-ref))
+
 #+end_src
 *** Deft
 #+begin_src emacs-lisp

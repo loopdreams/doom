@@ -34,8 +34,13 @@
 
 (add-to-list 'auto-mode-alist '("\\.gmi\\'" . markdown-mode))
 
- (setq org-directory "~/sci/"
-       org-roam-directory (concat org-directory "notes/"))
+(setq org-ref-default-bibliography
+      '("~/sci/lib.bib"))
+(setq bibtex-completion-bibliography
+      '("~/sci/lib.bib"))
+
+(setq org-directory "~/sci/"
+      org-roam-directory (concat org-directory "notes/"))
 
 (require 'org-superstar)
         (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
@@ -94,6 +99,12 @@
         org-roam-server-network-label-truncate t
         org-roam-server-network-label-truncate-length 60
         org-roam-server-network-label-wrap-length 20))
+
+(use-package! org-roam-bibtex
+  :after org-roam
+  :hook (org-roam-mode . org-roam-bibtex-mode)
+  :config
+  (require 'org-ref))
 
 (setq deft-extensions '("txt" "tex" "org" "md")
       deft-directory "~/sci/notes"

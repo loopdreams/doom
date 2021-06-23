@@ -51,7 +51,15 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
+(package! org-roam-bibtex
+  :recipe (:host github :repo "org-roam/org-roam-bibtex"))
+; this is recommended on the org-roam-bibtex github, not sure why
+(unpin! org-roam)
+(unpin! bibtex-completion helm-bibtex ivy-bibtex)
+
 (package! elfeed-goodies)
+(package! helm-bibtex)
+(package! org-ref)
 (package! org-superstar)
 (package! elfeed)
 (package! elpher)
