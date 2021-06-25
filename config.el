@@ -54,7 +54,7 @@
 
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'visual-fill-column-mode)
 
-(setq org-todo-keywords '((sequence "TODO(t)" "PROG(p)" "WAIT(w)" "IDEA(i)" "|" "DONE(d)" "CANCELLED(c)")))
+(setq org-todo-keywords '((sequence "TODO(t)" "PROG(p)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "|" "DONE(d)" "CANCELLED(c)")))
 
 ;; (map! :leader "n r B" '#org-roam-buffer-toggle-display)
 (map! :map org-roam-mode-map
@@ -123,25 +123,6 @@
 (require 'elfeed-goodies)
         (elfeed-goodies/setup)
         (setq elfeed-goodies/entry-pane-size 0.7)
-
-;; (setq +doom-dashboard-banner-file (expand-file-name "splashimg.png" doom-private-dir))
-;; (use-package dashboard
-;;   :init      ;; tweak dashboard config before loading it
-;;   (setq dashboard-set-heading-icons t)
-;;   (setq dashboard-set-file-icons t)
-;;   (setq dashboard-banner-logo-title "Box Three Spool Five")
-;;   ;;(setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
-;;   (setq dashboard-startup-banner "~/.doom.d/splashimg.png")  ;; use custom image as banner
-;;   (setq dashboard-center-content t) ;; set to 't' for centered content
-;;   (setq dashboard-items '((recents . 5)
-;;                           (agenda . 5 )
-;;                           (bookmarks . 5)))
-;;   :config
-;;   (dashboard-setup-startup-hook)
-;;   (dashboard-modify-heading-icons '((recents . "file-text")
-;; 			      (bookmarks . "book"))))
-
-;; (setq doom-fallback-buffer "*dashboard*")
 
 (defun doom-dashboard-draw-ascii-emacs-banner-fn ()
   (let* ((banner
