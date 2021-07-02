@@ -4,7 +4,8 @@
 (setq doom-font (font-spec :family "Source Code Pro" :size 20)
       doom-variable-pitch-font (font-spec :family "Source Sans Variable" :size 20))
 
-(setq doom-theme 'doom-miramare)
+;; (setq doom-theme 'doom-miramare)
+(setq doom-theme 'doom-gruvbox)
 
 (setq display-line-numbers-type 'relative)
 
@@ -54,7 +55,23 @@
 
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'visual-fill-column-mode)
 
-(setq org-todo-keywords '((sequence "TODO(t)" "PROG(p)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "|" "DONE(d)" "CANCELLED(c)")))
+(setq org-todo-keywords '((sequence "TODO(t)" "PROG(p)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "READ(r)" "|" "DONE(d)" "CANCELLED(c)")))
+;; (setq hl-todo-keyword-faces
+;;        '(("TODO"   . "#FF0000")
+;;         ("WAIT"  . "#FF0000")
+;;         ("BLOG"  . "#A020F0")
+;;         ("READ" . "#FF4500")))
+
+;; (setq hl-todo-keyword-faces
+;;         '(
+;;           ("TODO" . ,(face-foreground 'error))
+;;           ("BLOG" . ,(face-foreground 'error))
+;;           ("IDEA" . ,(face-foreground 'warning))
+;;           ("READ" . ,(face-foreground 'warning))
+;;           ("PROG" . ,(face-foreground 'warning))
+;;           ("DONE" . ,(face-foreground 'success))
+;;           ("CANCELLED" . ,(face-foreground 'success))
+;;           ("WAIT" . ,(face-foreground 'warning))))
 
 ;; (map! :leader "n r B" '#org-roam-buffer-toggle-display)
 (map! :map org-roam-mode-map
@@ -115,10 +132,6 @@
   :after elfeed
   :init
   (setq rmh-elfeed-org-files (list "~/.doom.d/elfeed.org")))
-
-;; (require 'elfeed-org)
-;;          (elfeed-org)
-;;          (setq rmh-elfeed-org-files (list "~/.doom.d/elfeed.org"))
 
 (require 'elfeed-goodies)
         (elfeed-goodies/setup)

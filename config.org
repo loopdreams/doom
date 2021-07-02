@@ -1,6 +1,5 @@
 #+TITLE: Emacs Config
 
-
 * Personal Information
 #+BEGIN_SRC emacs-lisp
 (setq user-full-name "Eoin Carney"
@@ -14,7 +13,8 @@
 #+END_SRC
 * Theme
 #+BEGIN_SRC emacs-lisp
-(setq doom-theme 'doom-miramare)
+;; (setq doom-theme 'doom-miramare)
+(setq doom-theme 'doom-gruvbox)
 #+END_SRC
 * General Settings
 + Relative line numbers
@@ -87,7 +87,23 @@ Org superstar and changing height of headings
 ** To-do keywords
 
 #+BEGIN_SRC emacs-lisp
-(setq org-todo-keywords '((sequence "TODO(t)" "PROG(p)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "|" "DONE(d)" "CANCELLED(c)")))
+(setq org-todo-keywords '((sequence "TODO(t)" "PROG(p)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "READ(r)" "|" "DONE(d)" "CANCELLED(c)")))
+;; (setq hl-todo-keyword-faces
+;;        '(("TODO"   . "#FF0000")
+;;         ("WAIT"  . "#FF0000")
+;;         ("BLOG"  . "#A020F0")
+;;         ("READ" . "#FF4500")))
+
+;; (setq hl-todo-keyword-faces
+;;         '(
+;;           ("TODO" . ,(face-foreground 'error))
+;;           ("BLOG" . ,(face-foreground 'error))
+;;           ("IDEA" . ,(face-foreground 'warning))
+;;           ("READ" . ,(face-foreground 'warning))
+;;           ("PROG" . ,(face-foreground 'warning))
+;;           ("DONE" . ,(face-foreground 'success))
+;;           ("CANCELLED" . ,(face-foreground 'success))
+;;           ("WAIT" . ,(face-foreground 'warning))))
 
 #+END_SRC
 ** Org Roam
@@ -170,10 +186,6 @@ To distinguish them from org links
   :after elfeed
   :init
   (setq rmh-elfeed-org-files (list "~/.doom.d/elfeed.org")))
-
-;; (require 'elfeed-org)
-;;          (elfeed-org)
-;;          (setq rmh-elfeed-org-files (list "~/.doom.d/elfeed.org"))
 
 (require 'elfeed-goodies)
         (elfeed-goodies/setup)

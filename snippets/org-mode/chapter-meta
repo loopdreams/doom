@@ -4,7 +4,7 @@
 # key: /chapter
 # condition: t
 # --
-** [ ] Chapter ${1:Chapter Name}
+** TODO Chapter ${1:Chapter Name}
 *** Notes:
 + Setting: :: ${2:Setting}
 + Date: :: ${3:Date}
