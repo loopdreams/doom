@@ -71,3 +71,4 @@
 (package! org-sidebar)
 (package! eww)
 (package! dashboard)
+(package! simple-mpc)

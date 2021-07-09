@@ -74,14 +74,24 @@
 ;;           ("WAIT" . ,(face-foreground 'warning))))
 
 ;; (map! :leader "n r B" '#org-roam-buffer-toggle-display)
+;; (map! :map org-roam-mode-map
+;;       :m "C-h /" 'org-roam-find-file
+;;       :m "C-h i" 'org-roam-insert
+;;       :m "C-h I" 'org-roam-insert-immediate
+;;       :m "C-h c" 'org-roam-capture
+;;       :m "C-h b" 'org-roam-buffer-toggle-display
+;;       :m "C-h u" 'org-roam-db-build-cache
+;;       :m "C-h t" 'org-roam-tag-add)
+
 (map! :map org-roam-mode-map
-      :m "C-h /" 'org-roam-find-file
-      :m "C-h i" 'org-roam-insert
-      :m "C-h I" 'org-roam-insert-immediate
-      :m "C-h c" 'org-roam-capture
-      :m "C-h b" 'org-roam-buffer-toggle-display
-      :m "C-h u" 'org-roam-db-build-cache
-      :m "C-h t" 'org-roam-tag-add)
+      :leader
+      :m "r r" 'org-roam-find-file
+      :m "r i" 'org-roam-insert
+      :m "r I" 'org-roam-insert-immediate
+      :m "r c" 'org-roam-capture
+      :m "r b" 'org-roam-buffer-toggle-display
+      :m "r u" 'org-roam-db-build-cache
+      :m "r t" 'org-roam-tag-add)
 
 (after! org-roam
   (set-face-attribute 'org-roam-link nil :foreground "#458588"))
@@ -175,6 +185,9 @@
   (evil-add-command-properties 'org-latex-export-to-pdf :repeat nil))
 
 ;; (setq +zen-text-scale 0.8)
+(map! :leader
+    :m "Z" 'display-fill-column-indicator-mode
+    :m "z" 'display-line-numbers-mode)
 
 (defcustom centered-point-position 0.35
   "Percentage of screen where `centered-point-mode' keeps point."
