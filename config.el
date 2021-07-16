@@ -43,6 +43,11 @@
 (setq org-directory "~/sci/"
       org-roam-directory (concat org-directory "notes/"))
 
+(map!
+ :m "<f5>" 'org-agenda-list
+ :m "<f6>" (lambda() (interactive)(find-file "~/sci/todo.org"))
+ :m "<f7>" '+calendar/open-calendar)
+
 (require 'org-superstar)
         (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 
@@ -53,7 +58,7 @@
                       :height 1.5
                       :weight 'bold))
 
-(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'visual-fill-column-mode)
+(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode)
 
 (setq org-todo-keywords '((sequence "TODO(t)" "PROG(p)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "READ(r)" "|" "DONE(d)" "CANCELLED(c)")))
 ;; (setq hl-todo-keyword-faces
@@ -91,6 +96,7 @@
       :m "r c" 'org-roam-capture
       :m "r b" 'org-roam-buffer-toggle-display
       :m "r u" 'org-roam-db-build-cache
+      :m "r B" 'orb-insert
       :m "r t" 'org-roam-tag-add)
 
 (after! org-roam

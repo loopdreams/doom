@@ -7,7 +7,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(org-agenda-files
-   '("~/sci/archive.org" "~/sci/notes/travelling_home.org" "~/sci/recurring_todo.org" "/home/eoin/sci/todo.org" "~/sci/notes/20210616194744-index.org" "/home/eoin/sci/journal.org"))
+   '("~/sci/notes/birthdays_holidays.org" "~/sci/notes/reading_notes.org" "~/sci/notes/website.org" "/home/eoin/sci/todo.org" "~/sci/archive.org" "~/sci/notes/travelling_home.org" "~/sci/recurring_todo.org" "~/sci/notes/20210616194744-index.org" "/home/eoin/sci/journal.org"))
  '(org-capture-templates
    '(("t" "Personal todo" entry
       (file+headline +org-capture-todo-file "Inbox")

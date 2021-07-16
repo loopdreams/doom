@@ -67,6 +67,13 @@
  (setq org-directory "~/sci/"
        org-roam-directory (concat org-directory "notes/"))
 #+END_SRC
+** Extra keybindings
+#+begin_src emacs-lisp
+(map!
+ :m "<f5>" 'org-agenda-list
+ :m "<f6>" (lambda() (interactive)(find-file "~/sci/todo.org"))
+ :m "<f7>" '+calendar/open-calendar)
+#+end_src
 ** Aesthetics
 Org superstar and changing height of headings
 
@@ -81,7 +88,7 @@ Org superstar and changing height of headings
                       :height 1.5
                       :weight 'bold))
 
-(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'visual-fill-column-mode)
+(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode)
 
 #+END_SRC
 ** To-do keywords
@@ -127,8 +134,12 @@ Org superstar and changing height of headings
       :m "r c" 'org-roam-capture
       :m "r b" 'org-roam-buffer-toggle-display
       :m "r u" 'org-roam-db-build-cache
+      :m "r B" 'orb-insert
       :m "r t" 'org-roam-tag-add)
 #+end_src
+
+#+RESULTS:
+: org-roam-tag-add
 
 *** Link font face
 To distinguish them from org links
