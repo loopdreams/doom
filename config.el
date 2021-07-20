@@ -1,7 +1,7 @@
 (setq user-full-name "Eoin Carney"
       user-mail-address "eoin@spool-five.com")
 
-(setq doom-font (font-spec :family "Source Code Pro" :size 20)
+(setq doom-font (font-spec :family "FiraMono Nerd Font" :size 20)
       doom-variable-pitch-font (font-spec :family "Source Sans Variable" :size 20))
 
 ;; (setq doom-theme 'doom-miramare)
