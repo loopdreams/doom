@@ -78,16 +78,6 @@
 ;;           ("CANCELLED" . ,(face-foreground 'success))
 ;;           ("WAIT" . ,(face-foreground 'warning))))
 
-;; (map! :leader "n r B" '#org-roam-buffer-toggle-display)
-;; (map! :map org-roam-mode-map
-;;       :m "C-h /" 'org-roam-find-file
-;;       :m "C-h i" 'org-roam-insert
-;;       :m "C-h I" 'org-roam-insert-immediate
-;;       :m "C-h c" 'org-roam-capture
-;;       :m "C-h b" 'org-roam-buffer-toggle-display
-;;       :m "C-h u" 'org-roam-db-build-cache
-;;       :m "C-h t" 'org-roam-tag-add)
-
 (map! :map org-roam-mode-map
       :leader
       :m "r r" 'org-roam-find-file
@@ -107,16 +97,21 @@
         '(("d" "default" plain (function org-roam--capture-get-point)
            "%?"
            :file-name "${slug}"
-           :head "#+TITLE: ${title}\n#+CREATED: %u\n#+Modified: %U\n#+ROAM_TAGS:%^{org-roam-tags}\n\n* ${title}\n"
+           :head "#+TITLE: ${title}\n#+CREATED: %u\n#+ROAM_TAGS:%^{org-roam-tags}\n\n* ${title}\n"
            :unnarrowed t
            :jump-to-captured t)
-        ("l" "clipboard" plain (function org-roam--capture-get-point)
-           "%i%a"
+          ("q" "quicklink" plain (function org-roam--capture-get-point)
+           "%?"
            :file-name "${slug}"
-           :head "#+TITLE: ${title}\n#+CREATED: %u\n#+Modified: %U\n#+ROAM_TAGS:%^{org-roam-tags}\n\n* ${title}\n"
-           :unnarrowed t
-           :prepend t
-           :jump-to-captured t))))
+           :head "#+TITLE: ${title}\n#+CREATED: %u\n#+ROAM_TAGS:%^{org-roam-tags}\n\n* ${title}\n"
+           :unnarrowed t))))
+        ;; ("l" "clipboard" plain (function org-roam--capture-get-point)
+        ;;    "%i%a"
+        ;;    :file-name "${slug}"
+        ;;    :head "#+TITLE: ${title}\n#+CREATED: %u\n#+Modified: %U\n#+ROAM_TAGS:%^{org-roam-tags}\n\n* ${title}\n"
+        ;;    :unnarrowed t
+        ;;    :prepend t
+        ;;    :jump-to-captured t)
 
 (use-package! org-roam-server
   :after org-roam
@@ -226,6 +221,10 @@
 (define-globalized-minor-mode global-centered-point-mode centered-point-mode
   centered-point-mode-on)
 (add-hook 'writeroom-mode-hook 'centered-point-mode)
+(add-hook 'olivetti-mode-on-hook 'centered-point-mode)
+
+(map! :leader
+      :m "t o" 'olivetti-mode)
 
 ;; (defun write-hook ()
 ;;   (centered-point-mode)

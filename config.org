@@ -76,7 +76,6 @@
 #+end_src
 ** Aesthetics
 Org superstar and changing height of headings
-
 #+BEGIN_SRC emacs-lisp
 (require 'org-superstar)
         (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
@@ -92,7 +91,6 @@ Org superstar and changing height of headings
 
 #+END_SRC
 ** To-do keywords
-
 #+BEGIN_SRC emacs-lisp
 (setq org-todo-keywords '((sequence "TODO(t)" "PROG(p)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "READ(r)" "|" "DONE(d)" "CANCELLED(c)")))
 ;; (setq hl-todo-keyword-faces
@@ -116,16 +114,6 @@ Org superstar and changing height of headings
 ** Org Roam
 *** Keybindings
 #+begin_src emacs-lisp
-;; (map! :leader "n r B" '#org-roam-buffer-toggle-display)
-;; (map! :map org-roam-mode-map
-;;       :m "C-h /" 'org-roam-find-file
-;;       :m "C-h i" 'org-roam-insert
-;;       :m "C-h I" 'org-roam-insert-immediate
-;;       :m "C-h c" 'org-roam-capture
-;;       :m "C-h b" 'org-roam-buffer-toggle-display
-;;       :m "C-h u" 'org-roam-db-build-cache
-;;       :m "C-h t" 'org-roam-tag-add)
-
 (map! :map org-roam-mode-map
       :leader
       :m "r r" 'org-roam-find-file
@@ -154,19 +142,21 @@ To distinguish them from org links
         '(("d" "default" plain (function org-roam--capture-get-point)
            "%?"
            :file-name "${slug}"
-           :head "#+TITLE: ${title}\n#+CREATED: %u\n#+Modified: %U\n#+ROAM_TAGS:%^{org-roam-tags}\n\n* ${title}\n"
+           :head "#+TITLE: ${title}\n#+CREATED: %u\n#+ROAM_TAGS:%^{org-roam-tags}\n\n* ${title}\n"
            :unnarrowed t
            :jump-to-captured t)
-        ("l" "clipboard" plain (function org-roam--capture-get-point)
-           "%i%a"
+          ("q" "quicklink" plain (function org-roam--capture-get-point)
+           "%?"
            :file-name "${slug}"
-           :head "#+TITLE: ${title}\n#+CREATED: %u\n#+Modified: %U\n#+ROAM_TAGS:%^{org-roam-tags}\n\n* ${title}\n"
-           :unnarrowed t
-           :prepend t
-           :jump-to-captured t))))
-
-
-
+           :head "#+TITLE: ${title}\n#+CREATED: %u\n#+ROAM_TAGS:%^{org-roam-tags}\n\n* ${title}\n"
+           :unnarrowed t))))
+        ;; ("l" "clipboard" plain (function org-roam--capture-get-point)
+        ;;    "%i%a"
+        ;;    :file-name "${slug}"
+        ;;    :head "#+TITLE: ${title}\n#+CREATED: %u\n#+Modified: %U\n#+ROAM_TAGS:%^{org-roam-tags}\n\n* ${title}\n"
+        ;;    :unnarrowed t
+        ;;    :prepend t
+        ;;    :jump-to-captured t)
 #+end_src
 *** Org-roam server
 #+begin_src emacs-lisp
@@ -246,7 +236,6 @@ To distinguish them from org links
 #+END_SRC
 
 * Mail
-
 Outgoing mail settings. Set to use msmtp.
 #+BEGIN_SRC emacs-lisp
 (setq sendmail-program "/usr/bin/msmtp"
@@ -257,7 +246,6 @@ Outgoing mail settings. Set to use msmtp.
 #+END_SRC
 
 * Writing mode
-
 Things to include with zen/writerroom mode (Space-t-z/Z)
 #+BEGIN_SRC emacs-lisp
 (after! evil
@@ -300,6 +288,10 @@ Things to include with zen/writerroom mode (Space-t-z/Z)
 (define-globalized-minor-mode global-centered-point-mode centered-point-mode
   centered-point-mode-on)
 (add-hook 'writeroom-mode-hook 'centered-point-mode)
+(add-hook 'olivetti-mode-on-hook 'centered-point-mode)
+
+(map! :leader
+      :m "t o" 'olivetti-mode)
 
 ;; (defun write-hook ()
 ;;   (centered-point-mode)
