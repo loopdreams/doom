@@ -2,10 +2,10 @@
       user-mail-address "eoin@spool-five.com")
 
 (setq doom-font (font-spec :family "FiraMono Nerd Font" :size 20)
-      doom-variable-pitch-font (font-spec :family "Source Sans Variable" :size 20))
+      doom-variable-pitch-font (font-spec :family "Source Sans Variable" :size 24))
 
 ;; (setq doom-theme 'doom-miramare)
-(setq doom-theme 'doom-dracula)
+(setq doom-theme 'doom-one)
 
 (setq doom-modeline-enable-word-count t)
 
@@ -43,8 +43,20 @@
       '("~/sci/lib.bib"))
 (setq org-roam-completion-everywhere t)
 
- (setq org-directory "~/sci/"
-       org-roam-directory (concat org-directory "notes/"))
+(setq org-directory "~/sci/"
+      org-roam-directory (concat org-directory "notes/"))
+
+(customize-set-variable 'org-capture-templates '(
+      ("t" "Personal todo" entry (file+headline +org-capture-todo-file "Inbox")
+       "* TODO %?\n%i\n%a" :prepend t)
+      ("n" "Personal notes" entry (file+headline +org-capture-notes-file "Inbox")
+       "* %u %?\n%i\n%a" :prepend t)
+      ("j" "Journal" entry (file+olp+datetree +org-capture-journal-file)
+       "* %U %?\n%i\n%a" :prepend t)
+      ("i" "Blog Idea" entry (id "9d9237c9-e79c-465b-9c10-2d75b6b4fdb0")
+       "* IDEA %u %?\n%i" :prepend t)
+      ("f" "Fiction Idea" entry (id "8a5272ce-9e99-4786-b645-942c942031c8")
+       "* IDEA %u %?\n%i" :prepend t)))
 
 (map!
  :m "<f5>" 'org-agenda-list
@@ -53,38 +65,49 @@
 
 (require 'org-superstar)
         (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
-
 (after! org
-  (set-face-attribute 'org-level-1 nil
-                      :height 1.2)
-  (set-face-attribute 'org-document-title nil
-                      :height 1.5
-                      :weight 'bold))
+(setq org-hidden-keywords '(title))
+;; set basic title font
+(set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default)
+;; Low levels are unimportant => no scaling
+(set-face-attribute 'org-level-7 nil :inherit 'org-level-8)
+(set-face-attribute 'org-level-6 nil :inherit 'org-level-8)
+(set-face-attribute 'org-level-5 nil :inherit 'org-level-8)
+(set-face-attribute 'org-level-4 nil :inherit 'org-level-8)
+;; Top ones get scaled the same as in LaTeX (\large, \Large, \LARGE)
+(set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.02) ;\large
+(set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.07) ;\Large
+(set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.328) ;\LARGE
+;; Only use the first 4 styles and do not cycle.
+(setq org-cycle-level-faces nil)
+(setq org-n-level-faces 4)
+;; Document Title, (\huge)
+(set-face-attribute 'org-document-title nil
+                    :height 2.074
+                    :foreground 'unspecified
+                    :inherit 'org-level-8))
+;; (after! org
+;;   (set-face-attribute 'org-level-1 nil
+;;                       :height 1.2)
+;;   (set-face-attribute 'org-document-title nil
+;;                       :height 1.5
+;;                       :weight 'bold))
 
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode)
 
 (setq org-todo-keywords '((sequence "TODO(t)" "CONFIG(c)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "READ(r)" "|" "DONE(d)" "CANCELLED(c)")))
-;; (setq hl-todo-keyword-faces
-;;        '(("TODO"   . "#FF0000")
-;;         ("WAIT"  . "#FF0000")
-;;         ("BLOG"  . "#A020F0")
-;;         ("READ" . "#FF4500")))
-
-;; (setq hl-todo-keyword-faces
-;;         '(
-;;           ("TODO" . ,(face-foreground 'error))
-;;           ("BLOG" . ,(face-foreground 'error))
-;;           ("IDEA" . ,(face-foreground 'warning))
-;;           ("READ" . ,(face-foreground 'warning))
-;;           ("PROG" . ,(face-foreground 'warning))
-;;           ("DONE" . ,(face-foreground 'success))
-;;           ("CANCELLED" . ,(face-foreground 'success))
-;;           ("WAIT" . ,(face-foreground 'warning))))
+(setq hl-todo-keyword-faces '(
+        ("TODO" . "#ebdbb2")
+        ("WAIT" . "#ebdbb2")
+        ("BLOG" . "#689d6a")
+        ("IDEA" . "#689d6a")
+        ("READ" . "#689d6a")
+        ("CONFIG" . "#689d6a")))
 
 (use-package! org-roam
-  :ensure t
   :init
   (setq org-roam-v2-ack t)
+  (setq org-roam-graph-viewer "/usr/bin/qutebrowser")
   :config
   (org-roam-setup))
 
@@ -93,6 +116,7 @@
       :m "r r" 'org-roam-node-find
       :m "r i" 'org-roam-node-insert
       :m "r b" 'org-roam-buffer-toggle
+      :m "r t" 'org-roam-tag-add
       :m "r c" 'orb-insert-link)
 
 (add-to-list 'display-buffer-alist
@@ -148,7 +172,7 @@
 (use-package! org-roam-ui
   :after org-roam
   ;; the below hook affects startup time. Could choose an alternative later...
-  :hook (after-init . org-roam-ui-mode)
+  ;; :hook (after-init . org-roam-ui-mode)
   :config
   (setq org-roam-ui-sync-theme t
         org-roam-ui-follow t
