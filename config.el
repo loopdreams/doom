@@ -5,7 +5,9 @@
       doom-variable-pitch-font (font-spec :family "Source Sans Variable" :size 20))
 
 ;; (setq doom-theme 'doom-miramare)
-(setq doom-theme 'doom-gruvbox)
+(setq doom-theme 'doom-dracula)
+
+(setq doom-modeline-enable-word-count t)
 
 (setq display-line-numbers-type 'relative)
 

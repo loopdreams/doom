@@ -14,9 +14,10 @@
 * Theme
 #+BEGIN_SRC emacs-lisp
 ;; (setq doom-theme 'doom-miramare)
-(setq doom-theme 'doom-gruvbox)
+(setq doom-theme 'doom-dracula)
 #+END_SRC
 * General Settings
++ Modeline word count
 + Relative line numbers
 + Set opacity here so it works with Xcompmgr
 + Gnutls-verify-error is for browsing gemini with elpher. There is probably a better way of doing this.
@@ -28,6 +29,8 @@
 + open .gmi in markdown mode
 + bibtex completion list
 #+BEGIN_SRC emacs-lisp
+(setq doom-modeline-enable-word-count t)
+
 (setq display-line-numbers-type 'relative)
 
 (doom/set-frame-opacity 90)

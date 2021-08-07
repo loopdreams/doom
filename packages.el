@@ -52,11 +52,11 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 (package! org-roam-bibtex
-  :recipe (:host github :repo "org-roam/org-roam-bibtex"))
+  :recipe (:host github :repo "org-roam/org-roam-bibtex")
+  :pin "f7b5be2")
 ; this is recommended on the org-roam-bibtex github, not sure why
 ;; (unpin! org-roam)
 (unpin! bibtex-completion helm-bibtex ivy-bibtex)
-
 (package! elfeed-goodies)
 (package! helm-bibtex)
 (package! org-roam :pin "8ad57b1")
@@ -65,7 +65,6 @@
 (package! elfeed)
 (package! elpher)
 (package! elfeed-org)
-;; (package! gemini-mode)
 (package! pandoc-mode)
 (package! org-roam-server)
 (package! olivetti)
@@ -73,3 +72,4 @@
 (package! eww)
 (package! dashboard)
 (package! simple-mpc)
+;; (package! gemini-mode)
