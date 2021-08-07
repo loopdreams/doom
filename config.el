@@ -41,9 +41,10 @@
       '("~/sci/lib.bib"))
 (setq bibtex-completion-bibliography
       '("~/sci/lib.bib"))
+(setq org-roam-completion-everywhere t)
 
-(setq org-directory "~/sci/"
-      org-roam-directory (concat org-directory "notes/"))
+ (setq org-directory "~/sci/"
+       org-roam-directory (concat org-directory "notes/"))
 
 (map!
  :m "<f5>" 'org-agenda-list
@@ -62,7 +63,7 @@
 
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode)
 
-(setq org-todo-keywords '((sequence "TODO(t)" "PROG(p)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "READ(r)" "|" "DONE(d)" "CANCELLED(c)")))
+(setq org-todo-keywords '((sequence "TODO(t)" "CONFIG(c)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "READ(r)" "|" "DONE(d)" "CANCELLED(c)")))
 ;; (setq hl-todo-keyword-faces
 ;;        '(("TODO"   . "#FF0000")
 ;;         ("WAIT"  . "#FF0000")
@@ -80,55 +81,60 @@
 ;;           ("CANCELLED" . ,(face-foreground 'success))
 ;;           ("WAIT" . ,(face-foreground 'warning))))
 
+(use-package! org-roam
+  :ensure t
+  :init
+  (setq org-roam-v2-ack t)
+  :config
+  (org-roam-setup))
+
 (map! :map org-roam-mode-map
       :leader
-      :m "r r" 'org-roam-find-file
-      :m "r i" 'org-roam-insert
-      :m "r I" 'org-roam-insert-immediate
-      :m "r c" 'org-roam-capture
-      :m "r b" 'org-roam-buffer-toggle-display
-      :m "r u" 'org-roam-db-build-cache
-      :m "r B" 'orb-insert
-      :m "r t" 'org-roam-tag-add)
+      :m "r r" 'org-roam-node-find
+      :m "r i" 'org-roam-node-insert
+      :m "r b" 'org-roam-buffer-toggle
+      :m "r c" 'orb-insert-link)
 
-(after! org-roam
-  (set-face-attribute 'org-roam-link nil :foreground "#458588"))
+(add-to-list 'display-buffer-alist
+             '("\\*org-roam\\*"
+               (display-buffer-in-side-window)
+               (side . right)
+               (slot . 0)
+               (window-width . 0.33)
+               (window-parameters . ((no-other-window . t)
+                                     (no-delete-other-windows . t)))))
 
 (after! org-roam
   (setq org-roam-capture-templates
-        '(("d" "default" plain (function org-roam--capture-get-point)
-           "%?"
-           :file-name "${slug}"
-           :head "#+TITLE: ${title}\n#+CREATED: %u\n#+ROAM_TAGS:%^{org-roam-tags}\n\n* ${title}\n"
+        '(("d" "default" plain "%?"
+           :if-new (file+head "%<%Y%m%d>-${slug}.org"
+                              "#+title: ${title}\n#+created: %u\n#+filetags: %^G\n\n")
            :unnarrowed t
            :jump-to-captured t)
-          ("q" "quicklink" plain (function org-roam--capture-get-point)
-           "%?"
-           :file-name "${slug}"
-           :head "#+TITLE: ${title}\n#+CREATED: %u\n#+ROAM_TAGS:%^{org-roam-tags}\n\n* ${title}\n"
+          ("q" "quick" plain "%?"
+           :if-new (file+head "%<%Y%m%d>-${slug}.org"
+                              "#+title: ${title}\n#+created: %u\n#+filetags: %^{org-file-tags}\n\n")
            :unnarrowed t))))
-        ;; ("l" "clipboard" plain (function org-roam--capture-get-point)
-        ;;    "%i%a"
-        ;;    :file-name "${slug}"
-        ;;    :head "#+TITLE: ${title}\n#+CREATED: %u\n#+Modified: %U\n#+ROAM_TAGS:%^{org-roam-tags}\n\n* ${title}\n"
-        ;;    :unnarrowed t
-        ;;    :prepend t
-        ;;    :jump-to-captured t)
-
-(use-package! org-roam-server
-  :after org-roam
-  :config
-  (setq org-roam-server-host "127.0.0.1"
-        org-roam-server-port 8080
-        org-roam-server-authenticate nil
-        org-roam-server-export-inline-images t
-        org-roam-server-serve-files nil
-        org-roam-server-served-file-extensions '("pdf" "mp4" "ogv")
-        org-roam-server-network-poll t
-        org-roam-server-network-arrows nil
-        org-roam-server-network-label-truncate t
-        org-roam-server-network-label-truncate-length 60
-        org-roam-server-network-label-wrap-length 20))
+;; (after! org-roam
+;;   (setq org-roam-capture-templates
+;;         '(("d" "default" plain (function org-roam--capture-get-point)
+;;            "%?"
+;;            :file-name "${slug}"
+;;            :head "#+TITLE: ${title}\n#+CREATED: %u\n#+ROAM_TAGS:%^{org-roam-tags}\n\n* ${title}\n"
+;;            :unnarrowed t
+;;            :jump-to-captured t)
+;;           ("q" "quicklink" plain (function org-roam--capture-get-point)
+;;            "%?"
+;;            :file-name "${slug}"
+;;            :head "#+TITLE: ${title}\n#+CREATED: %u\n#+ROAM_TAGS:%^{org-roam-tags}\n\n* ${title}\n"
+;;            :unnarrowed t))))
+;;         ;; ("l" "clipboard" plain (function org-roam--capture-get-point)
+;;         ;;    "%i%a"
+;;         ;;    :file-name "${slug}"
+;;         ;;    :head "#+TITLE: ${title}\n#+CREATED: %u\n#+Modified: %U\n#+ROAM_TAGS:%^{org-roam-tags}\n\n* ${title}\n"
+;;         ;;    :unnarrowed t
+;;         ;;    :prepend t
+;;         ;;    :jump-to-captured t)
 
 (use-package! org-roam-bibtex
   :after org-roam
@@ -136,9 +142,22 @@
   :config
   (require 'org-ref))
 
+(use-package! websocket
+  :after org-roam)
+
+(use-package! org-roam-ui
+  :after org-roam
+  ;; the below hook affects startup time. Could choose an alternative later...
+  :hook (after-init . org-roam-ui-mode)
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t))
+
 (setq deft-extensions '("txt" "tex" "org" "md")
       deft-directory "~/sci/notes"
-      deft-recursive t)
+      deft-recursive t
+      deft-use-filename-as-title t)
 
 (setq-default elfeed-search-filter "@1-week-ago +unread ")
 (use-package! elfeed-org
@@ -227,12 +246,3 @@
 
 (map! :leader
       :m "t o" 'olivetti-mode)
-
-;; (defun write-hook ()
-;;   (centered-point-mode)
-;;   (doom/set-frame-opacity 100)
-;;   (visual-line-mode)
-;;   (setq display-fill-column-indicator nil
-;;         display-line-numbers nil))
-;; (add-hook 'writeroom-mode-hook 'write-hook)
-;; (add-hook 'text-mode-hook 'set-fill-column 67)
