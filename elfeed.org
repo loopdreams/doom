@@ -55,3 +55,4 @@
 *** https://feeds.feedburner.com/arstechnica/index/
 *** https://solar.lowtechmagazine.com/feeds/all-en.atom.xml
 *** https://blog.tecosaur.com/tmio/rss.xml
+*** https://jcs.org/rss

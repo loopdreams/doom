@@ -59,9 +59,9 @@
        "* IDEA %u %?\n%i" :prepend t)))
 
 (map!
- :m "<f5>" 'org-agenda-list
- :m "<f6>" (lambda() (interactive)(find-file "~/sci/todo.org"))
- :m "<f7>" '+calendar/open-calendar)
+ :n "<f5>" 'org-agenda-list
+ :n "<f6>" (lambda() (interactive)(find-file "~/sci/todo.org"))
+ :n "<f7>" '+calendar/open-calendar)
 
 (require 'org-superstar)
         (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
@@ -104,6 +104,8 @@
         ("READ" . "#689d6a")
         ("CONFIG" . "#689d6a")))
 
+(setq org-roam-node-display-template "${title} ${tags}")
+
 (use-package! org-roam
   :init
   (setq org-roam-v2-ack t)
@@ -113,11 +115,11 @@
 
 (map! :map org-roam-mode-map
       :leader
-      :m "r r" 'org-roam-node-find
-      :m "r i" 'org-roam-node-insert
-      :m "r b" 'org-roam-buffer-toggle
-      :m "r t" 'org-roam-tag-add
-      :m "r c" 'orb-insert-link)
+      :n "r r" 'org-roam-node-find
+      :n "r i" 'org-roam-node-insert
+      :n "r b" 'org-roam-buffer-toggle
+      :n "r t" 'org-roam-tag-add
+      :n "r c" 'orb-insert-link)
 
 (add-to-list 'display-buffer-alist
              '("\\*org-roam\\*"
@@ -130,15 +132,19 @@
 
 (after! org-roam
   (setq org-roam-capture-templates
-        '(("d" "default" plain "%?"
+        '(("d" "default" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
            :if-new (file+head "%<%Y%m%d>-${slug}.org"
-                              "#+title: ${title}\n#+created: %u\n#+filetags: %^G\n\n")
+                              "#+title: ${title}\n")
            :unnarrowed t
            :jump-to-captured t)
-          ("q" "quick" plain "%?"
+          ("q" "quick" plain "#+created: %u\n#+filetags: %^G\n\n%?"
            :if-new (file+head "%<%Y%m%d>-${slug}.org"
-                              "#+title: ${title}\n#+created: %u\n#+filetags: %^{org-file-tags}\n\n")
-           :unnarrowed t))))
+                              "#+title: ${title}\n")
+           :unnarrowed t)
+          ("t" "test" plain (file "~/sci/notes/templates/test.org")
+           :if-new (file+head "%<%Y%m%d>-${slug}.org"
+                              "#+title: ${title}\n")
+            :unnarrowed t))))
 ;; (after! org-roam
 ;;   (setq org-roam-capture-templates
 ;;         '(("d" "default" plain (function org-roam--capture-get-point)
