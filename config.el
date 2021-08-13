@@ -9,13 +9,21 @@
 (setq doom-theme 'doom-one)
 
 (setq doom-modeline-enable-word-count t)
-
-(setq display-line-numbers-type 'relative)
-
+(display-time-mode 1)
 (doom/set-frame-opacity 90)
+(setq display-line-numbers-type 'relative
+      scroll-margin 2)
 
 (setq gnutls-verify-error 'nil)
 
+(setq browse-url-generic-program "/usr/bin/qutebrowser")
+(setq browse-url-browser-function 'browse-url-generic)
+
+(setq org-ref-default-bibliography
+      '("~/sci/lib.bib"))
+(setq bibtex-completion-bibliography
+      '("~/sci/lib.bib"))
+(setq org-roam-completion-everywhere t)
 (setq evil-vsplit-window-right t
       evil-split-window-below t)
 (defadvice! prompt-for-buffer (&rest _)
@@ -23,8 +31,6 @@
   (+ivy/switch-buffer))
 (setq +ivy-buffer-preview t)
 
-(setq browse-url-generic-program "/usr/bin/qutebrowser")
-(setq browse-url-browser-function 'browse-url-generic)
 
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
 (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
@@ -37,14 +43,11 @@
 
 (add-to-list 'auto-mode-alist '("\\.gmi\\'" . markdown-mode))
 
-(setq org-ref-default-bibliography
-      '("~/sci/lib.bib"))
-(setq bibtex-completion-bibliography
-      '("~/sci/lib.bib"))
-(setq org-roam-completion-everywhere t)
+(unless (string-match-p "^Power N/A" (battery))
+  (display-battery-mode 1))
 
-(setq org-directory "~/sci/"
-      org-roam-directory (concat org-directory "notes/"))
+ (setq org-directory "~/sci/"
+       org-roam-directory (concat org-directory "notes/"))
 
 (customize-set-variable 'org-capture-templates '(
       ("t" "Personal todo" entry (file+headline +org-capture-todo-file "Inbox")
