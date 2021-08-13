@@ -1,0 +1,26 @@
+# -*- mode: snippet -*-
+# name: orestes_htmlconversion
+# uuid: orestes_htmlconversion
+# key: /or
+# condition: t
+# --
+
+## Transmission Log - Orestes
+
+### Author: ###
+
+-------
+
+**Date:** (Earth Standard Time)
+
+-------
+
+
+
+-------
+
+*Sent via the QEC*
+
+[Next Entry](next.html)
+
+[Index](orestes.html)

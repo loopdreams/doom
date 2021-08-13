@@ -2,7 +2,8 @@
       user-mail-address "eoin@spool-five.com")
 
 (setq doom-font (font-spec :family "FiraMono Nerd Font" :size 20)
-      doom-variable-pitch-font (font-spec :family "Source Sans Variable" :size 24))
+      doom-variable-pitch-font (font-spec :family "Source Sans Variable" :size 22)
+      mixed-pitch-set-height 22)
 
 ;; (setq doom-theme 'doom-miramare)
 (setq doom-theme 'doom-one)
@@ -17,7 +18,6 @@
 
 (setq evil-vsplit-window-right t
       evil-split-window-below t)
-(define-key evil-normal-state-map (kbd "J") 'evil-next-visual-line)
 (defadvice! prompt-for-buffer (&rest _)
   :after '(evil-window-split evil-window-vsplit)
   (+ivy/switch-buffer))
@@ -51,6 +51,8 @@
        "* TODO %?\n%i\n%a" :prepend t)
       ("n" "Personal notes" entry (file+headline +org-capture-notes-file "Inbox")
        "* %u %?\n%i\n%a" :prepend t)
+      ("c" "Config Todo" entry (id "05774d4c-565c-4cd8-8f32-ccefe997a75a")
+       "* CONFIG %?\n%i\n%a" :prepend t)
       ("j" "Journal" entry (file+olp+datetree +org-capture-journal-file)
        "* %U %?\n%i\n%a" :prepend t)
       ("i" "Blog Idea" entry (id "9d9237c9-e79c-465b-9c10-2d75b6b4fdb0")
@@ -64,34 +66,24 @@
  :n "<f7>" '+calendar/open-calendar)
 
 (require 'org-superstar)
-        (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+(add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+
 (after! org
-(setq org-hidden-keywords '(title))
-;; set basic title font
-(set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default)
-;; Low levels are unimportant => no scaling
-(set-face-attribute 'org-level-7 nil :inherit 'org-level-8)
-(set-face-attribute 'org-level-6 nil :inherit 'org-level-8)
-(set-face-attribute 'org-level-5 nil :inherit 'org-level-8)
-(set-face-attribute 'org-level-4 nil :inherit 'org-level-8)
-;; Top ones get scaled the same as in LaTeX (\large, \Large, \LARGE)
-(set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.02) ;\large
-(set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.07) ;\Large
-(set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.328) ;\LARGE
-;; Only use the first 4 styles and do not cycle.
-(setq org-cycle-level-faces nil)
-(setq org-n-level-faces 4)
-;; Document Title, (\huge)
-(set-face-attribute 'org-document-title nil
-                    :height 2.074
-                    :foreground 'unspecified
-                    :inherit 'org-level-8))
-;; (after! org
-;;   (set-face-attribute 'org-level-1 nil
-;;                       :height 1.2)
-;;   (set-face-attribute 'org-document-title nil
-;;                       :height 1.5
-;;                       :weight 'bold))
+  (setq org-hidden-keywords '(title))
+  (set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default)
+  (set-face-attribute 'org-level-7 nil :inherit 'org-level-8)
+  (set-face-attribute 'org-level-6 nil :inherit 'org-level-8)
+  (set-face-attribute 'org-level-5 nil :inherit 'org-level-8)
+  (set-face-attribute 'org-level-4 nil :inherit 'org-level-8)
+  (set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.02) ;\large
+  (set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.07) ;\Large
+  (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.328) ;\LARGE
+  (setq org-cycle-level-faces nil)
+  (setq org-n-level-faces 4)
+  (set-face-attribute 'org-document-title nil
+                      :height 2.074
+                      :foreground 'unspecified
+                      :inherit 'org-level-8))
 
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode)
 
@@ -141,30 +133,15 @@
            :if-new (file+head "%<%Y%m%d>-${slug}.org"
                               "#+title: ${title}\n")
            :unnarrowed t)
+          ("w" "witness" plain "#+created: %u\n#+filetags: %^G\n\n%?"
+           :if-new (file+head "witness_${slug}.org"
+                              "#+title: ${title}\n")
+           :jump-to-captured t
+           :unnarrowed t)
           ("t" "test" plain (file "~/sci/notes/templates/test.org")
            :if-new (file+head "%<%Y%m%d>-${slug}.org"
                               "#+title: ${title}\n")
             :unnarrowed t))))
-;; (after! org-roam
-;;   (setq org-roam-capture-templates
-;;         '(("d" "default" plain (function org-roam--capture-get-point)
-;;            "%?"
-;;            :file-name "${slug}"
-;;            :head "#+TITLE: ${title}\n#+CREATED: %u\n#+ROAM_TAGS:%^{org-roam-tags}\n\n* ${title}\n"
-;;            :unnarrowed t
-;;            :jump-to-captured t)
-;;           ("q" "quicklink" plain (function org-roam--capture-get-point)
-;;            "%?"
-;;            :file-name "${slug}"
-;;            :head "#+TITLE: ${title}\n#+CREATED: %u\n#+ROAM_TAGS:%^{org-roam-tags}\n\n* ${title}\n"
-;;            :unnarrowed t))))
-;;         ;; ("l" "clipboard" plain (function org-roam--capture-get-point)
-;;         ;;    "%i%a"
-;;         ;;    :file-name "${slug}"
-;;         ;;    :head "#+TITLE: ${title}\n#+CREATED: %u\n#+Modified: %U\n#+ROAM_TAGS:%^{org-roam-tags}\n\n* ${title}\n"
-;;         ;;    :unnarrowed t
-;;         ;;    :prepend t
-;;         ;;    :jump-to-captured t)
 
 (use-package! org-roam-bibtex
   :after org-roam
@@ -177,8 +154,6 @@
 
 (use-package! org-roam-ui
   :after org-roam
-  ;; the below hook affects startup time. Could choose an alternative later...
-  ;; :hook (after-init . org-roam-ui-mode)
   :config
   (setq org-roam-ui-sync-theme t
         org-roam-ui-follow t
@@ -275,4 +250,4 @@
 (add-hook 'olivetti-mode-on-hook 'centered-point-mode)
 
 (map! :leader
-      :m "t o" 'olivetti-mode)
+      :n "t o" 'olivetti-mode)
