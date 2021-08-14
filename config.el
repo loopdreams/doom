@@ -51,7 +51,7 @@
  :n "<f6>" (lambda() (interactive)(find-file "~/sci/todo.org"))
  :n "<f7>" '+calendar/open-calendar)
 
-(after! org
+(add-hook! org-mode
   (setq org-hidden-keywords '(title))
   (set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default)
   (set-face-attribute 'org-level-7 nil :inherit 'org-level-8)
@@ -60,13 +60,10 @@
   (set-face-attribute 'org-level-4 nil :inherit 'org-level-8)
   (set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.02)
   (set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.07)
-  (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.328)
-  (setq org-cycle-level-faces nil)
+  (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.258)
+  (set-face-attribute 'org-document-title nil :inherit 'org-level-8 :height 2.01 :foreground 'unspecified)
   (setq org-n-level-faces 4)
-  (set-face-attribute 'org-document-title nil
-                      :height 2.074
-                      :foreground 'unspecified
-                      :inherit 'org-level-8))
+  (setq org-cycle-level-faces nil))
 
 (require 'org-superstar)
 (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))

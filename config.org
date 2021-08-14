@@ -88,8 +88,11 @@ Because home directory has .git file
 #+end_src
 ** Aesthetics
 Org superstar and changing height of headings
+
+The =add-hook!= used to be =after! org= but the title never loaded properly. The add hook seems to fix it, but I should still look into a better way to do it...
+Seems to slow down the first time you open an org file, but then no delay.
 #+BEGIN_SRC emacs-lisp
-(after! org
+(add-hook! org-mode
   (setq org-hidden-keywords '(title))
   (set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default)
   (set-face-attribute 'org-level-7 nil :inherit 'org-level-8)
@@ -98,13 +101,10 @@ Org superstar and changing height of headings
   (set-face-attribute 'org-level-4 nil :inherit 'org-level-8)
   (set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.02)
   (set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.07)
-  (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.328)
-  (setq org-cycle-level-faces nil)
+  (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.258)
+  (set-face-attribute 'org-document-title nil :inherit 'org-level-8 :height 2.01 :foreground 'unspecified)
   (setq org-n-level-faces 4)
-  (set-face-attribute 'org-document-title nil
-                      :height 2.074
-                      :foreground 'unspecified
-                      :inherit 'org-level-8))
+  (setq org-cycle-level-faces nil))
 
 (require 'org-superstar)
 (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
