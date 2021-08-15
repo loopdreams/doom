@@ -70,23 +70,18 @@
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode)
 
 (setq org-todo-keywords '((sequence "TODO(t)" "CONFIG(c)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "READ(r)" "|" "DONE(d)" "CANCELLED(c)")))
-(setq hl-todo-keyword-faces '(
-        ("TODO" . "#ebdbb2")
-        ("WAIT" . "#ebdbb2")
-        ("BLOG" . "#689d6a")
-        ("IDEA" . "#689d6a")
-        ("READ" . "#689d6a")
-        ("CONFIG" . "#689d6a")))
 
 (customize-set-variable 'org-capture-templates '(
       ("t" "Personal todo" entry (file+headline +org-capture-todo-file "Inbox")
        "* TODO %?\n%i\n%a" :prepend t)
-      ("n" "Personal notes" entry (file+headline +org-capture-notes-file "Inbox")
-       "* %u %?\n%i\n%a" :prepend t)
-      ("c" "Config Todo" entry (id "05774d4c-565c-4cd8-8f32-ccefe997a75a")
-       "* CONFIG %?\n%i\n%a" :prepend t)
+      ("r" "Roam Todo" entry (id "0a6e0e8a-c2e2-4d6d-ba85-066645c087ef")
+       "* TODO %?\n%i\n%a" :prepend t)
       ("j" "Journal" entry (file+olp+datetree +org-capture-journal-file)
        "* %U %?\n%i\n%a" :prepend t)
+      ("c" "Config Todo" entry (id "05774d4c-565c-4cd8-8f32-ccefe997a75a")
+       "* CONFIG %?\n%i\n%a" :prepend t)
+      ("n" "Personal notes" entry (file+headline +org-capture-notes-file "Inbox")
+       "* %u %?\n%i\n%a" :prepend t)
       ("i" "Blog Idea" entry (id "9d9237c9-e79c-465b-9c10-2d75b6b4fdb0")
        "* IDEA %u %?\n%i" :prepend t)
       ("f" "Fiction Idea" entry (id "8a5272ce-9e99-4786-b645-942c942031c8")
@@ -100,6 +95,10 @@
            :jump-to-captured t)
           ("q" "quick" plain "#+created: %u\n#+filetags: %^G\n\n%?"
            :if-new (file+head "%<%Y%m%d>-${slug}.org"
+                              "#+title: ${title}\n")
+           :unnarrowed t)
+          ("p" "python" plain "#+created: %u\n#+filetags: python\n[[id:65c3183f-70ff-4d85-a7fc-e6cd54b35306][python]]\n\n%?"
+           :if-new (file+head "python-${slug}.org"
                               "#+title: ${title}\n")
            :unnarrowed t)
           ("w" "witness" plain "#+created: %u\n#+filetags: %^G\n\n%?"
