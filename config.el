@@ -65,9 +65,7 @@
   (setq org-n-level-faces 4)
   (setq org-cycle-level-faces nil))
 
-(require 'org-superstar)
-(add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
-(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode)
+(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode)
 
 (setq org-todo-keywords '((sequence "TODO(t)" "CONFIG(c)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "READ(r)" "|" "DONE(d)" "CANCELLED(c)")))
 
