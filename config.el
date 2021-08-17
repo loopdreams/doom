@@ -51,6 +51,10 @@
  :n "<f6>" (lambda() (interactive)(find-file "~/sci/todo.org"))
  :n "<f7>" '+calendar/open-calendar)
 
+(after! org
+        (setq org-todo-keywords '((sequence "TODO(t)" "CONFIG(c)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "READ(r)" "|" "DONE(d)" "CANCELLED(c)")))
+        (setq org-superstar-headline-bullets-list '("❁" "❃" "✹" "✦") ))
+
 (add-hook! org-mode
   (setq org-hidden-keywords '(title))
   (set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default)
@@ -66,8 +70,6 @@
   (setq org-cycle-level-faces nil))
 
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode)
-
-(setq org-todo-keywords '((sequence "TODO(t)" "CONFIG(c)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "READ(r)" "|" "DONE(d)" "CANCELLED(c)")))
 
 (customize-set-variable 'org-capture-templates '(
       ("t" "Personal todo" entry (file+headline +org-capture-todo-file "Inbox")
@@ -150,11 +152,6 @@
   (setq org-roam-ui-sync-theme t
         org-roam-ui-follow t
         org-roam-ui-update-on-save t))
-
-(setq deft-extensions '("txt" "tex" "org" "md")
-      deft-directory "~/sci/notes"
-      deft-recursive t
-      deft-use-filename-as-title t)
 
 (setq-default elfeed-search-filter "@1-week-ago +unread ")
 (use-package! elfeed-org

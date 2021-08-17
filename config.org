@@ -86,6 +86,13 @@ Because home directory has .git file
  :n "<f6>" (lambda() (interactive)(find-file "~/sci/todo.org"))
  :n "<f7>" '+calendar/open-calendar)
 #+end_src
+** To-do keywords
+#+BEGIN_SRC emacs-lisp
+(after! org
+        (setq org-todo-keywords '((sequence "TODO(t)" "CONFIG(c)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "READ(r)" "|" "DONE(d)" "CANCELLED(c)")))
+        (setq org-superstar-headline-bullets-list '("❁" "❃" "✹" "✦") ))
+
+#+END_SRC
 ** Aesthetics
 Org superstar and changing height of headings
 
@@ -107,10 +114,6 @@ Seems to slow down the first time you open an org file, but then no delay.
   (setq org-cycle-level-faces nil))
 
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode)
-#+END_SRC
-** To-do keywords
-#+BEGIN_SRC emacs-lisp
-(setq org-todo-keywords '((sequence "TODO(t)" "CONFIG(c)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "READ(r)" "|" "DONE(d)" "CANCELLED(c)")))
 #+END_SRC
 ** Capture templates - Org and Org Roam
 #+begin_src emacs-lisp
@@ -213,13 +216,6 @@ See issue here: [[https://github.com/org-roam/org-roam/issues/1728][github issue
   (setq org-roam-ui-sync-theme t
         org-roam-ui-follow t
         org-roam-ui-update-on-save t))
-#+end_src
-*** Deft
-#+begin_src emacs-lisp
-(setq deft-extensions '("txt" "tex" "org" "md")
-      deft-directory "~/sci/notes"
-      deft-recursive t
-      deft-use-filename-as-title t)
 #+end_src
 * Elfeed
 #+BEGIN_SRC emacs-lisp
