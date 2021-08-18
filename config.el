@@ -53,7 +53,14 @@
 
 (after! org
         (setq org-todo-keywords '((sequence "TODO(t)" "CONFIG(c)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "READ(r)" "|" "DONE(d)" "CANCELLED(c)")))
-        (setq org-superstar-headline-bullets-list '("❁" "❃" "✹" "✦") ))
+        (setq org-superstar-headline-bullets-list '("❁" "❃" "✹" "✦"))
+        (setq org-todo-keyword-faces '(
+                                       ("TODO" . "#b16286")
+                                       ("CONFIG" . "#83a598")
+                                       ("WAIT" . "#a89984")
+                                       ("IDEA" . "#8ec07c")
+                                       ("BLOG" . "#8ec07c")
+                                       ("READ" . "#458588"))))
 
 (add-hook! org-mode
   (setq org-hidden-keywords '(title))
