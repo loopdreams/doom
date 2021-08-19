@@ -53,7 +53,15 @@
 
 (after! org
         (setq org-todo-keywords '((sequence "TODO(t)" "CONFIG(c)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "READ(r)" "|" "DONE(d)" "CANCELLED(c)")))
-        (setq org-superstar-headline-bullets-list '("❁" "❃" "✹" "✦"))
+        ;; (setq org-superstar-headline-bullets-list '("❁" "❃" "✹" "✦"))
+        (setq org-superstar-headline-bullets-list '("❁" "◉" "○" "◦"))
+        ;; (setq org-superstar-headline-bullets-list '("♠" "♥" "♦" "♣"))
+        (setq org-superstar-special-todo-items t)
+        ;; (setq org-superstar-cycle-headline-bullets nil)
+        (setq org-superstar-todo-bullet-alist '(
+                                                ("TODO" . 9744)
+                                                ("CONFIG" . 9744)
+                                                ("DONE" . 9745)))
         (setq org-todo-keyword-faces '(
                                        ("TODO" . "#b16286")
                                        ("CONFIG" . "#83a598")
