@@ -68,6 +68,7 @@
 (package! olivetti)
 (package! eww)
 (package! dashboard)
+(package! org-drill)
 (package! simple-mpc)
 (package! websocket)
 (package! org-roam-ui

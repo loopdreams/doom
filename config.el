@@ -37,7 +37,7 @@
   (setq projectile-project-root-files-bottom-up
         (remove ".git" projectile-project-root-files-bottom-up)))
 
- (setq org-directory "~/sci/"
+(setq org-directory "~/sci/"
        org-roam-directory (concat org-directory "notes/")
        org-ref-default-bibliograpy "~/sci/lib.bib"
        bibtex-completion-bibliograpy "~/sci/lib.bib")
