@@ -167,6 +167,10 @@ Seems to slow down the first time you open an org file, but then no delay.
                               "#+title: ${title}\n")
            :jump-to-captured t
            :unnarrowed t)
+          ("b" "bridge" plain "#+filetags: bridge\n\n* Question :drill:\n%?\n** Answer"
+           :if-new (file+head "bridge/${slug}.org"
+                              "#+title: ${title}\n")
+           :unnarrowed t)
           ("t" "test" plain (file "~/sci/notes/templates/test.org")
            :if-new (file+head "%<%Y%m%d>-${slug}.org"
                               "#+title: ${title}\n")

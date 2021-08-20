@@ -37,7 +37,7 @@
   (setq projectile-project-root-files-bottom-up
         (remove ".git" projectile-project-root-files-bottom-up)))
 
-(setq org-directory "~/sci/"
+ (setq org-directory "~/sci/"
        org-roam-directory (concat org-directory "notes/")
        org-ref-default-bibliograpy "~/sci/lib.bib"
        bibtex-completion-bibliograpy "~/sci/lib.bib")
@@ -120,6 +120,10 @@
            :if-new (file+head "witness_${slug}.org"
                               "#+title: ${title}\n")
            :jump-to-captured t
+           :unnarrowed t)
+          ("b" "bridge" plain "#+filetags: bridge\n\n* Question :drill:\n%?\n** Answer"
+           :if-new (file+head "bridge/${slug}.org"
+                              "#+title: ${title}\n")
            :unnarrowed t)
           ("t" "test" plain (file "~/sci/notes/templates/test.org")
            :if-new (file+head "%<%Y%m%d>-${slug}.org"
