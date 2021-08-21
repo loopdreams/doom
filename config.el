@@ -52,7 +52,7 @@
  :n "<f7>" '+calendar/open-calendar)
 
 (after! org
-        (setq org-todo-keywords '((sequence "TODO(t)" "CONFIG(c)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "READ(r)" "|" "DONE(d)" "CANCELLED(c)")))
+        (setq org-todo-keywords '((sequence "TODO(t)" "CONFIG(c)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "READ(r)" "|" "DONE(d)" "CANCELLED(n)")))
         ;; (setq org-superstar-headline-bullets-list '("❁" "❃" "✹" "✦"))
         (setq org-superstar-headline-bullets-list '("❁" "◉" "○" "◦"))
         ;; (setq org-superstar-headline-bullets-list '("♠" "♥" "♦" "♣"))

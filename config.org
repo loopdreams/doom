@@ -89,7 +89,7 @@ Because home directory has .git file
 ** To-do keywords
 #+BEGIN_SRC emacs-lisp
 (after! org
-        (setq org-todo-keywords '((sequence "TODO(t)" "CONFIG(c)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "READ(r)" "|" "DONE(d)" "CANCELLED(c)")))
+        (setq org-todo-keywords '((sequence "TODO(t)" "CONFIG(c)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "READ(r)" "|" "DONE(d)" "CANCELLED(n)")))
         ;; (setq org-superstar-headline-bullets-list '("❁" "❃" "✹" "✦"))
         (setq org-superstar-headline-bullets-list '("❁" "◉" "○" "◦"))
         ;; (setq org-superstar-headline-bullets-list '("♠" "♥" "♦" "♣"))
