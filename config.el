@@ -39,8 +39,8 @@
 
  (setq org-directory "~/sci/"
        org-roam-directory (concat org-directory "notes/")
-       org-ref-default-bibliograpy "~/sci/lib.bib"
-       bibtex-completion-bibliograpy "~/sci/lib.bib")
+       org-ref-default-bibliography "~/sci/lib.bib"
+       bibtex-completion-bibliography "~/sci/lib.bib")
 
 (setq org-roam-completion-everywhere t)
 
