@@ -27,6 +27,7 @@
 + Map J/K as gj/gk
 + open .gmi in markdown mode
 + Battery in modeline (doesn't seem to work on Asus, works on Thinkpad)
++ Elpher start page
 #+BEGIN_SRC emacs-lisp
 (setq doom-modeline-enable-word-count t)
 (display-time-mode 1)
@@ -41,6 +42,7 @@
 
 ;; (unless (string-match-p "^Power N/A" (battery))
 ;;   (display-battery-mode 1))
+(setq elpher-start-page-url "gemini://spool-five.com/feed/feed.gmi")
 
 #+END_SRC
 ** Buffer Previews

@@ -21,6 +21,7 @@
 
 ;; (unless (string-match-p "^Power N/A" (battery))
 ;;   (display-battery-mode 1))
+(setq elpher-start-page-url "gemini://spool-five.com/feed/feed.gmi")
 
 (setq evil-vsplit-window-right t
       evil-split-window-below t)
