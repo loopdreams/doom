@@ -132,7 +132,7 @@
             :unnarrowed t)))
     (setq org-roam-dailies-capture-templates
         '(("d" "default" entry "* %<%H:%M> - %?"
-            :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")))))
+            :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n [[id:477e986a-2fba-4982-8158-b309baf0b14b][Daily]]")))))
 
 (use-package! org-roam
   :init
