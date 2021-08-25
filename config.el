@@ -129,31 +129,43 @@
           ("t" "test" plain (file "~/sci/notes/templates/test.org")
            :if-new (file+head "%<%Y%m%d>-${slug}.org"
                               "#+title: ${title}\n")
-            :unnarrowed t))))
+            :unnarrowed t)))
+    (setq org-roam-dailies-capture-templates
+        '(("d" "default" entry "* %<%H:%M> - %?"
+            :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")))))
 
 (use-package! org-roam
   :init
   (setq org-roam-v2-ack t)
   (setq org-roam-graph-viewer "/usr/bin/qutebrowser")
   :config
+  (add-to-list 'display-buffer-alist
+                '("\\*org-roam\\*"
+                (display-buffer-in-side-window)
+                (side . right)
+                (slot . 0)
+                (window-width . 0.33)
+                (window-parameters . ((no-other-window . t)
+                                        (no-delete-other-windows . t)))))
   (org-roam-setup))
 
 (map! :map org-roam-mode-map
       :leader
-      "r r" 'org-roam-node-find
-      "r i" 'org-roam-node-insert
-      "r b" 'org-roam-buffer-toggle
-      "r t" 'org-roam-tag-add
-      "r c" 'orb-insert-link)
+      :prefix "r"
+      :desc "Find Note"         "r"     'org-roam-node-find
+      :desc "Insert Note"       "i"     'org-roam-node-insert
+      :desc "Toggle Buffer"     "b"     'org-roam-buffer-toggle
+      :desc "Add Tag"           "t"     'org-roam-tag-add
+      :desc "Bibtex Link"       "c"     'orb-insert-link)
+(map! :map org-roam-mode-map
+      :leader
+      :prefix "r d"
+      :desc "Daily Capture"     "c"     'org-roam-dailies-capture-today
+      :desc "Daily Find"        "f"     'org-roam-dailies-find-directory
+      :desc "Daily Today"       "t"     'org-roam-dailies-find-today
+      :desc "Daily Date"        "d"     'org-roam-dailies-goto-date)
 
-(add-to-list 'display-buffer-alist
-             '("\\*org-roam\\*"
-               (display-buffer-in-side-window)
-               (side . right)
-               (slot . 0)
-               (window-width . 0.33)
-               (window-parameters . ((no-other-window . t)
-                                     (no-delete-other-windows . t)))))
+
 
 (setq org-roam-node-display-template "${title} ${tags}")
 
