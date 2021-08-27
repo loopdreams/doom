@@ -56,6 +56,8 @@
 ; this is recommended on the org-roam-bibtex github, not sure why
 (unpin! org-roam)
 (unpin! bibtex-completion helm-bibtex ivy-bibtex)
+(package! org-pretty-table
+  :recipe (:host github :repo "Fuco1/org-pretty-table"))
 (package! elfeed-goodies)
 (package! helm-bibtex)
 (package! org-roam)

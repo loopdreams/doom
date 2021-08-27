@@ -7,10 +7,18 @@
 #+END_SRC
 
 * Font
+Line below about top padding taken from [[https://lepisma.xyz/2017/10/28/ricing-org-mode/][here]]
+#+begin_quote
+Top padding
+Similar to mode-line, Emacs also has header-line for windows. Setting its format to empty string (setq header-line-format " ") gives you top padding. Also by changing header-line face height, you can change this spacing.
+#+end_quote
+
 #+BEGIN_SRC emacs-lisp
 (setq doom-font (font-spec :family "FiraMono Nerd Font" :size 20)
-      doom-variable-pitch-font (font-spec :family "Source Sans Variable" :size 22)
+      ;; doom-variable-pitch-font (font-spec :family "Source Sans Variable" :size 22)
+      doom-variable-pitch-font (font-spec :family "ETBembo" :size 24)
       mixed-pitch-set-height 22)
+(setq line-spacing 0.1)
 
 #+END_SRC
 * Theme
@@ -93,7 +101,8 @@ Because home directory has .git file
 (after! org
         (setq org-todo-keywords '((sequence "TODO(t)" "CONFIG(c)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "READ(r)" "|" "DONE(d)" "CANCELLED(n)")))
         ;; (setq org-superstar-headline-bullets-list '("❁" "❃" "✹" "✦"))
-        (setq org-superstar-headline-bullets-list '("❁" "◉" "○" "◦"))
+        ;; (setq org-superstar-headline-bullets-list '("❁" "◉" "○" "◦"))
+        (setq org-superstar-headline-bullets-list '(" "))
         ;; (setq org-superstar-headline-bullets-list '("♠" "♥" "♦" "♣"))
         (setq org-superstar-special-todo-items t)
         ;; (setq org-superstar-cycle-headline-bullets nil)
@@ -148,7 +157,7 @@ Seems to slow down the first time you open an org file, but then no delay.
   (setq org-n-level-faces 4)
   (setq org-cycle-level-faces nil))
 
-(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode)
+(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode #'org-pretty-table-mode)
 #+END_SRC
 ** Capture templates - Org and Org Roam
 #+begin_src emacs-lisp

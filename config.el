@@ -2,8 +2,10 @@
       user-mail-address "eoin@spool-five.com")
 
 (setq doom-font (font-spec :family "FiraMono Nerd Font" :size 20)
-      doom-variable-pitch-font (font-spec :family "Source Sans Variable" :size 22)
+      ;; doom-variable-pitch-font (font-spec :family "Source Sans Variable" :size 22)
+      doom-variable-pitch-font (font-spec :family "ETBembo" :size 24)
       mixed-pitch-set-height 22)
+(setq line-spacing 0.1)
 
 ;; (setq doom-theme 'doom-miramare)
 (setq doom-theme 'doom-one)
@@ -55,7 +57,8 @@
 (after! org
         (setq org-todo-keywords '((sequence "TODO(t)" "CONFIG(c)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "READ(r)" "|" "DONE(d)" "CANCELLED(n)")))
         ;; (setq org-superstar-headline-bullets-list '("❁" "❃" "✹" "✦"))
-        (setq org-superstar-headline-bullets-list '("❁" "◉" "○" "◦"))
+        ;; (setq org-superstar-headline-bullets-list '("❁" "◉" "○" "◦"))
+        (setq org-superstar-headline-bullets-list '(" "))
         ;; (setq org-superstar-headline-bullets-list '("♠" "♥" "♦" "♣"))
         (setq org-superstar-special-todo-items t)
         ;; (setq org-superstar-cycle-headline-bullets nil)
@@ -100,7 +103,7 @@
   (setq org-n-level-faces 4)
   (setq org-cycle-level-faces nil))
 
-(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode)
+(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode #'org-pretty-table-mode)
 
 (customize-set-variable 'org-capture-templates '(
       ("t" "Personal todo" entry (file+headline +org-capture-todo-file "Inbox")
