@@ -110,6 +110,24 @@ Because home directory has .git file
                                        ("READ" . "#458588"))))
 
 #+END_SRC
+** Org Agenda
+
+#+begin_src emacs-lisp
+(setq org-agenda-custom-commands
+      '(("n" . "Custom Menu")
+        ("nr" "Roam Todos" tags-todo "roam")
+        ("nc" "Config" tags-todo "config")
+        ("nf" "Fiction" tags-todo "fiction")
+        ("N" "Custom Menu Block"
+         ((tags-todo "general")
+          (tags-todo "roam")
+          (tags-todo "config")
+          (tags-todo "fiction"))
+         nil
+          ("~/next-actions.html")) ;; exports block to this file with C-c a e
+       ;; ..other commands here
+        ))
+#+end_src
 ** Aesthetics
 Org superstar and changing height of headings
 

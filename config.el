@@ -71,6 +71,21 @@
                                        ("BLOG" . "#8ec07c")
                                        ("READ" . "#458588"))))
 
+(setq org-agenda-custom-commands
+      '(("n" . "Custom Menu")
+        ("nr" "Roam Todos" tags-todo "roam")
+        ("nc" "Config" tags-todo "config")
+        ("nf" "Fiction" tags-todo "fiction")
+        ("N" "Custom Menu Block"
+         ((tags-todo "general")
+          (tags-todo "roam")
+          (tags-todo "config")
+          (tags-todo "fiction"))
+         nil
+          ("~/next-actions.html")) ;; exports block to this file with C-c a e
+       ;; ..other commands here
+        ))
+
 (add-hook! org-mode
   (setq org-hidden-keywords '(title))
   (set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default)
