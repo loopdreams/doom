@@ -122,34 +122,34 @@
 (after! org-roam
   (setq org-roam-capture-templates
         '(("d" "default" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
-           :if-new (file+head "%<%Y%m%d>-${slug}.org"
+           :target (file+head "%<%Y%m%d>-${slug}.org"
                               "#+title: ${title}\n")
            :unnarrowed t
            :jump-to-captured t)
           ("q" "quick" plain "#+created: %u\n#+filetags: %^G\n\n%?"
-           :if-new (file+head "%<%Y%m%d>-${slug}.org"
+           :target (file+head "%<%Y%m%d>-${slug}.org"
                               "#+title: ${title}\n")
            :unnarrowed t)
           ("p" "python" plain "#+created: %u\n#+filetags: python\n[[id:65c3183f-70ff-4d85-a7fc-e6cd54b35306][python]]\n\n%?"
-           :if-new (file+head "python-${slug}.org"
+           :target (file+head "python-${slug}.org"
                               "#+title: ${title}\n")
            :unnarrowed t)
           ("w" "witness" plain "#+created: %u\n#+filetags: %^G\n\n%?"
-           :if-new (file+head "witness_${slug}.org"
+           :target (file+head "witness_${slug}.org"
                               "#+title: ${title}\n")
            :jump-to-captured t
            :unnarrowed t)
           ("b" "bridge" plain "#+filetags: bridge\n\n* Question :drill:\n%?\n** Answer"
-           :if-new (file+head "bridge/${slug}.org"
+           :target (file+head "bridge/${slug}.org"
                               "#+title: ${title}\n")
            :unnarrowed t)
           ("t" "test" plain (file "~/sci/notes/templates/test.org")
-           :if-new (file+head "%<%Y%m%d>-${slug}.org"
+           :target (file+head "%<%Y%m%d>-${slug}.org"
                               "#+title: ${title}\n")
             :unnarrowed t)))
     (setq org-roam-dailies-capture-templates
         '(("d" "default" entry "* %<%H:%M> - %?"
-            :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n [[id:477e986a-2fba-4982-8158-b309baf0b14b][Daily]]")))))
+            :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n [[id:477e986a-2fba-4982-8158-b309baf0b14b][Daily]]")))))
 
 (use-package! org-roam
   :init
@@ -183,6 +183,7 @@
       :desc "Daily Date"        "d"     'org-roam-dailies-goto-date)
 
 (setq org-roam-node-display-template "${title} ${tags}")
+(advice-remove 'org-roam-capture--get-target #'org-roam-capture--get-if-new-target-a)
 
 (use-package! org-roam-bibtex
   :after org-roam

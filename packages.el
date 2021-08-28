@@ -51,21 +51,16 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
-(package! org-roam-bibtex
-  :recipe (:host github :repo "org-roam/org-roam-bibtex"))
-; this is recommended on the org-roam-bibtex github, not sure why
-(unpin! org-roam)
-(unpin! bibtex-completion helm-bibtex ivy-bibtex)
-(package! org-pretty-table
-  :recipe (:host github :repo "Fuco1/org-pretty-table"))
-(package! elfeed-goodies)
-(package! helm-bibtex) ;this is the general name for both helm/ivy bibtex completion
-(package! org-roam)
-(package! org-ref)
+(when (featurep! :lang org +roam2)
+  (package! org-roam
+    :recipe (:host github :repo "org-roam/org-roam"
+             :files (:defaults "extensions/*")
+             :build (:not compile))))
+;; (package! org-roam)
 (package! org-superstar)
 (package! elfeed)
-(package! elpher)
 (package! elfeed-org)
+(package! elpher)
 (package! pandoc-mode)
 (package! olivetti)
 (package! eww)
@@ -76,3 +71,13 @@
 (package! org-roam-ui
   :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out")))
 ;; (package! gemini-mode)
+(package! org-roam-bibtex
+  :recipe (:host github :repo "org-roam/org-roam-bibtex"))
+; this is recommended on the org-roam-bibtex github, not sure why
+(unpin! org-roam)
+(unpin! bibtex-completion helm-bibtex ivy-bibtex)
+(package! org-pretty-table
+  :recipe (:host github :repo "Fuco1/org-pretty-table"))
+(package! elfeed-goodies)
+(package! helm-bibtex) ;this is the general name for both helm/ivy bibtex completion
+(package! org-ref)
