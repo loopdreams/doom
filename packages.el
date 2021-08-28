@@ -59,7 +59,7 @@
 (package! org-pretty-table
   :recipe (:host github :repo "Fuco1/org-pretty-table"))
 (package! elfeed-goodies)
-(package! helm-bibtex)
+(package! helm-bibtex) ;this is the general name for both helm/ivy bibtex completion
 (package! org-roam)
 (package! org-ref)
 (package! org-superstar)

@@ -4,23 +4,22 @@
 (setq doom-font (font-spec :family "FiraMono Nerd Font" :size 20)
       ;; doom-variable-pitch-font (font-spec :family "Source Sans Variable" :size 22)
       doom-variable-pitch-font (font-spec :family "ETBembo" :size 24)
-      mixed-pitch-set-height 22)
-(setq line-spacing 0.1)
+      mixed-pitch-set-height 22
+      line-spacing 0.1)
 
 ;; (setq doom-theme 'doom-miramare)
-(setq doom-theme 'doom-one)
+;; (setq doom-theme 'doom-one)
+(setq doom-theme 'doom-nord-light)
 
 (setq doom-modeline-enable-word-count t)
 (display-time-mode 1)
 (doom/set-frame-opacity 90)
 (setq display-line-numbers-type 'relative
-      scroll-margin 2)
+      scroll-margin 5)
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
 (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
-
 (add-to-list 'auto-mode-alist '("\\.gmi\\'" . markdown-mode))
 (add-hook! markdown-mode 'mixed-pitch-mode)
-
 ;; (unless (string-match-p "^Power N/A" (battery))
 ;;   (display-battery-mode 1))
 (setq elpher-start-page-url "gemini://spool-five.com/feed/feed.gmi")
@@ -182,8 +181,6 @@
       :desc "Daily Find"        "f"     'org-roam-dailies-find-directory
       :desc "Daily Today"       "t"     'org-roam-dailies-find-today
       :desc "Daily Date"        "d"     'org-roam-dailies-goto-date)
-
-
 
 (setq org-roam-node-display-template "${title} ${tags}")
 
