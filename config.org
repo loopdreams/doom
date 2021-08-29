@@ -249,9 +249,8 @@ Seems to slow down the first time you open an org file, but then no delay.
 *** TODO Temporary fix for tag display and capture templates
 See issue here: [[https://github.com/org-roam/org-roam/issues/1728][github issue]]
 This github [[https://github.com/org-roam/org-roam/issues/1814][issue]] for capture templates
-This only works if the capture templates specifiy 'target' instead of 'if-new', so I'll change them to that for now. Remeber to change them back if there is a fix...
 #+begin_src emacs-lisp
-(setq org-roam-node-display-template "${title} ${tags}")
+(setq org-roam-node-display-template "${title:*} ${tags:30}") ;the format here is $(field-name:length). Including the 'length' integer causes the alignment of the tags to the right, ommitting it leaves them on the left.
 (advice-remove 'org-roam-capture--get-target #'org-roam-capture--get-if-new-target-a)
 #+end_src
 *** Org-roam bibtex
