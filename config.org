@@ -216,17 +216,19 @@ Seems to slow down the first time you open an org file, but then no delay.
   (setq org-roam-v2-ack t)
   (setq org-roam-graph-viewer "/usr/bin/qutebrowser")
   :config
-  (add-to-list 'display-buffer-alist
-                '("\\*org-roam\\*"
-                (display-buffer-in-side-window)
-                (side . right)
-                (slot . 0)
-                (window-width . 0.33)
-                (window-parameters . ((no-other-window . t)
-                                        (no-delete-other-windows . t)))))
   (org-roam-setup))
 #+end_src
-
+*** Buffer
+#+begin_src emacs-lisp
+(add-hook! 'org-roam-mode-hook (add-to-list 'display-buffer-alist
+             '("\\*org-roam\\*"
+               (display-buffer-in-side-window)
+               (side . right)
+               (slot . 0)
+               (window-width . 0.33)
+               (window-parameters . ((no-other-window . t)
+                                     (no-delete-other-windows . t))))))
+#+end_src
 *** Keybindings
 #+begin_src emacs-lisp
 (map! :map org-roam-mode-map
@@ -246,12 +248,10 @@ Seems to slow down the first time you open an org file, but then no delay.
       :desc "Daily Date"        "d"     'org-roam-dailies-goto-date)
 #+end_src
 
-*** TODO Temporary fix for tag display and capture templates
+*** Temporary fix for tag display
 See issue here: [[https://github.com/org-roam/org-roam/issues/1728][github issue]]
-This github [[https://github.com/org-roam/org-roam/issues/1814][issue]] for capture templates
 #+begin_src emacs-lisp
 (setq org-roam-node-display-template "${title:*} ${tags:30}") ;the format here is $(field-name:length). Including the 'length' integer causes the alignment of the tags to the right, ommitting it leaves them on the left.
-(advice-remove 'org-roam-capture--get-target #'org-roam-capture--get-if-new-target-a)
 #+end_src
 *** Org-roam bibtex
 #+begin_src emacs-lisp

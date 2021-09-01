@@ -156,15 +156,16 @@
   (setq org-roam-v2-ack t)
   (setq org-roam-graph-viewer "/usr/bin/qutebrowser")
   :config
-  (add-to-list 'display-buffer-alist
-                '("\\*org-roam\\*"
-                (display-buffer-in-side-window)
-                (side . right)
-                (slot . 0)
-                (window-width . 0.33)
-                (window-parameters . ((no-other-window . t)
-                                        (no-delete-other-windows . t)))))
   (org-roam-setup))
+
+(add-hook! 'org-roam-mode-hook (add-to-list 'display-buffer-alist
+             '("\\*org-roam\\*"
+               (display-buffer-in-side-window)
+               (side . right)
+               (slot . 0)
+               (window-width . 0.33)
+               (window-parameters . ((no-other-window . t)
+                                     (no-delete-other-windows . t))))))
 
 (map! :map org-roam-mode-map
       :leader
@@ -183,7 +184,6 @@
       :desc "Daily Date"        "d"     'org-roam-dailies-goto-date)
 
 (setq org-roam-node-display-template "${title:*} ${tags:30}") ;the format here is $(field-name:length). Including the 'length' integer causes the alignment of the tags to the right, ommitting it leaves them on the left.
-(advice-remove 'org-roam-capture--get-target #'org-roam-capture--get-if-new-target-a)
 
 (use-package! org-roam-bibtex
   :after org-roam
