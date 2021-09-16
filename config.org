@@ -219,6 +219,7 @@ Seems to slow down the first time you open an org file, but then no delay.
   (org-roam-setup))
 #+end_src
 *** Buffer
+Adding the hook seems to fix the problem of the buffer not loading in the right place on start-up. It still doesn't load properly the first time you open a roam file, but does so on the second file (good enough for now).
 #+begin_src emacs-lisp
 (add-hook! 'org-roam-mode-hook (add-to-list 'display-buffer-alist
              '("\\*org-roam\\*"
