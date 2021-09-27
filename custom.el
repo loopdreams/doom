@@ -22,7 +22,7 @@
  '(jdee-db-spec-breakpoint-face-colors (cons "#1B2229" "#3f444a"))
  '(objed-cursor-color "#ff6c6b")
  '(org-agenda-files
-   '("/home/eoin/sci/notes/blognotes.org" "/home/eoin/sci/notes/storynotes.org" "/home/eoin/sci/notes/korea_september_trip.org" "/home/eoin/sci/notes/reading_notes.org" "/home/eoin/sci/todo.org" "/home/eoin/sci/archive.org" "/home/eoin/sci/notes/travelling_home.org" "/home/eoin/sci/recurring_todo.org" "/home/eoin/sci/notes/20210616194744-index.org" "/home/eoin/sci/journal.org"))
+   '("~/sci/subscriptions.org" "/home/eoin/sci/notes/birthdays_holidays.org" "/home/eoin/sci/notes/blognotes.org" "/home/eoin/sci/notes/storynotes.org" "/home/eoin/sci/notes/korea_september_trip.org" "/home/eoin/sci/notes/reading_notes.org" "/home/eoin/sci/todo.org" "/home/eoin/sci/archive.org" "/home/eoin/sci/notes/travelling_home.org" "/home/eoin/sci/recurring_todo.org" "/home/eoin/sci/notes/20210616194744-index.org"))
  '(org-capture-templates
    '(("t" "Personal todo" entry
       (file+headline +org-capture-todo-file "Inbox")
@@ -60,6 +60,8 @@
  '(pdf-view-midnight-colors (cons "#bbc2cf" "#282c34"))
  '(rustic-ansi-faces
    ["#282c34" "#ff6c6b" "#98be65" "#ECBE7B" "#51afef" "#c678dd" "#46D9FF" "#bbc2cf"])
+ '(smtpmail-smtp-server "mail.spool-five.com")
+ '(smtpmail-smtp-service 25)
  '(vc-annotate-background "#282c34")
  '(vc-annotate-color-map
    (list

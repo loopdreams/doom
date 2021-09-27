@@ -1,9 +1,11 @@
 (setq user-full-name "Eoin Carney"
       user-mail-address "eoin@spool-five.com")
 
-(setq doom-font (font-spec :family "FiraMono Nerd Font" :size 20)
+(setq doom-font (font-spec :family "Go Mono" :size 22)
+      ;; doom-font (font-spec :family "FiraMono Nerd Font" :size 22)
       ;; doom-variable-pitch-font (font-spec :family "Source Sans Variable" :size 22)
       doom-variable-pitch-font (font-spec :family "ETBembo" :size 24)
+      ;; doom-variable-pitch-font (font-spec :family "Go" :size 24)
       mixed-pitch-set-height 22
       line-spacing 0.1)
 
@@ -34,10 +36,6 @@
 (setq browse-url-generic-program "/usr/bin/qutebrowser")
 (setq browse-url-browser-function 'browse-url-generic)
 (setq gnutls-verify-error 'nil)
-
-(after! projectile
-  (setq projectile-project-root-files-bottom-up
-        (remove ".git" projectile-project-root-files-bottom-up)))
 
  (setq org-directory "~/sci/"
        org-roam-directory (concat org-directory "notes/")
@@ -238,11 +236,18 @@
 (custom-set-faces!
   '(doom-dashboard-banner :foreground "slategray"))
 
-(setq sendmail-program "/usr/bin/msmtp"
-      send-mail-function 'smtpmail-send-it
-      message-sendmail-f-is-evil t
-      message-sendmail-extra-arguments '("--read-envelope-from")
-      message-send-mail-function 'message-send-mail-with-sendmail)
+(setq
+ mu4e-get-mail-command "mbsync website"  ;; or fetchmail, or ...
+ mu4e-update-interval 300
+ mu4e-headers-auto-update t
+ )
+(setq message-send-mail-function 'message-send-mail-with-sendmail)
+(setq sendmail-program "/usr/bin/msmtp")
+;; (setq sendmail-program "/usr/bin/msmtp"
+;;       send-mail-function 'smtpmail-send-it
+;;       message-sendmail-f-is-evil t
+;;       message-sendmail-extra-arguments '("--read-envelope-from")
+;;       message-send-mail-function 'message-send-mail-with-sendmail)
 
 (defcustom centered-point-position 0.45
   "Percentage of screen where `centered-point-mode' keeps point."

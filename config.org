@@ -1,4 +1,5 @@
 #+TITLE: Emacs Config
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 
 * Personal Information
 #+BEGIN_SRC emacs-lisp
@@ -14,9 +15,11 @@ Similar to mode-line, Emacs also has header-line for windows. Setting its format
 #+end_quote
 
 #+BEGIN_SRC emacs-lisp
-(setq doom-font (font-spec :family "FiraMono Nerd Font" :size 20)
+(setq doom-font (font-spec :family "Go Mono" :size 22)
+      ;; doom-font (font-spec :family "FiraMono Nerd Font" :size 22)
       ;; doom-variable-pitch-font (font-spec :family "Source Sans Variable" :size 22)
       doom-variable-pitch-font (font-spec :family "ETBembo" :size 24)
+      ;; doom-variable-pitch-font (font-spec :family "Go" :size 24)
       mixed-pitch-set-height 22
       line-spacing 0.1)
 #+END_SRC
@@ -68,13 +71,6 @@ Set qutebrowser as default and fix for elpher browsing Gemini
 (setq browse-url-generic-program "/usr/bin/qutebrowser")
 (setq browse-url-browser-function 'browse-url-generic)
 (setq gnutls-verify-error 'nil)
-#+end_src
-** Projectile Fix
-Because home directory has .git file
-#+begin_src emacs-lisp
-(after! projectile
-  (setq projectile-project-root-files-bottom-up
-        (remove ".git" projectile-project-root-files-bottom-up)))
 #+end_src
 * Org
 ** Directories
@@ -322,12 +318,20 @@ See issue here: [[https://github.com/org-roam/org-roam/issues/1728][github issue
 
 * Mail
 Outgoing mail settings. Set to use msmtp.
+** TODO sending mail is broken, not sure what to do with it at the moment. I can send from other clients (mutt) which use the same msmtp settings, but not from here...
 #+BEGIN_SRC emacs-lisp
-(setq sendmail-program "/usr/bin/msmtp"
-      send-mail-function 'smtpmail-send-it
-      message-sendmail-f-is-evil t
-      message-sendmail-extra-arguments '("--read-envelope-from")
-      message-send-mail-function 'message-send-mail-with-sendmail)
+(setq
+ mu4e-get-mail-command "mbsync website"  ;; or fetchmail, or ...
+ mu4e-update-interval 300
+ mu4e-headers-auto-update t
+ )
+(setq message-send-mail-function 'message-send-mail-with-sendmail)
+(setq sendmail-program "/usr/bin/msmtp")
+;; (setq sendmail-program "/usr/bin/msmtp"
+;;       send-mail-function 'smtpmail-send-it
+;;       message-sendmail-f-is-evil t
+;;       message-sendmail-extra-arguments '("--read-envelope-from")
+;;       message-send-mail-function 'message-send-mail-with-sendmail)
 #+END_SRC
 
 * Writing mode
