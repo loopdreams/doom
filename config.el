@@ -1,21 +1,22 @@
 (setq user-full-name "Eoin Carney"
       user-mail-address "eoin@spool-five.com")
 
-(setq doom-font (font-spec :family "Go Mono" :size 22)
+(setq doom-font (font-spec :family "Go Mono" :size 16)
       ;; doom-font (font-spec :family "FiraMono Nerd Font" :size 22)
       ;; doom-variable-pitch-font (font-spec :family "Source Sans Variable" :size 22)
-      doom-variable-pitch-font (font-spec :family "ETBembo" :size 24)
+      doom-variable-pitch-font (font-spec :family "ETBembo" :size 20)
       ;; doom-variable-pitch-font (font-spec :family "Go" :size 24)
-      mixed-pitch-set-height 22
+      mixed-pitch-set-height 20
       line-spacing 0.1)
 
 ;; (setq doom-theme 'doom-miramare)
 ;; (setq doom-theme 'doom-one)
-(setq doom-theme 'doom-nord-light)
+;; (setq doom-theme 'doom-nord-light)
+(setq doom-theme 'doom-gruvbox)
 
 (setq doom-modeline-enable-word-count t)
 (display-time-mode 1)
-(doom/set-frame-opacity 90)
+;; (doom/set-frame-opacity 90)
 (setq display-line-numbers-type 'relative
       scroll-margin 5)
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
@@ -25,6 +26,7 @@
 ;; (unless (string-match-p "^Power N/A" (battery))
 ;;   (display-battery-mode 1))
 (setq elpher-start-page-url "gemini://spool-five.com/feed/feed.gmi")
+(map! :n "SPC o t" 'eshell)
 
 (setq evil-vsplit-window-right t
       evil-split-window-below t)
@@ -285,4 +287,5 @@
     "t o" 'olivetti-mode)
 
 (add-hook! (writeroom-mode olivetti-mode) 'centered-point-mode-on)
+;; (add-hook! 'writeroom-mode-enable-hook '(lambda () (display-line-numbers-mode -1)))
 (remove-hook! (writeroom-mode) #'+zen-enable-mixed-pitch-mode-h) ;; added this since mixed-pitch is defaul on most 'writing' files (org, md). Otherwise, when exiting writeroom mode, font switched back to fixed-pitch
