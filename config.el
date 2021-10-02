@@ -64,7 +64,7 @@
         (setq org-superstar-todo-bullet-alist '(
                                                 ("TODO" . 9744)
                                                 ("CONFIG" . 9744)
-                                                ("DONE" . 9745)))
+                                                ("DONE" . 9747)))
         (setq org-todo-keyword-faces '(
                                        ("TODO" . "#b16286")
                                        ("CONFIG" . "#83a598")
