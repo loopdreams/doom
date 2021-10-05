@@ -90,7 +90,7 @@ Set qutebrowser as default and fix for elpher browsing Gemini
 #+begin_src emacs-lisp
 (map!
  :n "<f5>" 'org-agenda-list
- :n "<f6>" (lambda() (interactive)(find-file "~/sci/todo.org"))
+ :n "<f6>" (lambda() (interactive)(find-file (concat org-directory "todo.org")))
  :n "<f7>" '+calendar/open-calendar)
 #+end_src
 ** To-do keywords

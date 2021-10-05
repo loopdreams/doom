@@ -39,7 +39,7 @@
 (setq browse-url-browser-function 'browse-url-generic)
 (setq gnutls-verify-error 'nil)
 
- (setq org-directory "~/Dropbox/sci/"
+(setq org-directory "~/Dropbox/sci/"
        org-roam-directory (concat org-directory "notes/")
        org-ref-default-bibliography (concat org-directory "lib.bib")
        bibtex-completion-bibliography (concat org-directory "lib.bib"))
@@ -50,7 +50,7 @@
 
 (map!
  :n "<f5>" 'org-agenda-list
- :n "<f6>" (lambda() (interactive)(find-file "~/sci/todo.org"))
+ :n "<f6>" (lambda() (interactive)(find-file (concat org-directory "todo.org")))
  :n "<f7>" '+calendar/open-calendar)
 
 (after! org
