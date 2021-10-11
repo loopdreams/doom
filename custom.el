@@ -22,7 +22,7 @@
  '(jdee-db-spec-breakpoint-face-colors (cons "#1B2229" "#3f444a"))
  '(objed-cursor-color "#ff6c6b")
  '(org-agenda-files
-   '("~/Dropbox/sci/subscriptions.org" "/home/eoin/Dropbox/sci/notes/blognotes.org" "/home/eoin/Dropbox/sci/notes/reading_notes.org" "/home/eoin/Dropbox/sci/notes/storynotes.org" "/home/eoin/Dropbox/sci/notes/20210616194744-index.org" "/home/eoin/Dropbox/sci/archive.org" "/home/eoin/Dropbox/sci/recurring_todo.org" "/home/eoin/Dropbox/sci/notes/20211003-administrative_office_application.org" "/home/eoin/Dropbox/sci/notes/20211005-comptia_aplus.org" "/home/eoin/Dropbox/sci/todo.org"))
+   '("~/Dropbox/sci/notes/20211011-arch_linux.org" "/home/eoin/Dropbox/sci/notes/20211011-comptia_core1.org" "/home/eoin/Dropbox/sci/subscriptions.org" "/home/eoin/Dropbox/sci/notes/blognotes.org" "/home/eoin/Dropbox/sci/notes/reading_notes.org" "/home/eoin/Dropbox/sci/notes/storynotes.org" "/home/eoin/Dropbox/sci/notes/20210616194744-index.org" "/home/eoin/Dropbox/sci/archive.org" "/home/eoin/Dropbox/sci/recurring_todo.org" "/home/eoin/Dropbox/sci/notes/20211003-administrative_office_application.org" "/home/eoin/Dropbox/sci/notes/20211005-comptia_aplus.org" "/home/eoin/Dropbox/sci/todo.org"))
  '(org-capture-templates
    '(("t" "Personal todo" entry
       (file+headline +org-capture-todo-file "Inbox")
