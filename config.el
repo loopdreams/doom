@@ -1,8 +1,8 @@
 (setq user-full-name "Eoin Carney"
       user-mail-address "eoin@spool-five.com")
 
-(setq doom-font (font-spec :family "FuraMono Nerd Font" :size 16)
-      ;; (font-spec :family "GoMono Nerd Font Mono" :size 16)
+(setq doom-font (font-spec :family "GoMono Nerd Font" :size 16)
+      ;; (font-spec :family "FuraMono Nerd Font" :size 16)
       ;; doom-font (font-spec :family "FiraMono Nerd Font" :size 22)
       ;; doom-variable-pitch-font (font-spec :family "Source Sans Variable" :size 22)
       doom-variable-pitch-font (font-spec :family "ETBembo" :size 20)
@@ -40,12 +40,12 @@
 (setq browse-url-browser-function 'browse-url-generic)
 (setq gnutls-verify-error 'nil)
 
-(setq org-directory "~/Dropbox/sci/"
+ (setq org-directory "~/Dropbox/sci/"
        org-roam-directory (concat org-directory "notes/")
        org-ref-default-bibliography (concat org-directory "lib.bib")
        bibtex-completion-bibliography (concat org-directory "lib.bib"))
 
-;; (setq org-roam-completion-everywhere t)
+(setq org-roam-completion-everywhere t)
 
 (add-to-list 'org-modules 'org-id)
 
@@ -56,9 +56,9 @@
 
 (after! org
         (setq org-todo-keywords '((sequence "TODO(t)" "CONFIG(c)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "READ(r)" "|" "DONE(d)" "CANCELLED(n)")))
-        ;; (setq org-superstar-headline-bullets-list '("❁" "❃" "✹" "✦"))
+        (setq org-superstar-headline-bullets-list '("❁" "❃" "✹" "✦"))
         ;; (setq org-superstar-headline-bullets-list '("❁" "◉" "○" "◦"))
-        (setq org-superstar-headline-bullets-list '(" "))
+        ;; (setq org-superstar-headline-bullets-list '(" "))
         ;; (setq org-superstar-headline-bullets-list '("♠" "♥" "♦" "♣"))
         (setq org-superstar-special-todo-items t)
         ;; (setq org-superstar-cycle-headline-bullets nil)
@@ -89,21 +89,21 @@
        ;; ..other commands here
         ))
 
-;; (add-hook! org-mode
-;;   (setq org-hidden-keywords '(title))
-;;   (set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default)
-;;   (set-face-attribute 'org-level-7 nil :inherit 'org-level-8)
-;;   (set-face-attribute 'org-level-6 nil :inherit 'org-level-8)
-;;   (set-face-attribute 'org-level-5 nil :inherit 'org-level-8)
-;;   (set-face-attribute 'org-level-4 nil :inherit 'org-level-8)
-;;   (set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.02)
-;;   (set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.07)
-;;   (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.258)
-;;   (set-face-attribute 'org-document-title nil :inherit 'org-level-8 :height 2.01 :foreground 'unspecified)
-;;   (setq org-n-level-faces 4)
-;;   (setq org-cycle-level-faces nil))
+(add-hook! org-mode
+  (setq org-hidden-keywords '(title))
+  (set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default)
+  (set-face-attribute 'org-level-7 nil :inherit 'org-level-8)
+  (set-face-attribute 'org-level-6 nil :inherit 'org-level-8)
+  (set-face-attribute 'org-level-5 nil :inherit 'org-level-8)
+  (set-face-attribute 'org-level-4 nil :inherit 'org-level-8)
+  (set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.02)
+  (set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.07)
+  (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.258)
+  (set-face-attribute 'org-document-title nil :inherit 'org-level-8 :height 2.01 :foreground 'unspecified)
+  (setq org-n-level-faces 4)
+  (setq org-cycle-level-faces nil))
 
-;; (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode #'org-pretty-table-mode)
+(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode #'org-pretty-table-mode)
 
 (customize-set-variable 'org-capture-templates '(
       ("t" "Personal todo" entry (file+headline +org-capture-todo-file "Inbox")

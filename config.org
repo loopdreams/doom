@@ -1,14 +1,6 @@
 #+TITLE: Emacs Config
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 
-* Note
-I've turned off some things to try get better performance with large org files:
-- word-count in modeline
-- org-roam completion everywhere
-- The entire 'aesthetics' block (including org-superstar, mixed-pitch, etc.)
-
-Result: improved performance a lot!! Next, will have to try turning things back on one by one, to see what was the culprit...
-** TODO find what is slowing org mode
 * Personal Information
 #+BEGIN_SRC emacs-lisp
 (setq user-full-name "Eoin Carney"
@@ -23,8 +15,8 @@ Similar to mode-line, Emacs also has header-line for windows. Setting its format
 #+end_quote
 
 #+BEGIN_SRC emacs-lisp
-(setq doom-font (font-spec :family "FuraMono Nerd Font" :size 16)
-      ;; (font-spec :family "GoMono Nerd Font Mono" :size 16)
+(setq doom-font (font-spec :family "GoMono Nerd Font" :size 16)
+      ;; (font-spec :family "FuraMono Nerd Font" :size 16)
       ;; doom-font (font-spec :family "FiraMono Nerd Font" :size 22)
       ;; doom-variable-pitch-font (font-spec :family "Source Sans Variable" :size 22)
       doom-variable-pitch-font (font-spec :family "ETBembo" :size 20)
@@ -41,7 +33,7 @@ Similar to mode-line, Emacs also has header-line for windows. Setting its format
 #+END_SRC
 * General Settings
 ** Misc
-+ Modeline word count
++ Modeline word count - DISABLED - slows down org significantly in larger files
 + Time in modeline
 + Set opacity here so it works with Xcompmgr
 + Relative line numbers
@@ -91,7 +83,7 @@ Set qutebrowser as default and fix for elpher browsing Gemini
        org-ref-default-bibliography (concat org-directory "lib.bib")
        bibtex-completion-bibliography (concat org-directory "lib.bib"))
 
-;; (setq org-roam-completion-everywhere t)
+(setq org-roam-completion-everywhere t)
 
 (add-to-list 'org-modules 'org-id)
 #+END_SRC
@@ -106,9 +98,9 @@ Set qutebrowser as default and fix for elpher browsing Gemini
 #+BEGIN_SRC emacs-lisp
 (after! org
         (setq org-todo-keywords '((sequence "TODO(t)" "CONFIG(c)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "READ(r)" "|" "DONE(d)" "CANCELLED(n)")))
-        ;; (setq org-superstar-headline-bullets-list '("❁" "❃" "✹" "✦"))
+        (setq org-superstar-headline-bullets-list '("❁" "❃" "✹" "✦"))
         ;; (setq org-superstar-headline-bullets-list '("❁" "◉" "○" "◦"))
-        (setq org-superstar-headline-bullets-list '(" "))
+        ;; (setq org-superstar-headline-bullets-list '(" "))
         ;; (setq org-superstar-headline-bullets-list '("♠" "♥" "♦" "♣"))
         (setq org-superstar-special-todo-items t)
         ;; (setq org-superstar-cycle-headline-bullets nil)
@@ -149,21 +141,21 @@ Org superstar and changing height of headings
 The =add-hook!= used to be =after! org= but the title never loaded properly. The add hook seems to fix it, but I should still look into a better way to do it...
 Seems to slow down the first time you open an org file, but then no delay.
 #+BEGIN_SRC emacs-lisp
-;; (add-hook! org-mode
-;;   (setq org-hidden-keywords '(title))
-;;   (set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default)
-;;   (set-face-attribute 'org-level-7 nil :inherit 'org-level-8)
-;;   (set-face-attribute 'org-level-6 nil :inherit 'org-level-8)
-;;   (set-face-attribute 'org-level-5 nil :inherit 'org-level-8)
-;;   (set-face-attribute 'org-level-4 nil :inherit 'org-level-8)
-;;   (set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.02)
-;;   (set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.07)
-;;   (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.258)
-;;   (set-face-attribute 'org-document-title nil :inherit 'org-level-8 :height 2.01 :foreground 'unspecified)
-;;   (setq org-n-level-faces 4)
-;;   (setq org-cycle-level-faces nil))
+(add-hook! org-mode
+  (setq org-hidden-keywords '(title))
+  (set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default)
+  (set-face-attribute 'org-level-7 nil :inherit 'org-level-8)
+  (set-face-attribute 'org-level-6 nil :inherit 'org-level-8)
+  (set-face-attribute 'org-level-5 nil :inherit 'org-level-8)
+  (set-face-attribute 'org-level-4 nil :inherit 'org-level-8)
+  (set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.02)
+  (set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.07)
+  (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.258)
+  (set-face-attribute 'org-document-title nil :inherit 'org-level-8 :height 2.01 :foreground 'unspecified)
+  (setq org-n-level-faces 4)
+  (setq org-cycle-level-faces nil))
 
-;; (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode #'org-pretty-table-mode)
+(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode #'org-pretty-table-mode)
 
 #+END_SRC
 ** Capture templates - Org and Org Roam

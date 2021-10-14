@@ -51,6 +51,7 @@
 *** https://nightafternight.substack.com/feed
 *** http://radiofrance-podcast.net/podcast09/rss_18081.xml
 ** Tech :tech:
+*** https://ogbe.net/blog.xml
 *** https://www.archlinux.org/feeds/news/
 *** https://feeds.feedburner.com/arstechnica/index/
 *** https://solar.lowtechmagazine.com/feeds/all-en.atom.xml
