@@ -86,6 +86,7 @@ Set qutebrowser as default and fix for elpher browsing Gemini
 (setq org-roam-completion-everywhere t)
 
 (add-to-list 'org-modules 'org-id)
+(require 'ox-gemini)
 #+END_SRC
 ** Extra keybindings
 #+begin_src emacs-lisp
