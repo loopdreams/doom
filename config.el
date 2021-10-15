@@ -48,6 +48,7 @@
 (setq org-roam-completion-everywhere t)
 
 (add-to-list 'org-modules 'org-id)
+(require 'ox-gemini)
 
 (map!
  :n "<f5>" 'org-agenda-list
