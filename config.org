@@ -91,14 +91,26 @@ Set qutebrowser as default and fix for elpher browsing Gemini
 ** Extra keybindings
 #+begin_src emacs-lisp
 (map!
- :n "<f5>" 'org-agenda-list
+ :n "<f5>" 'org-agenda
  :n "<f6>" (lambda() (interactive)(find-file (concat org-directory "todo.org")))
  :n "<f7>" '+calendar/open-calendar)
 #+end_src
 ** To-do keywords
 #+BEGIN_SRC emacs-lisp
 (after! org
-        (setq org-todo-keywords '((sequence "TODO(t)" "CONFIG(c)" "WAIT(w)" "IDEA(i)" "BLOG(b)" "READ(r)" "|" "DONE(d)" "CANCELLED(n)")))
+        (setq org-todo-keywords
+              '((sequence "TODO(t)"
+                          "PROJ(p)"
+                          "NEXT(n)"
+                          "WAIT(w)"
+                          "SOMEDAY(s)"
+                          "RLX(r)"
+                          "BRIDGE"
+                          "STUCK(x)"
+                          "BUY(b)"
+                          "|"
+                          "DONE(d)"
+                          "CANCELLED(n)")))
         (setq org-superstar-headline-bullets-list '("❁" "❃" "✹" "✦"))
         ;; (setq org-superstar-headline-bullets-list '("❁" "◉" "○" "◦"))
         ;; (setq org-superstar-headline-bullets-list '(" "))
@@ -107,34 +119,53 @@ Set qutebrowser as default and fix for elpher browsing Gemini
         ;; (setq org-superstar-cycle-headline-bullets nil)
         (setq org-superstar-todo-bullet-alist '(
                                                 ("TODO" . 9744)
+                                                ("NEXT" . 9744)
                                                 ("CONFIG" . 9744)
                                                 ("DONE" . 9747)))
         (setq org-todo-keyword-faces '(
                                        ("TODO" . "#b16286")
-                                       ("CONFIG" . "#83a598")
+                                       ("PROJ" . "#83a598")
                                        ("WAIT" . "#a89984")
-                                       ("IDEA" . "#8ec07c")
-                                       ("BLOG" . "#8ec07c")
-                                       ("READ" . "#458588"))))
+                                       ("SOMEDAY" . "#8ec07c"))))
 
 #+END_SRC
 ** Org Agenda
+#+begin_src emacs-lisp
+(setq gtd/next-action-head "Next actions:"
+      gtd/waiting-head "Waiting on:"
+      gtd/project-head "Projects:"
+      gtd/shop-head "Shopping:"
+      gtd/someday-head "Someday/maybe:")
+
+(setq org-agenda-custom-commands
+      '(
+        ("g" "GTD view"
+         ((agenda "" ((org-agenda-span 'day)
+                      (org-agenda-start-day 'nil))) ;; this is needed because doom starts agenda with day set to -3d
+          (todo "NEXT" ((org-agenda-overriding-header gtd/next-action-head)))
+          (todo "WAIT" ((org-agenda-overriding-header gtd/waiting-head)))
+          (todo "PROJ" ((org-agenda-overriding-header gtd/project-head)))
+          (todo "BUY"  ((org-agenda-overriding-header gtd/shop-head)))
+          (todo "SOMEDAY" ((org-agenda-overriding-header gtd/someday-head)))
+        ))))
+
+#+end_src
 
 #+begin_src emacs-lisp
-(setq org-agenda-custom-commands
-      '(("n" . "Custom Menu")
-        ("nr" "Roam Todos" tags-todo "roam")
-        ("nc" "Config" tags-todo "config")
-        ("nf" "Fiction" tags-todo "fiction")
-        ("N" "Custom Menu Block"
-         ((tags-todo "general")
-          (tags-todo "roam")
-          (tags-todo "config")
-          (tags-todo "fiction"))
-         nil
-          ("~/next-actions.html")) ;; exports block to this file with C-c a e
-       ;; ..other commands here
-        ))
+;; (setq org-agenda-custom-commands
+;;       '(("n" . "Custom Menu")
+;;         ("nr" "Roam Todos" tags-todo "roam")
+;;         ("nc" "Config" tags-todo "config")
+;;         ("nf" "Fiction" tags-todo "fiction")
+;;         ("N" "Custom Menu Block"
+;;          ((tags-todo "general")
+;;           (tags-todo "roam")
+;;           (tags-todo "config")
+;;           (tags-todo "fiction"))
+;;          nil
+;;           ("~/next-actions.html")) ;; exports block to this file with C-c a e
+;;        ;; ..other commands here
+;;         ))
 #+end_src
 ** Aesthetics
 Org superstar and changing height of headings
@@ -164,6 +195,8 @@ Seems to slow down the first time you open an org file, but then no delay.
 (customize-set-variable 'org-capture-templates '(
       ("t" "Personal todo" entry (file+headline +org-capture-todo-file "Inbox")
        "* TODO %?\n%i\n%a" :prepend t)
+      ("a" "Next Action" entry (id "cd9ffc7d-d197-4521-b74d-4b1f93b301ca")
+       "* NEXT %?\n%i\n%a" :prepend t)
       ("r" "Roam Todo" entry (id "0a6e0e8a-c2e2-4d6d-ba85-066645c087ef")
        "* TODO %?\n%i\n%a" :prepend t)
       ("j" "Journal" entry (file+olp+datetree +org-capture-journal-file)
@@ -384,3 +417,153 @@ Outgoing mail settings. Set to use msmtp.
 (remove-hook! (writeroom-mode) #'+zen-enable-mixed-pitch-mode-h) ;; added this since mixed-pitch is defaul on most 'writing' files (org, md). Otherwise, when exiting writeroom mode, font switched back to fixed-pitch
 
 #+END_SRC
+* Blog
+Work-in-progress
+**  Load the publishing system
+#+begin_src emacs-lisp
+(require 'ox-publish)
+(require 'ox-rss)
+#+end_src
+
+** Custom functions
+*** Set Directories
+#+begin_src emacs-lisp
+(setq my-blog-org-directory "~/Dropbox/blog/org-web/")
+(setq my-blog-pub-directory "~/Dropbox/blog/public_html/")
+;; remove validation link
+(setq org-html-validation-link nil)
+#+end_src
+*** header/footer
+#+begin_src emacs-lisp
+(setq my-pages-header-file (concat my-blog-org-directory "templates/header.html"))
+(defun my-pages-header (arg)
+  (with-temp-buffer
+    (insert-file-contents my-pages-header-file)
+    (buffer-string)))
+(setq my-pages-footer-file (concat my-blog-org-directory "templates/footer.html"))
+(defun my-pages-footer (arg)
+  (with-temp-buffer
+    (insert-file-contents my-pages-footer-file)
+    (buffer-string)))
+(setq my-blog-header-file (concat my-blog-org-directory "blog/templates/header.html"))
+(defun my-blog-header (arg)
+  (with-temp-buffer
+    (insert-file-contents my-blog-header-file)
+    (buffer-string)))
+(setq my-blog-footer-file (concat my-blog-org-directory "blog/templates/footer.html"))
+(defun my-blog-footer (arg)
+  (with-temp-buffer
+    (insert-file-contents my-blog-footer-file)
+    (buffer-string)))
+#+end_src
+*** sitemap entry
+#+begin_src emacs-lisp
+(defun my-sitemap-format-entry (entry style project)
+  (format "%s - [[file:%s][%s]] (%s)"
+  (format-time-string "%Y-%m-%d" (org-publish-find-date entry project))
+  entry
+  (org-publish-find-title entry project)
+  (org-find-category
+   (expand-file-name entry (plist-get (cdr project) :base-directory)))))
+
+(defun org-find-category (file)
+  (with-temp-buffer
+    (message file)
+    (insert-file-contents file)
+    (goto-char (point-min))
+    (let ((beg (+ 1 (re-search-forward "^#\\+category\:")))
+  (end (progn (forward-word) (point))))
+      (buffer-substring beg end))))
+
+
+#+end_src
+*** TODO preview feature
+
+
+*** Define the publishing project
+
+#+begin_src emacs-lisp
+(setq org-publish-project-alist
+      '(
+       ("site" :components ("blog" "pages" "attachments"))
+       ("blog"
+        :recursive t
+        :base-directory "~/Dropbox/blog/org-web/blog"
+        :base-extension "org"
+        :publishing-directory "~/Dropbox/blog/public_html/blog"
+        :publishing-function org-html-publish-to-html
+
+        :with-author nil
+        :with-creator nil
+        :with-date nil
+
+        :with-toc nil
+        :section-numbers nil
+        :htmlized t ;; for exporting code blocks to html
+
+        :html-head nil
+        :html-head-extra "<link rel='stylesheet' href='../style.css' />"
+        :html-head-include-default-style nil
+        :html-head-include-scripts nil
+        :html-viewport nil
+
+        :html-preamble my-blog-header
+        :html-postamble my-blog-footer
+
+        :auto-sitemap t
+        :sitemap-sort-files anti-chronologically
+        :sitemap-format-entry my-sitemap-format-entry
+        :sitemap-filename "blog.org"
+        :sitemap-title "Blog")
+       ("pages"
+        :base-directory "~/Dropbox/blog/org-web/"
+        :base-extension "org"
+        :publishing-directory "~/Dropbox/blog/public_html/"
+        :publishing-function org-html-publish-to-html
+
+        :with-author nil
+        :with-creator nil
+        :with-date nil
+
+        :with-toc nil
+        :section-numbers nil
+
+        :html-head nil
+        :html-head-extra "<link rel='stylesheet' href='./style.css' />"
+        :html-head-include-default-style nil
+        :html-head-include-scripts nil
+        :html-viewport nil
+
+        :html-preamble my-pages-header
+        :html-postamble my-pages-footer)
+
+       ("attachments"
+        :base-directory "~/Dropbox/blog/org-web"
+        :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+        :publishing-directory "~/Dropbox/blog/public_html"
+       :recursive t
+        :publishing-function org-publish-attachment)
+       ("rss"
+        :base-directory "~/Dropbox/blog/org-web/blog"
+        :base-extension "org"
+        :publishing-directory "~/Dropbox/blog/public_html"
+        :publishing-function org-rss-publish-to-rss
+
+        :html-link-home "https://spool-five.com"
+        :html-link-use-abs-url t
+
+        :title "Spool Five"
+        :section-numbers nil
+        :table-of-contents nil)
+       ("gemini"
+        :base-directory "~/Dropbox/blog/org-web/blog"
+        :base-extension "org"
+        :publishing-directory "~/Dropbox/blog/public_html/gemini"
+        :publishing-function org-gemini-publish-to-gemini
+        :auto-sitemap t
+        :sitemap-sort-files anti-chronologically
+        :sitemap-filename "gemini.org"
+        :sitemap-title "Gemlog")))
+
+
+#+end_src
