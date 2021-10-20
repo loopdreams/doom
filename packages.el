@@ -82,3 +82,4 @@
 (package! helm-bibtex) ;this is the general name for both helm/ivy bibtex completion
 (package! org-ref)
 (package! ox-gemini)
+(package! ox-rss)
