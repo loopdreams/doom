@@ -40,7 +40,7 @@
 (setq browse-url-browser-function 'browse-url-generic)
 (setq gnutls-verify-error 'nil)
 
-(setq org-directory "~/Dropbox/sci/"
+ (setq org-directory "~/Dropbox/sci/"
        org-roam-directory (concat org-directory "notes/")
        org-ref-default-bibliography (concat org-directory "lib.bib")
        bibtex-completion-bibliography (concat org-directory "lib.bib"))
@@ -136,22 +136,20 @@
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode #'org-pretty-table-mode)
 
 (customize-set-variable 'org-capture-templates '(
-      ("t" "Personal todo" entry (file+headline +org-capture-todo-file "Inbox")
+      ("i" "Inbox (Store Link)" entry (file+headline +org-capture-todo-file "Inbox")
        "* TODO %?\n%i\n%a" :prepend t)
+      ("o" "Inbox (No Link)" entry (file+headline +org-capture-todo-file "Inbox")
+       "* TODO %?\n%i" :prepend t)
       ("a" "Next Action" entry (id "cd9ffc7d-d197-4521-b74d-4b1f93b301ca")
        "* NEXT %?\n%i\n%a" :prepend t)
-      ("r" "Roam Todo" entry (id "0a6e0e8a-c2e2-4d6d-ba85-066645c087ef")
-       "* TODO %?\n%i\n%a" :prepend t)
-      ("j" "Journal" entry (file+olp+datetree +org-capture-journal-file)
-       "* %U %?\n%i\n%a" :prepend t)
-      ("c" "Config Todo" entry (id "05774d4c-565c-4cd8-8f32-ccefe997a75a")
-       "* CONFIG %?\n%i\n%a" :prepend t)
-      ("n" "Personal notes" entry (file+headline +org-capture-notes-file "Inbox")
-       "* %u %?\n%i\n%a" :prepend t)
-      ("i" "Blog Idea" entry (id "9d9237c9-e79c-465b-9c10-2d75b6b4fdb0")
-       "* IDEA %u %?\n%i" :prepend t)
-      ("f" "Fiction Idea" entry (id "8a5272ce-9e99-4786-b645-942c942031c8")
-       "* IDEA %u %?\n%i" :prepend t)))
+      ("p" "Project" entry (id "1e3f82bc-4ed2-4db3-b1d9-0023663d6286")
+       "* PROJ %?\n%i- [ ] Next Action:\n%a" :prepend t)
+      ("b" "Project (Blog)" entry (id "1e3f82bc-4ed2-4db3-b1d9-0023663d6286")
+       "* PROJ %? :blog:\n%i- [ ] Next Action:\n%a" :prepend t)
+      ("f" "Project (Fiction)" entry (id "1e3f82bc-4ed2-4db3-b1d9-0023663d6286")
+       "* PROJ %? :fiction:\n%i- [ ] Next Action:\n%a" :prepend t)
+      ("c" "Project (Config)" entry (id "1e3f82bc-4ed2-4db3-b1d9-0023663d6286")
+       "* PROJ %? :config:\n%i- [ ] Next Action:\n%a" :prepend t)))
 (after! org-roam
   (setq org-roam-capture-templates
         '(("d" "default" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
