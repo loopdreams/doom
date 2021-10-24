@@ -111,7 +111,7 @@ Set qutebrowser as default and fix for elpher browsing Gemini
                           "BUY(b)"
                           "|"
                           "DONE(d)"
-                          "CANCELLED(n)")))
+                          "CANCELLED(c)")))
         (setq org-superstar-headline-bullets-list '("❁" "❃" "✹" "✦"))
         ;; (setq org-superstar-headline-bullets-list '("❁" "◉" "○" "◦"))
         ;; (setq org-superstar-headline-bullets-list '(" "))
