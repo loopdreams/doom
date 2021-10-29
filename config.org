@@ -405,13 +405,14 @@ Outgoing mail settings. Set to use msmtp.
   centered-point-mode-on)
 #+end_src
 ** Writing Settings
+Disabled the 'centered point mode' hook for now. It started getting in the way too much (when 'zoomed in'). Also 'zz/zt/zb' basically enable a similar kind of functionality, but with more control, for writing.
 #+BEGIN_SRC emacs-lisp
 (map! :leader
     "Z" 'display-fill-column-indicator-mode
     "z" 'display-line-numbers-mode
     "t o" 'olivetti-mode)
 
-(add-hook! (writeroom-mode olivetti-mode) 'centered-point-mode-on)
+;; (add-hook! (writeroom-mode olivetti-mode) 'centered-point-mode-on)
 ;; (add-hook! 'writeroom-mode-enable-hook '(lambda () (display-line-numbers-mode -1)))
 (remove-hook! (writeroom-mode) #'+zen-enable-mixed-pitch-mode-h) ;; added this since mixed-pitch is defaul on most 'writing' files (org, md). Otherwise, when exiting writeroom mode, font switched back to fixed-pitch
 
