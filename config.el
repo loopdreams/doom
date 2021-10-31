@@ -318,6 +318,6 @@
     "z" 'display-line-numbers-mode
     "t o" 'olivetti-mode)
 
-(add-hook! (writeroom-mode olivetti-mode) 'centered-point-mode-on)
+;; (add-hook! (writeroom-mode olivetti-mode) 'centered-point-mode-on)
 ;; (add-hook! 'writeroom-mode-enable-hook '(lambda () (display-line-numbers-mode -1)))
 (remove-hook! (writeroom-mode) #'+zen-enable-mixed-pitch-mode-h) ;; added this since mixed-pitch is defaul on most 'writing' files (org, md). Otherwise, when exiting writeroom mode, font switched back to fixed-pitch
