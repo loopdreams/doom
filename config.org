@@ -8,12 +8,6 @@
 #+END_SRC
 
 * Font
-Line below about top padding taken from [[https://lepisma.xyz/2017/10/28/ricing-org-mode/][here]]
-#+begin_quote
-Top padding
-Similar to mode-line, Emacs also has header-line for windows. Setting its format to empty string (setq header-line-format " ") gives you top padding. Also by changing header-line face height, you can change this spacing.
-#+end_quote
-
 #+BEGIN_SRC emacs-lisp
 (setq doom-font (font-spec :family "GoMono Nerd Font" :size 16)
       ;; (font-spec :family "FuraMono Nerd Font" :size 16)
@@ -151,23 +145,6 @@ Set qutebrowser as default and fix for elpher browsing Gemini
         ))))
 
 #+end_src
-
-#+begin_src emacs-lisp
-;; (setq org-agenda-custom-commands
-;;       '(("n" . "Custom Menu")
-;;         ("nr" "Roam Todos" tags-todo "roam")
-;;         ("nc" "Config" tags-todo "config")
-;;         ("nf" "Fiction" tags-todo "fiction")
-;;         ("N" "Custom Menu Block"
-;;          ((tags-todo "general")
-;;           (tags-todo "roam")
-;;           (tags-todo "config")
-;;           (tags-todo "fiction"))
-;;          nil
-;;           ("~/next-actions.html")) ;; exports block to this file with C-c a e
-;;        ;; ..other commands here
-;;         ))
-#+end_src
 ** Aesthetics
 Org superstar and changing height of headings
 
@@ -237,8 +214,8 @@ Seems to slow down the first time you open an org file, but then no delay.
                               "#+title: ${title}\n")
             :unnarrowed t)))
     (setq org-roam-dailies-capture-templates
-        '(("d" "default" entry "* %<%H:%M> - %?"
-            :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n [[id:477e986a-2fba-4982-8158-b309baf0b14b][Daily]]")))))
+        '(("d" "default" entry "* %<%H:%M> -  [[id:477e986a-2fba-4982-8158-b309baf0b14b][%?]]"
+            :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")))))
 #+end_src
 
 ** Org Roam
@@ -417,3 +394,24 @@ Disabled the 'centered point mode' hook for now. It started getting in the way t
 (remove-hook! (writeroom-mode) #'+zen-enable-mixed-pitch-mode-h) ;; added this since mixed-pitch is defaul on most 'writing' files (org, md). Otherwise, when exiting writeroom mode, font switched back to fixed-pitch
 
 #+END_SRC
+** ERC
+#+begin_src emacs-lisp
+(defun tildechat ()
+    (interactive)
+    (erc-tls :server "irc.tilde.chat"
+             :port 6697
+             :nick "eoin"
+             :full-name "eoin carney"
+             :client-certificate
+             '("/home/eoin/.certs/erc.key"
+               "/home/eoin/.certs/erc.crt")))
+(defun liberachat ()
+    (interactive)
+    (erc-tls :server "irc.libera.chat"
+             :port 6697
+             :nick "loopdreams"
+             :full-name "loopdreams"
+             :client-certificate
+             '("/home/eoin/.certs/erc.key"
+               "/home/eoin/.certs/erc.crt")))
+#+end_src

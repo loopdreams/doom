@@ -40,7 +40,7 @@
 (setq browse-url-browser-function 'browse-url-generic)
 (setq gnutls-verify-error 'nil)
 
-(setq org-directory "~/Dropbox/sci/"
+ (setq org-directory "~/Dropbox/sci/"
        org-roam-directory (concat org-directory "notes/")
        bibtex-completion-bibliography (concat org-directory "lib.bib"))
 
@@ -105,21 +105,6 @@
           (todo "SOMEDAY" ((org-agenda-overriding-header gtd/someday-head)))
         ))))
 
-;; (setq org-agenda-custom-commands
-;;       '(("n" . "Custom Menu")
-;;         ("nr" "Roam Todos" tags-todo "roam")
-;;         ("nc" "Config" tags-todo "config")
-;;         ("nf" "Fiction" tags-todo "fiction")
-;;         ("N" "Custom Menu Block"
-;;          ((tags-todo "general")
-;;           (tags-todo "roam")
-;;           (tags-todo "config")
-;;           (tags-todo "fiction"))
-;;          nil
-;;           ("~/next-actions.html")) ;; exports block to this file with C-c a e
-;;        ;; ..other commands here
-;;         ))
-
 (add-hook! org-mode
   (setq org-hidden-keywords '(title))
   (set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default)
@@ -180,8 +165,8 @@
                               "#+title: ${title}\n")
             :unnarrowed t)))
     (setq org-roam-dailies-capture-templates
-        '(("d" "default" entry "* %<%H:%M> - %?"
-            :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n [[id:477e986a-2fba-4982-8158-b309baf0b14b][Daily]]")))))
+        '(("d" "default" entry "* %<%H:%M> -  [[id:477e986a-2fba-4982-8158-b309baf0b14b][%?]]"
+            :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")))))
 
 (use-package! org-roam
   :init
@@ -321,3 +306,22 @@
 ;; (add-hook! (writeroom-mode olivetti-mode) 'centered-point-mode-on)
 ;; (add-hook! 'writeroom-mode-enable-hook '(lambda () (display-line-numbers-mode -1)))
 (remove-hook! (writeroom-mode) #'+zen-enable-mixed-pitch-mode-h) ;; added this since mixed-pitch is defaul on most 'writing' files (org, md). Otherwise, when exiting writeroom mode, font switched back to fixed-pitch
+
+(defun tildechat ()
+    (interactive)
+    (erc-tls :server "irc.tilde.chat"
+             :port 6697
+             :nick "eoin"
+             :full-name "eoin carney"
+             :client-certificate
+             '("/home/eoin/.certs/erc.key"
+               "/home/eoin/.certs/erc.crt")))
+(defun liberachat ()
+    (interactive)
+    (erc-tls :server "irc.libera.chat"
+             :port 6697
+             :nick "loopdreams"
+             :full-name "loopdreams"
+             :client-certificate
+             '("/home/eoin/.certs/erc.key"
+               "/home/eoin/.certs/erc.crt")))
