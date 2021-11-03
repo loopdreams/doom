@@ -306,3 +306,22 @@
 ;; (add-hook! (writeroom-mode olivetti-mode) 'centered-point-mode-on)
 ;; (add-hook! 'writeroom-mode-enable-hook '(lambda () (display-line-numbers-mode -1)))
 (remove-hook! (writeroom-mode) #'+zen-enable-mixed-pitch-mode-h) ;; added this since mixed-pitch is defaul on most 'writing' files (org, md). Otherwise, when exiting writeroom mode, font switched back to fixed-pitch
+
+(defun tildechat ()
+    (interactive)
+    (erc-tls :server "irc.tilde.chat"
+             :port 6697
+             :nick "eoin"
+             :full-name "eoin carney"
+             :client-certificate
+             '("/home/eoin/.certs/erc.key"
+               "/home/eoin/.certs/erc.crt")))
+(defun liberachat ()
+    (interactive)
+    (erc-tls :server "irc.libera.chat"
+             :port 6697
+             :nick "loopdreams"
+             :full-name "loopdreams"
+             :client-certificate
+             '("/home/eoin/.certs/erc.key"
+               "/home/eoin/.certs/erc.crt")))

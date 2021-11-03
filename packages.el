@@ -83,3 +83,4 @@
 (package! org-ref)
 (package! ox-gemini)
 (package! ox-rss)
+(package! pass)
