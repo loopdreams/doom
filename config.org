@@ -151,23 +151,6 @@ Set qutebrowser as default and fix for elpher browsing Gemini
         ))))
 
 #+end_src
-
-#+begin_src emacs-lisp
-;; (setq org-agenda-custom-commands
-;;       '(("n" . "Custom Menu")
-;;         ("nr" "Roam Todos" tags-todo "roam")
-;;         ("nc" "Config" tags-todo "config")
-;;         ("nf" "Fiction" tags-todo "fiction")
-;;         ("N" "Custom Menu Block"
-;;          ((tags-todo "general")
-;;           (tags-todo "roam")
-;;           (tags-todo "config")
-;;           (tags-todo "fiction"))
-;;          nil
-;;           ("~/next-actions.html")) ;; exports block to this file with C-c a e
-;;        ;; ..other commands here
-;;         ))
-#+end_src
 ** Aesthetics
 Org superstar and changing height of headings
 
@@ -237,8 +220,8 @@ Seems to slow down the first time you open an org file, but then no delay.
                               "#+title: ${title}\n")
             :unnarrowed t)))
     (setq org-roam-dailies-capture-templates
-        '(("d" "default" entry "* %<%H:%M> - %?"
-            :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n [[id:477e986a-2fba-4982-8158-b309baf0b14b][Daily]]")))))
+        '(("d" "default" entry "* %<%H:%M> -  [[id:477e986a-2fba-4982-8158-b309baf0b14b][%?]]"
+            :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")))))
 #+end_src
 
 ** Org Roam
