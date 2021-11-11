@@ -9,7 +9,7 @@
  '(ansi-color-names-vector
    ["#282c34" "#ff6c6b" "#98be65" "#ECBE7B" "#51afef" "#c678dd" "#46D9FF" "#bbc2cf"])
  '(custom-safe-themes
-   '("246a9596178bb806c5f41e5b571546bb6e0f4bd41a9da0df5dfbca7ec6e2250c" "d268b67e0935b9ebc427cad88ded41e875abfcc27abd409726a92e55459e0d01" default))
+   '("f91395598d4cb3e2ae6a2db8527ceb83fed79dbaf007f435de3e91e5bda485fb" "246a9596178bb806c5f41e5b571546bb6e0f4bd41a9da0df5dfbca7ec6e2250c" "d268b67e0935b9ebc427cad88ded41e875abfcc27abd409726a92e55459e0d01" default))
  '(exwm-floating-border-color "#191b20")
  '(fci-rule-color "#5B6268")
  '(highlight-tail-colors
@@ -22,7 +22,7 @@
  '(jdee-db-spec-breakpoint-face-colors (cons "#1B2229" "#3f444a"))
  '(objed-cursor-color "#ff6c6b")
  '(org-agenda-files
-   '("/home/eoin/Dropbox/sci/notes/20211102-core_1_flashcards.org" "/home/eoin/Dropbox/sci/notes/20211025-comptia_core1_lesson5_hardware_and_network_troubleshooting.org" "/home/eoin/Dropbox/sci/notes/20211024-comptia_core1_lesson_4_virtualization_and_cloud_computing.org" "/home/eoin/Dropbox/sci/notes/20210616194744-index.org" "/home/eoin/Dropbox/sci/notes/20211020-shopping.org" "/home/eoin/Dropbox/sci/notes/20211020-downtime.org" "/home/eoin/Dropbox/sci/notes/20211019-actions.org" "/home/eoin/Dropbox/sci/notes/20211019-projects.org" "/home/eoin/Dropbox/sci/trash.org" "/home/eoin/Dropbox/sci/notes/20211015-comptia_core_1_lesson_3_hardware.org" "/home/eoin/Dropbox/sci/notes/20211011-comptia_core1.org" "/home/eoin/Dropbox/sci/subscriptions.org" "/home/eoin/Dropbox/sci/archive.org" "/home/eoin/Dropbox/sci/recurring_todo.org" "/home/eoin/Dropbox/sci/notes/20211005-comptia_aplus.org" "/home/eoin/Dropbox/sci/todo.org"))
+   '("~/Dropbox/sci/notes/20211003-administrative_office_application.org" "/home/eoin/Dropbox/sci/notes/20211102-core_1_flashcards.org" "/home/eoin/Dropbox/sci/notes/20211025-comptia_core1_lesson5_hardware_and_network_troubleshooting.org" "/home/eoin/Dropbox/sci/notes/20211024-comptia_core1_lesson_4_virtualization_and_cloud_computing.org" "/home/eoin/Dropbox/sci/notes/20210616194744-index.org" "/home/eoin/Dropbox/sci/notes/20211020-shopping.org" "/home/eoin/Dropbox/sci/notes/20211020-downtime.org" "/home/eoin/Dropbox/sci/notes/20211019-actions.org" "/home/eoin/Dropbox/sci/notes/20211019-projects.org" "/home/eoin/Dropbox/sci/trash.org" "/home/eoin/Dropbox/sci/notes/20211015-comptia_core_1_lesson_3_hardware.org" "/home/eoin/Dropbox/sci/notes/20211011-comptia_core1.org" "/home/eoin/Dropbox/sci/subscriptions.org" "/home/eoin/Dropbox/sci/archive.org" "/home/eoin/Dropbox/sci/recurring_todo.org" "/home/eoin/Dropbox/sci/notes/20211005-comptia_aplus.org" "/home/eoin/Dropbox/sci/todo.org"))
  '(org-capture-templates
    '(("i" "Inbox (Store Link)" entry
       (file+headline +org-capture-todo-file "Inbox")

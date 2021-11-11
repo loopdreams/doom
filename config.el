@@ -11,9 +11,8 @@
       line-spacing 0.1)
 
 ;; (setq doom-theme 'doom-miramare)
-;; (setq doom-theme 'doom-one)
-;; (setq doom-theme 'doom-nord-light)
 (setq doom-theme 'doom-gruvbox)
+;; (setq doom-theme 'acario-light)
 
 ;; (setq doom-modeline-enable-word-count t)
 (display-time-mode 1)
@@ -267,6 +266,23 @@
 ;;       message-sendmail-f-is-evil t
 ;;       message-sendmail-extra-arguments '("--read-envelope-from")
 ;;       message-send-mail-function 'message-send-mail-with-sendmail)
+
+;; (set-email-account!
+;;  "gmail"
+;;  '((mu4e-sent-folder       . "/[Gmail]/Sent Mail")
+;;    (mu4e-trash-folder      . "/[Gmail]/Bin")
+;;    (smtpmail-smtp-user     . "eoincarney0@gmail.com"))
+;;  t)
+;; (setq mu4e-get-mail-command "mbsync gmail"
+;;       ;; get emails and index every 5 minutes
+;;       mu4e-update-interval 300
+;; 	  ;; send emails with format=flowed
+;; 	  mu4e-compose-format-flowed t
+;; 	  ;; don't need to run cleanup after indexing for gmail
+;; 	  mu4e-index-cleanup nil
+;; 	  mu4e-index-lazy-check t
+;;       ;; more sensible date format
+;;       mu4e-headers-date-format "%d.%m.%y")
 
 (defcustom centered-point-position 0.45
   "Percentage of screen where `centered-point-mode' keeps point."
