@@ -21,8 +21,8 @@
 * Theme
 #+BEGIN_SRC emacs-lisp
 ;; (setq doom-theme 'doom-miramare)
-(setq doom-theme 'doom-gruvbox)
-;; (setq doom-theme 'acario-light)
+;; (setq doom-theme 'doom-gruvbox)
+(setq doom-theme 'doom-acario-light)
 #+END_SRC
 * General Settings
 ** Misc

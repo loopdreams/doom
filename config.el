@@ -11,8 +11,8 @@
       line-spacing 0.1)
 
 ;; (setq doom-theme 'doom-miramare)
-(setq doom-theme 'doom-gruvbox)
-;; (setq doom-theme 'acario-light)
+;; (setq doom-theme 'doom-gruvbox)
+(setq doom-theme 'doom-acario-light)
 
 ;; (setq doom-modeline-enable-word-count t)
 (display-time-mode 1)
