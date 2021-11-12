@@ -395,6 +395,7 @@ Disabled the 'centered point mode' hook for now. It started getting in the way t
 
 #+END_SRC
 ** ERC
+Seems to only work in emacs 28+
 #+begin_src emacs-lisp
 (defun tildechat ()
     (interactive)
