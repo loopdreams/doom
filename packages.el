@@ -84,3 +84,8 @@
 (package! ox-gemini)
 (package! ox-rss)
 (package! pass)
+(package! org-fc
+  :recipe (:host nil
+           :type git
+           :repo "https://git.sr.ht/~l3kn/org-fc"
+           :files (:defaults "awk" "demo.org")))

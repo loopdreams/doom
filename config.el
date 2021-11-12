@@ -39,7 +39,7 @@
 (setq browse-url-browser-function 'browse-url-generic)
 (setq gnutls-verify-error 'nil)
 
- (setq org-directory "~/Dropbox/sci/"
+(setq org-directory "~/Dropbox/sci/"
        org-roam-directory (concat org-directory "notes/")
        bibtex-completion-bibliography (concat org-directory "lib.bib"))
 
@@ -216,6 +216,14 @@
   (setq org-roam-ui-sync-theme t
         org-roam-ui-follow t
         org-roam-ui-update-on-save t))
+
+;; (defun org-fc/user-config ()
+;;   ;; ...
+;;   ;; Org-fc
+;;   (require 'org-fc-hydra)
+;;   (setq org-fc-directories '("~/Dropbox/sci/notes/"))
+;;   ;; ...
+;;   )
 
 (setq-default elfeed-search-filter "@1-week-ago +unread ")
 (use-package! elfeed-org

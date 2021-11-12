@@ -284,6 +284,17 @@ See issue here: [[https://github.com/org-roam/org-roam/issues/1728][github issue
         org-roam-ui-follow t
         org-roam-ui-update-on-save t))
 #+end_src
+** Org Flashcards
+#+begin_src emacs-lisp
+;; (defun org-fc/user-config ()
+;;   ;; ...
+;;   ;; Org-fc
+;;   (require 'org-fc-hydra)
+;;   (setq org-fc-directories '("~/Dropbox/sci/notes/"))
+;;   ;; ...
+;;   )
+
+#+end_src
 * Elfeed
 #+BEGIN_SRC emacs-lisp
 (setq-default elfeed-search-filter "@1-week-ago +unread ")
