@@ -25,7 +25,7 @@
 (add-hook! markdown-mode 'mixed-pitch-mode)
 ;; (unless (string-match-p "^Power N/A" (battery))
 ;;   (display-battery-mode 1))
-(setq elpher-start-page-url "gemini://spool-five.com/feed/feed.gmi")
+(setq elpher-start-page-url "gemini://warmedal.se/~antenna/")
 (map! :n "SPC o t" 'eshell)
 
 (setq evil-vsplit-window-right t
@@ -39,7 +39,7 @@
 (setq browse-url-browser-function 'browse-url-generic)
 (setq gnutls-verify-error 'nil)
 
- (setq org-directory "~/Dropbox/sci/"
+(setq org-directory "~/Dropbox/sci/"
        org-roam-directory (concat org-directory "notes/")
        bibtex-completion-bibliography (concat org-directory "lib.bib"))
 
