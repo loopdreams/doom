@@ -341,32 +341,14 @@ See issue here: [[https://github.com/org-roam/org-roam/issues/1728][github issue
 #+END_SRC
 
 * Mail
-Outgoing mail settings. Set to use msmtp.
-** TODO sending mail is broken, not sure what to do with it at the moment. I can send from other clients (mutt) which use the same msmtp settings, but not from here...
-#+BEGIN_SRC emacs-lisp
-;; (setq
-;;  mu4e-get-mail-command "mbsync website"  ;; or fetchmail, or ...
-;;  mu4e-update-interval 300
-;;  mu4e-headers-auto-update t
-;;  )
-;; (setq message-send-mail-function 'message-send-mail-with-sendmail)
-;; (setq sendmail-program "/usr/bin/msmtp")
-;; ;; (setq sendmail-program "/usr/bin/msmtp"
-;; ;;       send-mail-function 'smtpmail-send-it
-;; ;;       message-sendmail-f-is-evil t
-;; ;;       message-sendmail-extra-arguments '("--read-envelope-from")
-;; ;;       message-send-mail-function 'message-send-mail-with-sendmail)
-#+END_SRC
-
 ** Gmail
 #+begin_src emacs-lisp
-(set-email-account!
- "gmail"
- '((mu4e-sent-folder       . "/[Gmail]/Sent Mail")
-   (mu4e-trash-folder      . "/[Gmail]/Bin")
+(setq mu4e-get-mail-command "mbsync eoincarney0@gmail"
+ '((mu4e-sent-folder       . "/[eoin].Sent Mail")
+   (mu4e-trash-folder      . "/[eoin].Bin")
    (smtpmail-smtp-user     . "eoincarney0@gmail.com"))
  t)
-(setq mu4e-get-mail-command "mbsync eoincarney0@gmail"
+(setq mu4e-get-mail-command "mbsync -a"
       ;; get emails and index every 5 minutes
       mu4e-update-interval 300
 	  ;; send emails with format=flowed
@@ -376,6 +358,12 @@ Outgoing mail settings. Set to use msmtp.
 	  mu4e-index-lazy-check t
       ;; more sensible date format
       mu4e-headers-date-format "%d.%m.%y")
+(setq message-send-mail-function 'message-send-mail-with-sendmail)
+(setq sendmail-program "/usr/bin/msmtp"
+      send-mail-function 'smtpmail-send-it
+      message-sendmail-f-is-evil t
+      message-sendmail-extra-arguments '("-a" "eoincarney0@gmail.com")
+      message-send-mail-function 'message-send-mail-with-sendmail)
 #+end_src
 * Writing mode
 ** Centered-point mode
