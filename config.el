@@ -39,7 +39,7 @@
 (setq browse-url-browser-function 'browse-url-generic)
 (setq gnutls-verify-error 'nil)
 
-(setq org-directory "~/Dropbox/sci/"
+ (setq org-directory "~/Dropbox/sci/"
        org-roam-directory (concat org-directory "notes/")
        bibtex-completion-bibliography (concat org-directory "lib.bib"))
 
@@ -262,35 +262,35 @@
 (custom-set-faces!
   '(doom-dashboard-banner :foreground "slategray"))
 
-(setq
- mu4e-get-mail-command "mbsync website"  ;; or fetchmail, or ...
- mu4e-update-interval 300
- mu4e-headers-auto-update t
- )
-(setq message-send-mail-function 'message-send-mail-with-sendmail)
-(setq sendmail-program "/usr/bin/msmtp")
-;; (setq sendmail-program "/usr/bin/msmtp"
-;;       send-mail-function 'smtpmail-send-it
-;;       message-sendmail-f-is-evil t
-;;       message-sendmail-extra-arguments '("--read-envelope-from")
-;;       message-send-mail-function 'message-send-mail-with-sendmail)
+;; (setq
+;;  mu4e-get-mail-command "mbsync website"  ;; or fetchmail, or ...
+;;  mu4e-update-interval 300
+;;  mu4e-headers-auto-update t
+;;  )
+;; (setq message-send-mail-function 'message-send-mail-with-sendmail)
+;; (setq sendmail-program "/usr/bin/msmtp")
+;; ;; (setq sendmail-program "/usr/bin/msmtp"
+;; ;;       send-mail-function 'smtpmail-send-it
+;; ;;       message-sendmail-f-is-evil t
+;; ;;       message-sendmail-extra-arguments '("--read-envelope-from")
+;; ;;       message-send-mail-function 'message-send-mail-with-sendmail)
 
-;; (set-email-account!
-;;  "gmail"
-;;  '((mu4e-sent-folder       . "/[Gmail]/Sent Mail")
-;;    (mu4e-trash-folder      . "/[Gmail]/Bin")
-;;    (smtpmail-smtp-user     . "eoincarney0@gmail.com"))
-;;  t)
-;; (setq mu4e-get-mail-command "mbsync gmail"
-;;       ;; get emails and index every 5 minutes
-;;       mu4e-update-interval 300
-;; 	  ;; send emails with format=flowed
-;; 	  mu4e-compose-format-flowed t
-;; 	  ;; don't need to run cleanup after indexing for gmail
-;; 	  mu4e-index-cleanup nil
-;; 	  mu4e-index-lazy-check t
-;;       ;; more sensible date format
-;;       mu4e-headers-date-format "%d.%m.%y")
+(set-email-account!
+ "gmail"
+ '((mu4e-sent-folder       . "/[Gmail]/Sent Mail")
+   (mu4e-trash-folder      . "/[Gmail]/Bin")
+   (smtpmail-smtp-user     . "eoincarney0@gmail.com"))
+ t)
+(setq mu4e-get-mail-command "mbsync eoincarney0@gmail"
+      ;; get emails and index every 5 minutes
+      mu4e-update-interval 300
+	  ;; send emails with format=flowed
+	  mu4e-compose-format-flowed t
+	  ;; don't need to run cleanup after indexing for gmail
+	  mu4e-index-cleanup nil
+	  mu4e-index-lazy-check t
+      ;; more sensible date format
+      mu4e-headers-date-format "%d.%m.%y")
 
 (defcustom centered-point-position 0.45
   "Percentage of screen where `centered-point-mode' keeps point."
