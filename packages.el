@@ -57,6 +57,7 @@
              :files (:defaults "extensions/*")
              :build (:not compile))))
 ;; (package! org-roam)
+(package! org :pin "73875939a8b5545ac53a86ec467239f510d14de8")
 (package! org-superstar)
 (package! elfeed)
 (package! elfeed-org)
