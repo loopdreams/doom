@@ -343,20 +343,16 @@ See issue here: [[https://github.com/org-roam/org-roam/issues/1728][github issue
 * Mail
 ** Gmail
 #+begin_src emacs-lisp
-(set-email-account!
- "gmail"
- '((mu4e-sent-folder       . "/[eoin].Sent Mail")
-   (mu4e-trash-folder      . "/[eoin].Bin")
-   (smtpmail-smtp-user     . "eoincarney0@gmail.com"))
- t)
+(setq mu4e-sent-folder "/[eoin].Sent Mail")
+(setq mu4e-trash-folder "/[eoin].Bin")
 (setq mu4e-get-mail-command "mbsync -a"
       ;; get emails and index every 5 minutes
       mu4e-update-interval 300
-	  ;; send emails with format=flowed
-	  mu4e-compose-format-flowed t
-	  ;; don't need to run cleanup after indexing for gmail
-	  mu4e-index-cleanup nil
-	  mu4e-index-lazy-check t
+      ;; send emails with format=flowed
+      mu4e-compose-format-flowed t
+      ;; don't need to run cleanup after indexing for gmail
+      mu4e-index-cleanup nil
+      mu4e-index-lazy-check t
       ;; more sensible date format
       mu4e-headers-date-format "%d.%m.%y")
 (setq message-send-mail-function 'message-send-mail-with-sendmail)
@@ -433,4 +429,18 @@ Seems to only work in emacs 28+
              :client-certificate
              '("/home/eoin/.certs/erc.key"
                "/home/eoin/.certs/erc.crt")))
+#+end_src
+** Ivy Posframe
+
+#+begin_src emacs-lisp
+(require 'ivy-posframe)
+;; display at `ivy-posframe-style'
+(setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display)))
+;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
+;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-window-center)))
+;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-bottom-left)))
+;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-window-bottom-left)))
+;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-top-center)))
+(ivy-posframe-mode 1)
+
 #+end_src
