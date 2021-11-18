@@ -8,7 +8,7 @@
       doom-variable-pitch-font (font-spec :family "ETBembo" :size 20)
       ;; doom-variable-pitch-font (font-spec :family "Go" :size 24)
       mixed-pitch-set-height 20
-      line-spacing 0.1)
+      line-spacing 0.3)
 
 ;; (setq doom-theme 'doom-miramare)
 ;; (setq doom-theme 'doom-gruvbox)
