@@ -58,6 +58,7 @@
              :build (:not compile))))
 ;; (package! org-roam)
 (package! org-superstar)
+(package! org :pin "73875939a8b5545ac53a86ec467239f510d14de8")
 (package! elfeed)
 (package! elfeed-org)
 (package! elpher)
@@ -84,6 +85,7 @@
 (package! ox-gemini)
 (package! ox-rss)
 (package! pass)
+(package! ivy-posframe)
 (package! org-fc
   :recipe (:host nil
            :type git
