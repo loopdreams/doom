@@ -1,5 +1,5 @@
 (setq user-full-name "Eoin Carney"
-      user-mail-address "eoin@spool-five.com")
+      user-mail-address "eoincarney0@gmail.com")
 
 (setq doom-font (font-spec :family "GoMono Nerd Font" :size 16)
       ;; (font-spec :family "FuraMono Nerd Font" :size 16)

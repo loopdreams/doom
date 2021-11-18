@@ -4,7 +4,7 @@
 * Personal Information
 #+BEGIN_SRC emacs-lisp
 (setq user-full-name "Eoin Carney"
-      user-mail-address "eoin@spool-five.com")
+      user-mail-address "eoincarney0@gmail.com")
 #+END_SRC
 
 * Font
