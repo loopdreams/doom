@@ -1,14 +1,13 @@
 (setq user-full-name "Eoin Carney"
       user-mail-address "eoincarney0@gmail.com")
 
-(setq doom-font (font-spec :family "GoMono Nerd Font" :size 16)
+(setq doom-font
+      (font-spec :family "GoMono Nerd Font" :size 16)
       ;; (font-spec :family "FuraMono Nerd Font" :size 16)
-      ;; doom-font (font-spec :family "FiraMono Nerd Font" :size 22)
-      doom-variable-pitch-font (font-spec :family "ETBembo" :size 20)
       ;; doom-variable-pitch-font (font-spec :family "Apple Garamond" :size 20)
-      ;; doom-variable-pitch-font (font-spec :family "Go" :size 24)
       mixed-pitch-set-height 20
-      line-spacing 0.3)
+      doom-variable-pitch-font (font-spec :family "ETBembo" :size 20))
+(setq-default line-spacing 0.3)
 
 ;; (setq doom-theme 'doom-miramare)
 ;; (setq doom-theme 'doom-gruvbox)
@@ -39,7 +38,7 @@
 (setq browse-url-browser-function 'browse-url-generic)
 (setq gnutls-verify-error 'nil)
 
-(setq org-directory "~/Dropbox/sci/"
+ (setq org-directory "~/Dropbox/sci/"
        org-roam-directory (concat org-directory "notes/")
        bibtex-completion-bibliography (concat org-directory "lib.bib"))
 
@@ -342,9 +341,4 @@
 (require 'ivy-posframe)
 ;; display at `ivy-posframe-style'
 (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display)))
-;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
-;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-window-center)))
-;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-bottom-left)))
-;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-window-bottom-left)))
-;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-top-center)))
 (ivy-posframe-mode 1)
