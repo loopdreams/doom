@@ -188,7 +188,7 @@
                               "#+title: ${title}\n")
            :unnarrowed t)
           ("p" "work person" plain (file "~/Dropbox/work/templates/people.org")
-           :target (file "${slug}.org}")
+           :target (file "${slug}.org.gpg")
            :unnarrowed t)
           ("t" "test" plain (file "~/Dropbox/sci/notes/templates/test.org")
            :target (file+head "%<%Y%m%d>-${slug}.org"
