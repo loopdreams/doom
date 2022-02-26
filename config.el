@@ -4,7 +4,6 @@
 (setq doom-font
       (font-spec :family "GoMono Nerd Font" :size 16)
       ;; (font-spec :family "FuraMono Nerd Font" :size 16)
-      ;; doom-variable-pitch-font (font-spec :family "Apple Garamond" :size 20)
       mixed-pitch-set-height 20
       doom-variable-pitch-font (font-spec :family "ETBembo" :size 20))
 (setq-default line-spacing 0.3)
@@ -22,12 +21,11 @@
 (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
 (add-to-list 'auto-mode-alist '("\\.gmi\\'" . markdown-mode))
 (add-hook! markdown-mode 'mixed-pitch-mode)
-;; (unless (string-match-p "^Power N/A" (battery))
-;;   (display-battery-mode 1))
 (setq elpher-start-page-url "gemini://warmedal.se/~antenna/")
 (map! :n "SPC o t" 'eshell)
 (super-save-mode 1)
 (setq super-save-when-idle t)
+
 (require 'epa-file)
 (epa-file-enable)
 (require 'org-crypt)
@@ -48,7 +46,7 @@
 (setq browse-url-browser-function 'browse-url-generic)
 (setq gnutls-verify-error 'nil)
 
- (setq org-directory "~/Dropbox/sci/"
+(setq org-directory "~/Dropbox/sci/"
        org-roam-directory (concat org-directory "notes/")
        bibtex-completion-bibliography (concat org-directory "lib.bib"))
 
@@ -83,7 +81,6 @@
         ;; (setq org-superstar-headline-bullets-list '(" "))
         ;; (setq org-superstar-headline-bullets-list '("♠" "♥" "♦" "♣"))
         (setq org-superstar-special-todo-items t)
-        ;; (setq org-superstar-cycle-headline-bullets nil)
         (setq org-superstar-todo-bullet-alist '(
                                                 ("TODO" . 9744)
                                                 ("NEXT" . 9744)
@@ -128,8 +125,14 @@
   (setq org-n-level-faces 4)
   (setq org-cycle-level-faces nil))
 
+;; SVG-TAG-MODE
+
+(setq svg-tag-tags
+      '((":TODO:" . ((lambda (tag) (svg-tag-make "TODO"))))))
+
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode #'org-pretty-table-mode #'org-appear-mode)
 (setq org-ellipsis " ▼")
+;; (add-hook! 'org-mode-hook #'org-modern-mode)
 (setq org-list-demote-modify-bullet
       '(("+" . "*")("*" . "-")("-" . "+")))
 
@@ -240,7 +243,6 @@
 
 (use-package! websocket
   :after org-roam)
-
 (use-package! org-roam-ui
   :after org-roam
   :config
@@ -248,20 +250,11 @@
         org-roam-ui-follow t
         org-roam-ui-update-on-save t))
 
-;; (defun org-fc/user-config ()
-;;   ;; ...
-;;   ;; Org-fc
-;;   (require 'org-fc-hydra)
-;;   (setq org-fc-directories '("~/Dropbox/sci/notes/"))
-;;   ;; ...
-;;   )
-
 (setq-default elfeed-search-filter "@1-week-ago +unread ")
 (use-package! elfeed-org
   :after elfeed
   :init
   (setq rmh-elfeed-org-files (list "~/.doom.d/elfeed.org")))
-
 (require 'elfeed-goodies)
         (elfeed-goodies/setup)
         (setq elfeed-goodies/entry-pane-size 0.7)

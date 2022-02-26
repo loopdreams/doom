@@ -6,13 +6,11 @@
 (setq user-full-name "Eoin Carney"
       user-mail-address "eoincarney0@gmail.com")
 #+END_SRC
-
 * Font
 #+BEGIN_SRC emacs-lisp
 (setq doom-font
       (font-spec :family "GoMono Nerd Font" :size 16)
       ;; (font-spec :family "FuraMono Nerd Font" :size 16)
-      ;; doom-variable-pitch-font (font-spec :family "Apple Garamond" :size 20)
       mixed-pitch-set-height 20
       doom-variable-pitch-font (font-spec :family "ETBembo" :size 20))
 (setq-default line-spacing 0.3)
@@ -32,11 +30,9 @@
 + Scroll Margin
 + Map J/K as gj/gk
 + open .gmi in markdown mode
-+ Battery in modeline (doesn't seem to work on Asus, works on Thinkpad)
 + Elpher start page
 + Rebind for eshell
 + Auto save (super save)
-+ Enable [[https://orgmode.org/worg/org-tutorials/encrypting-files.html][encryption]]
 #+BEGIN_SRC emacs-lisp
 ;; (setq doom-modeline-enable-word-count t)
 (display-time-mode 1)
@@ -47,12 +43,14 @@
 (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
 (add-to-list 'auto-mode-alist '("\\.gmi\\'" . markdown-mode))
 (add-hook! markdown-mode 'mixed-pitch-mode)
-;; (unless (string-match-p "^Power N/A" (battery))
-;;   (display-battery-mode 1))
 (setq elpher-start-page-url "gemini://warmedal.se/~antenna/")
 (map! :n "SPC o t" 'eshell)
 (super-save-mode 1)
 (setq super-save-when-idle t)
+#+END_SRC
+** Encryption
++ Enable [[https://orgmode.org/worg/org-tutorials/encrypting-files.html][encryption]]
+#+begin_src emacs-lisp
 (require 'epa-file)
 (epa-file-enable)
 (require 'org-crypt)
@@ -61,7 +59,7 @@
 ;; GPG key to use for encryption
 ;; Either the Key ID or set to nil to use symmetric encryption.
 (setq org-crypt-key nil)
-#+END_SRC
+#+end_src
 ** Buffer Previews
 Maybe not really necessary
 #+begin_src emacs-lisp
@@ -80,7 +78,7 @@ Set qutebrowser as default and fix for elpher browsing Gemini
 (setq gnutls-verify-error 'nil)
 #+end_src
 * Org
-** Directories
+** Directories and misc
 #+BEGIN_SRC emacs-lisp
  (setq org-directory "~/Dropbox/sci/"
        org-roam-directory (concat org-directory "notes/")
@@ -121,7 +119,6 @@ Set qutebrowser as default and fix for elpher browsing Gemini
         ;; (setq org-superstar-headline-bullets-list '(" "))
         ;; (setq org-superstar-headline-bullets-list '("♠" "♥" "♦" "♣"))
         (setq org-superstar-special-todo-items t)
-        ;; (setq org-superstar-cycle-headline-bullets nil)
         (setq org-superstar-todo-bullet-alist '(
                                                 ("TODO" . 9744)
                                                 ("NEXT" . 9744)
@@ -132,7 +129,6 @@ Set qutebrowser as default and fix for elpher browsing Gemini
                                        ("PROJ" . "#83a598")
                                        ("WAIT" . "#a89984")
                                        ("SOMEDAY" . "#8ec07c"))))
-
 #+END_SRC
 ** Org Agenda
 #+begin_src emacs-lisp
@@ -154,7 +150,6 @@ Set qutebrowser as default and fix for elpher browsing Gemini
           (todo "BUY"  ((org-agenda-overriding-header gtd/shop-head)))
           (todo "SOMEDAY" ((org-agenda-overriding-header gtd/someday-head)))
         ))))
-
 #+end_src
 ** Aesthetics
 Org superstar and changing height of headings
@@ -176,12 +171,16 @@ Seems to slow down the first time you open an org file, but then no delay.
   (setq org-n-level-faces 4)
   (setq org-cycle-level-faces nil))
 
+;; SVG-TAG-MODE
+
+(setq svg-tag-tags
+      '((":TODO:" . ((lambda (tag) (svg-tag-make "TODO"))))))
+
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode #'org-pretty-table-mode #'org-appear-mode)
 (setq org-ellipsis " ▼")
+;; (add-hook! 'org-mode-hook #'org-modern-mode)
 (setq org-list-demote-modify-bullet
       '(("+" . "*")("*" . "-")("-" . "+")))
-
-
 #+END_SRC
 ** Capture templates - Org and Org Roam
 #+begin_src emacs-lisp
@@ -297,6 +296,7 @@ See issue here: [[https://github.com/org-roam/org-roam/issues/1728][github issue
 #+begin_src emacs-lisp
 (setq org-roam-node-display-template "${title:*} ${tags:30}") ;the format here is $(field-name:length). Including the 'length' integer causes the alignment of the tags to the right, ommitting it leaves them on the left.
 #+end_src
+
 *** Org-roam bibtex
 #+begin_src emacs-lisp
 (use-package! org-roam-bibtex
@@ -309,24 +309,12 @@ See issue here: [[https://github.com/org-roam/org-roam/issues/1728][github issue
 #+begin_src emacs-lisp
 (use-package! websocket
   :after org-roam)
-
 (use-package! org-roam-ui
   :after org-roam
   :config
   (setq org-roam-ui-sync-theme t
         org-roam-ui-follow t
         org-roam-ui-update-on-save t))
-#+end_src
-** Org Flashcards
-#+begin_src emacs-lisp
-;; (defun org-fc/user-config ()
-;;   ;; ...
-;;   ;; Org-fc
-;;   (require 'org-fc-hydra)
-;;   (setq org-fc-directories '("~/Dropbox/sci/notes/"))
-;;   ;; ...
-;;   )
-
 #+end_src
 * Elfeed
 #+BEGIN_SRC emacs-lisp
@@ -335,13 +323,10 @@ See issue here: [[https://github.com/org-roam/org-roam/issues/1728][github issue
   :after elfeed
   :init
   (setq rmh-elfeed-org-files (list "~/.doom.d/elfeed.org")))
-
 (require 'elfeed-goodies)
         (elfeed-goodies/setup)
         (setq elfeed-goodies/entry-pane-size 0.7)
-
 #+END_SRC
-
 * Dashboard
 
 #+BEGIN_SRC emacs-lisp

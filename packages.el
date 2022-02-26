@@ -89,9 +89,8 @@
 (package! ox-rss)
 (package! pass)
 (package! ivy-posframe)
-(package! org-fc
-  :recipe (:host nil
-           :type git
-           :repo "https://git.sr.ht/~l3kn/org-fc"
-           :files (:defaults "awk" "demo.org")))
+(package! org-modern
+  :recipe (:host github :repo "minad/org-modern"))
+(package! svg-tag-mode
+  :recipe (:host github :repo "rougier/svg-tag-mode"))
 (package! mermaid-mode) ; for graphs
