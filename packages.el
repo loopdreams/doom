@@ -51,15 +51,15 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
-(when (featurep! :lang org +roam2)
-  (package! org-roam
-    :recipe (:host github :repo "org-roam/org-roam"
-             :files (:defaults "extensions/*")
-             :build (:not compile))))
+;; (when (featurep! :lang org +roam2)
+;;   (package! org-roam
+;;     :recipe (:host github :repo "org-roam/org-roam"
+;;              :files (:defaults "extensions/*")
+;;              :build (:not compile))))
 ;; (package! org-roam)
-(package! org :pin "73875939a8b5545ac53a86ec467239f510d14de8")
+(package! org-roam)
+(unpin! org-roam)
 (package! org-superstar)
-(package! org :pin "73875939a8b5545ac53a86ec467239f510d14de8")
 (package! elfeed)
 (package! elfeed-org)
 (package! elpher)
