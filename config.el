@@ -4,28 +4,36 @@
 (setq doom-font
       (font-spec :family "GoMono Nerd Font" :size 16)
       ;; (font-spec :family "FuraMono Nerd Font" :size 16)
-      ;; doom-variable-pitch-font (font-spec :family "Apple Garamond" :size 20)
       mixed-pitch-set-height 20
       doom-variable-pitch-font (font-spec :family "ETBembo" :size 20))
 (setq-default line-spacing 0.3)
 
 ;; (setq doom-theme 'doom-miramare)
-;; (setq doom-theme 'doom-gruvbox)
-(setq doom-theme 'doom-acario-light)
+(setq doom-theme 'doom-dracula)
+;; (setq doom-theme 'doom-acario-light)
 
 ;; (setq doom-modeline-enable-word-count t)
 (display-time-mode 1)
-;; (doom/set-frame-opacity 90)
+(doom/set-frame-opacity 90)
 (setq display-line-numbers-type 'relative
       scroll-margin 5)
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
 (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
 (add-to-list 'auto-mode-alist '("\\.gmi\\'" . markdown-mode))
 (add-hook! markdown-mode 'mixed-pitch-mode)
-;; (unless (string-match-p "^Power N/A" (battery))
-;;   (display-battery-mode 1))
 (setq elpher-start-page-url "gemini://warmedal.se/~antenna/")
 (map! :n "SPC o t" 'eshell)
+(super-save-mode 1)
+(setq super-save-when-idle t)
+
+(require 'epa-file)
+(epa-file-enable)
+(require 'org-crypt)
+(org-crypt-use-before-save-magic)
+(setq org-tags-exclude-from-inheritance (quote ("crypt")))
+;; GPG key to use for encryption
+;; Either the Key ID or set to nil to use symmetric encryption.
+(setq org-crypt-key nil)
 
 (setq evil-vsplit-window-right t
       evil-split-window-below t)
@@ -73,7 +81,6 @@
         ;; (setq org-superstar-headline-bullets-list '(" "))
         ;; (setq org-superstar-headline-bullets-list '("♠" "♥" "♦" "♣"))
         (setq org-superstar-special-todo-items t)
-        ;; (setq org-superstar-cycle-headline-bullets nil)
         (setq org-superstar-todo-bullet-alist '(
                                                 ("TODO" . 9744)
                                                 ("NEXT" . 9744)
@@ -85,18 +92,19 @@
                                        ("WAIT" . "#a89984")
                                        ("SOMEDAY" . "#8ec07c"))))
 
-(setq gtd/next-action-head "Next actions:"
-      gtd/waiting-head "Waiting on:"
-      gtd/project-head "Projects:"
-      gtd/shop-head "Shopping:"
-      gtd/someday-head "Someday/maybe:")
+(setq gtd/next-action-head "Next actions"
+      gtd/waiting-head "Waiting on"
+      gtd/project-head "Projects"
+      gtd/shop-head "Shopping"
+      gtd/someday-head "Someday/maybe")
 
 (setq org-agenda-custom-commands
       '(
         ("g" "GTD view"
-         ((agenda "" ((org-agenda-span 'day)
-                      (org-agenda-start-day 'nil))) ;; this is needed because doom starts agenda with day set to -3d
+         (
           (todo "NEXT" ((org-agenda-overriding-header gtd/next-action-head)))
+          (agenda "" ((org-agenda-span 'day)
+                      (org-agenda-start-day 'nil))) ;; this is needed because doom starts agenda with day set to -3d
           (todo "WAIT" ((org-agenda-overriding-header gtd/waiting-head)))
           (todo "PROJ" ((org-agenda-overriding-header gtd/project-head)))
           (todo "BUY"  ((org-agenda-overriding-header gtd/shop-head)))
@@ -117,7 +125,16 @@
   (setq org-n-level-faces 4)
   (setq org-cycle-level-faces nil))
 
-(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode #'org-pretty-table-mode)
+;; SVG-TAG-MODE
+
+(setq svg-tag-tags
+      '((":TODO:" . ((lambda (tag) (svg-tag-make "TODO"))))))
+
+(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode #'org-pretty-table-mode #'org-appear-mode)
+(setq org-ellipsis " ▼")
+;; (add-hook! 'org-mode-hook #'org-modern-mode)
+(setq org-list-demote-modify-bullet
+      '(("+" . "*")("*" . "-")("-" . "+")))
 
 (customize-set-variable 'org-capture-templates '(
       ("i" "Inbox (Store Link)" entry (file+headline +org-capture-todo-file "Inbox")
@@ -141,14 +158,29 @@
                               "#+title: ${title}\n")
            :unnarrowed t
            :jump-to-captured t)
+          ("e" "encrypted" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
+           :target (file+head "%<%Y%m%d>-${slug}.org.gpg"
+                              "#+title: ${title}\n")
+           :unnarrowed t
+           :jump-to-captured t)
+          ("a" "aws" plain "#+created: %u\n#+filetags:training:SSA-CO2\n"
+           :target (file+head "%<%Y%m%d>-${slug}.org"
+                              "#+title: ${title}\n")
+           :unnarrowed t
+           :jump-to-captured t)
+          ("c" "ccna" plain "#+created: %u\n#+filetags:training:ccna\n"
+           :target (file+head "%<%Y%m%d>-${slug}.org"
+                              "#+title: ${title}\n")
+           :unnarrowed t
+           :jump-to-captured t)
           ("q" "quick" plain "#+created: %u\n#+filetags: %^G\n\n%?"
            :target (file+head "%<%Y%m%d>-${slug}.org"
                               "#+title: ${title}\n")
            :unnarrowed t)
-          ("p" "python" plain "#+created: %u\n#+filetags: python\n[[id:65c3183f-70ff-4d85-a7fc-e6cd54b35306][python]]\n\n%?"
-           :target (file+head "python-${slug}.org"
-                              "#+title: ${title}\n")
-           :unnarrowed t)
+          ;; ("p" "python" plain "#+created: %u\n#+filetags: python\n[[id:65c3183f-70ff-4d85-a7fc-e6cd54b35306][python]]\n\n%?"
+          ;;  :target (file+head "python-${slug}.org"
+          ;;                     "#+title: ${title}\n")
+          ;;  :unnarrowed t)
           ("w" "witness" plain "#+created: %u\n#+filetags: %^G\n\n%?"
            :target (file+head "witness_${slug}.org"
                               "#+title: ${title}\n")
@@ -158,7 +190,10 @@
            :target (file+head "bridge/${slug}.org"
                               "#+title: ${title}\n")
            :unnarrowed t)
-          ("t" "test" plain (file "~/sci/notes/templates/test.org")
+          ("p" "work person" plain (file "~/Dropbox/work/templates/people.org")
+           :target (file "${slug}.org.gpg")
+           :unnarrowed t)
+          ("t" "test" plain (file "~/Dropbox/sci/notes/templates/test.org")
            :target (file+head "%<%Y%m%d>-${slug}.org"
                               "#+title: ${title}\n")
             :unnarrowed t)))
@@ -208,7 +243,6 @@
 
 (use-package! websocket
   :after org-roam)
-
 (use-package! org-roam-ui
   :after org-roam
   :config
@@ -216,20 +250,11 @@
         org-roam-ui-follow t
         org-roam-ui-update-on-save t))
 
-;; (defun org-fc/user-config ()
-;;   ;; ...
-;;   ;; Org-fc
-;;   (require 'org-fc-hydra)
-;;   (setq org-fc-directories '("~/Dropbox/sci/notes/"))
-;;   ;; ...
-;;   )
-
 (setq-default elfeed-search-filter "@1-week-ago +unread ")
 (use-package! elfeed-org
   :after elfeed
   :init
   (setq rmh-elfeed-org-files (list "~/.doom.d/elfeed.org")))
-
 (require 'elfeed-goodies)
         (elfeed-goodies/setup)
         (setq elfeed-goodies/entry-pane-size 0.7)
@@ -337,7 +362,7 @@
              '("/home/eoin/.certs/erc.key"
                "/home/eoin/.certs/erc.crt")))
 
-(require 'ivy-posframe)
-;; display at `ivy-posframe-style'
-(setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display)))
-(ivy-posframe-mode 1)
+;; (require 'ivy-posframe)
+;; ;; display at `ivy-posframe-style'
+;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display)))
+;; (ivy-posframe-mode 1)

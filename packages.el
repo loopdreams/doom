@@ -56,14 +56,16 @@
 ;;     :recipe (:host github :repo "org-roam/org-roam"
 ;;              :files (:defaults "extensions/*")
 ;;              :build (:not compile))))
-;; (package! org-roam)
 (package! org-roam)
-(unpin! org-roam)
+;; (package! org :pin "73875939a8b5545ac53a86ec467239f510d14de8")
 (package! org-superstar)
+(package! org-appear)
+(package! super-save)
 (package! elfeed)
 (package! elfeed-org)
 (package! elpher)
 (package! pandoc-mode)
+(package! ox-reveal)
 (package! olivetti)
 (package! eww)
 (package! dashboard)
@@ -87,8 +89,8 @@
 (package! ox-rss)
 (package! pass)
 (package! ivy-posframe)
-(package! org-fc
-  :recipe (:host nil
-           :type git
-           :repo "https://git.sr.ht/~l3kn/org-fc"
-           :files (:defaults "awk" "demo.org")))
+(package! org-modern
+  :recipe (:host github :repo "minad/org-modern"))
+(package! svg-tag-mode
+  :recipe (:host github :repo "rougier/svg-tag-mode"))
+(package! mermaid-mode) ; for graphs
