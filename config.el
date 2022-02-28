@@ -46,7 +46,7 @@
 (setq browse-url-browser-function 'browse-url-generic)
 (setq gnutls-verify-error 'nil)
 
-(setq org-directory "~/Dropbox/sci/"
+ (setq org-directory "~/Dropbox/sci/"
        org-roam-directory (concat org-directory "notes/")
        bibtex-completion-bibliography (concat org-directory "lib.bib"))
 
@@ -65,6 +65,7 @@
 (after! org
         (setq org-todo-keywords
               '((sequence "TODO(t)"
+                          "TT(k)"
                           "PROJ(p)"
                           "NEXT(n)"
                           "WAIT(w)"
@@ -74,7 +75,7 @@
                           "STUCK(x)"
                           "BUY(b)"
                           "|"
-                          "DONE(d)"
+                          "DONE(d!/!)"
                           "CANCELLED(c)")))
         (setq org-superstar-headline-bullets-list '("❁" "❃" "✹" "✦"))
         ;; (setq org-superstar-headline-bullets-list '("❁" "◉" "○" "◦"))
@@ -83,11 +84,13 @@
         (setq org-superstar-special-todo-items t)
         (setq org-superstar-todo-bullet-alist '(
                                                 ("TODO" . 9744)
+                                                ("TT"   . 9744)
                                                 ("NEXT" . 9744)
                                                 ("CONFIG" . 9744)
                                                 ("DONE" . 9747)))
         (setq org-todo-keyword-faces '(
                                        ("TODO" . "#b16286")
+                                       ("TT"   . "#b16286")
                                        ("PROJ" . "#83a598")
                                        ("WAIT" . "#a89984")
                                        ("SOMEDAY" . "#8ec07c"))))
@@ -102,7 +105,7 @@
       '(
         ("g" "GTD view"
          (
-          (todo "NEXT" ((org-agenda-overriding-header gtd/next-action-head)))
+          (todo "TT" ((org-agenda-overriding-header gtd/next-action-head)))
           (agenda "" ((org-agenda-span 'day)
                       (org-agenda-start-day 'nil))) ;; this is needed because doom starts agenda with day set to -3d
           (todo "WAIT" ((org-agenda-overriding-header gtd/waiting-head)))
@@ -141,8 +144,8 @@
        "* TODO %?\n%i\n%a" :prepend t)
       ("o" "Inbox (No Link)" entry (file+headline +org-capture-todo-file "Inbox")
        "* TODO %?\n%i" :prepend t)
-      ("a" "Next Action" entry (id "cd9ffc7d-d197-4521-b74d-4b1f93b301ca")
-       "* NEXT %?\n%i\n%a" :prepend t)
+      ("t" "TT" entry (id "cd9ffc7d-d197-4521-b74d-4b1f93b301ca")
+       "* TT %?\n%i\n%a" :prepend t)
       ("p" "Project" entry (id "1e3f82bc-4ed2-4db3-b1d9-0023663d6286")
        "* PROJ %?\n%i- [ ] Next Action:\n%a" :prepend t)
       ("b" "Project (Blog)" entry (id "1e3f82bc-4ed2-4db3-b1d9-0023663d6286")
