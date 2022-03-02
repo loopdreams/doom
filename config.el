@@ -171,6 +171,11 @@
                               "#+title: ${title}\n")
            :unnarrowed t
            :jump-to-captured t)
+          ("r" "reference" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
+           :target (file+head "ref/%<%Y%m%d>-${slug}.org"
+                              "#+title: ${title}\n")
+           :unnarrowed t
+           :jump-to-captured t)
           ("c" "ccna" plain "#+created: %u\n#+filetags:training:ccna\n"
            :target (file+head "%<%Y%m%d>-${slug}.org"
                               "#+title: ${title}\n")
