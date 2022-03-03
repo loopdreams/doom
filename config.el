@@ -46,7 +46,7 @@
 (setq browse-url-browser-function 'browse-url-generic)
 (setq gnutls-verify-error 'nil)
 
- (setq org-directory "~/Dropbox/sci/"
+(setq org-directory "~/Dropbox/sci/"
        org-roam-directory (concat org-directory "notes/")
        bibtex-completion-bibliography (concat org-directory "lib.bib"))
 
@@ -77,8 +77,9 @@
                           "|"
                           "DONE(d!/!)"
                           "CANCELLED(c)")))
-        (setq org-superstar-headline-bullets-list '("❁" "❃" "✹" "✦"))
+        ;; (setq org-superstar-headline-bullets-list '("❁" "❃" "✹" "✦"))
         ;; (setq org-superstar-headline-bullets-list '("❁" "◉" "○" "◦"))
+        (setq org-superstar-headline-bullets-list '("◉" "○" "✹" "◦"))
         ;; (setq org-superstar-headline-bullets-list '(" "))
         ;; (setq org-superstar-headline-bullets-list '("♠" "♥" "♦" "♣"))
         (setq org-superstar-special-todo-items t)
@@ -120,11 +121,11 @@
   (set-face-attribute 'org-level-7 nil :inherit 'org-level-8)
   (set-face-attribute 'org-level-6 nil :inherit 'org-level-8)
   (set-face-attribute 'org-level-5 nil :inherit 'org-level-8)
-  (set-face-attribute 'org-level-4 nil :inherit 'org-level-8)
-  (set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.02)
-  (set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.07)
-  (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.258)
-  (set-face-attribute 'org-document-title nil :inherit 'org-level-8 :height 2.01 :foreground 'unspecified)
+  (set-face-attribute 'org-level-4 nil :inherit 'org-level-8 :height 1.1)
+  (set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.12)
+  (set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.25)
+  (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.4)
+  (set-face-attribute 'org-document-title nil :inherit 'org-level-8 :height 2.0 :foreground 'unspecified)
   (setq org-n-level-faces 4)
   (setq org-cycle-level-faces nil))
 
@@ -133,11 +134,26 @@
 (setq svg-tag-tags
       '((":TODO:" . ((lambda (tag) (svg-tag-make "TODO"))))))
 
-(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode #'org-pretty-table-mode #'org-appear-mode)
+(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode #'org-pretty-table-mode #'org-appear-mode #'prettify-symbols-mode)
 (setq org-ellipsis " ▼")
 ;; (add-hook! 'org-mode-hook #'org-modern-mode)
 (setq org-list-demote-modify-bullet
       '(("+" . "*")("*" . "-")("-" . "+")))
+;; displays dashes as bullets, taken from https://mstempl.netlify.app/post/beautify-org-mode/
+(font-lock-add-keywords 'org-mode
+                        '(("^ *\\([-]\\) "
+                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+(font-lock-add-keywords 'org-mode
+                        '(("^ *\\([+]\\) "
+                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "◦"))))))
+;; prettify symbols, taken from same source as above
+(setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
+                                       ("#+END_SRC" . "†")
+                                       ("#+begin_src" . "†")
+                                       ("#+end_src" . "†")
+                                       (">=" . "≥")
+                                       ("=>" . "⇨")))
+(setq prettify-symbols-unprettify-at-point 'right-edge)
 
 (customize-set-variable 'org-capture-templates '(
       ("i" "Inbox (Store Link)" entry (file+headline +org-capture-todo-file "Inbox")
