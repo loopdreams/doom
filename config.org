@@ -433,7 +433,7 @@ Disabled the 'centered point mode' hook for now. It started getting in the way t
 (remove-hook! (writeroom-mode) #'+zen-enable-mixed-pitch-mode-h) ;; added this since mixed-pitch is defaul on most 'writing' files (org, md). Otherwise, when exiting writeroom mode, font switched back to fixed-pitch
 
 #+END_SRC
-** ERC
+* ERC
 Seems to only work in emacs 28+
 #+begin_src emacs-lisp
 (defun tildechat ()
@@ -455,7 +455,7 @@ Seems to only work in emacs 28+
              '("/home/eoin/.certs/erc.key"
                "/home/eoin/.certs/erc.crt")))
 #+end_src
-** Ivy Posframe
+* Ivy Posframe
 
 #+begin_src emacs-lisp
 ;; (require 'ivy-posframe)
