@@ -76,25 +76,7 @@
                           "BUY(b)"
                           "|"
                           "DONE(d!/!)"
-                          "CANCELLED(c)")))
-        ;; (setq org-superstar-headline-bullets-list '("❁" "❃" "✹" "✦"))
-        ;; (setq org-superstar-headline-bullets-list '("❁" "◉" "○" "◦"))
-        (setq org-superstar-headline-bullets-list '("◉" "○" "✹" "◦"))
-        ;; (setq org-superstar-headline-bullets-list '(" "))
-        ;; (setq org-superstar-headline-bullets-list '("♠" "♥" "♦" "♣"))
-        (setq org-superstar-special-todo-items t)
-        (setq org-superstar-todo-bullet-alist '(
-                                                ("TODO" . 9744)
-                                                ("TT"   . 9744)
-                                                ("NEXT" . 9744)
-                                                ("CONFIG" . 9744)
-                                                ("DONE" . 9747)))
-        (setq org-todo-keyword-faces '(
-                                       ("TODO" . "#b16286")
-                                       ("TT"   . "#b16286")
-                                       ("PROJ" . "#83a598")
-                                       ("WAIT" . "#a89984")
-                                       ("SOMEDAY" . "#8ec07c"))))
+                          "CANCELLED(c)"))))
 
 (setq gtd/next-action-head "Next actions"
       gtd/waiting-head "Waiting on"
@@ -129,16 +111,35 @@
   (setq org-n-level-faces 4)
   (setq org-cycle-level-faces nil))
 
+(after! org
+        (setq org-superstar-headline-bullets-list '("◉" "○" "✹" "◦"))
+        ;; (setq org-superstar-headline-bullets-list '("❁" "❃" "✹" "✦"))
+        ;; (setq org-superstar-headline-bullets-list '("❁" "◉" "○" "◦"))
+        ;; (setq org-superstar-headline-bullets-list '(" "))
+        ;; (setq org-superstar-headline-bullets-list '("♠" "♥" "♦" "♣"))
+        (setq org-superstar-special-todo-items t)
+        (setq org-superstar-todo-bullet-alist '(
+                                                ("TODO" . 9744)
+                                                ("TT"   . 9744)
+                                                ("NEXT" . 9744)
+                                                ("CONFIG" . 9744)
+                                                ("DONE" . 9747)))
+        (setq org-ellipsis " ▼")
+        (setq org-list-demote-modify-bullet
+              '(("+" . "*")("*" . "-")("-" . "+")))
+        (setq org-todo-keyword-faces '(
+                                       ("TODO" . "#b16286")
+                                       ("TT"   . "#b16286")
+                                       ("PROJ" . "#83a598")
+                                       ("WAIT" . "#a89984")
+                                       ("SOMEDAY" . "#8ec07c"))))
 ;; SVG-TAG-MODE
 
 (setq svg-tag-tags
       '((":TODO:" . ((lambda (tag) (svg-tag-make "TODO"))))))
 
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode #'org-pretty-table-mode #'org-appear-mode #'prettify-symbols-mode)
-(setq org-ellipsis " ▼")
 ;; (add-hook! 'org-mode-hook #'org-modern-mode)
-(setq org-list-demote-modify-bullet
-      '(("+" . "*")("*" . "-")("-" . "+")))
 ;; displays dashes as bullets, taken from https://mstempl.netlify.app/post/beautify-org-mode/
 (font-lock-add-keywords 'org-mode
                         '(("^ *\\([-]\\) "
@@ -201,12 +202,8 @@
            :target (file+head "%<%Y%m%d>-${slug}.org"
                               "#+title: ${title}\n")
            :unnarrowed t)
-          ;; ("p" "python" plain "#+created: %u\n#+filetags: python\n[[id:65c3183f-70ff-4d85-a7fc-e6cd54b35306][python]]\n\n%?"
-          ;;  :target (file+head "python-${slug}.org"
-          ;;                     "#+title: ${title}\n")
-          ;;  :unnarrowed t)
-          ("w" "witness" plain "#+created: %u\n#+filetags: %^G\n\n%?"
-           :target (file+head "witness_${slug}.org"
+          ("l" "landlord" plain "#+created: %u\n#+filetags:fiction %^G\n\n%?"
+           :target (file+head "llord/${slug}.org"
                               "#+title: ${title}\n")
            :jump-to-captured t
            :unnarrowed t)
@@ -385,8 +382,3 @@
              :client-certificate
              '("/home/eoin/.certs/erc.key"
                "/home/eoin/.certs/erc.crt")))
-
-;; (require 'ivy-posframe)
-;; ;; display at `ivy-posframe-style'
-;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display)))
-;; (ivy-posframe-mode 1)
