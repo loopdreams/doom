@@ -9,7 +9,7 @@
  '(ansi-color-names-vector
    ["#282c34" "#ff6c6b" "#98be65" "#ECBE7B" "#51afef" "#c678dd" "#46D9FF" "#bbc2cf"])
  '(custom-safe-themes
-   '("4b6b6b0a44a40f3586f0f641c25340718c7c626cbf163a78b5a399fbe0226659" "7eea50883f10e5c6ad6f81e153c640b3a288cd8dc1d26e4696f7d40f754cc703" "f91395598d4cb3e2ae6a2db8527ceb83fed79dbaf007f435de3e91e5bda485fb" "246a9596178bb806c5f41e5b571546bb6e0f4bd41a9da0df5dfbca7ec6e2250c" "d268b67e0935b9ebc427cad88ded41e875abfcc27abd409726a92e55459e0d01" default))
+   '("1704976a1797342a1b4ea7a75bdbb3be1569f4619134341bd5a4c1cfb16abad4" "4b6b6b0a44a40f3586f0f641c25340718c7c626cbf163a78b5a399fbe0226659" "7eea50883f10e5c6ad6f81e153c640b3a288cd8dc1d26e4696f7d40f754cc703" "f91395598d4cb3e2ae6a2db8527ceb83fed79dbaf007f435de3e91e5bda485fb" "246a9596178bb806c5f41e5b571546bb6e0f4bd41a9da0df5dfbca7ec6e2250c" "d268b67e0935b9ebc427cad88ded41e875abfcc27abd409726a92e55459e0d01" default))
  '(exwm-floating-border-color "#191b20")
  '(fci-rule-color "#5B6268")
  '(highlight-tail-colors
@@ -23,41 +23,6 @@
  '(objed-cursor-color "#ff6c6b")
  '(org-agenda-files
    '("~/Dropbox/sci/notes/20220204-ccna_main.org" "/home/eoin/Dropbox/sci/notes/20211112-comptia_core2.org" "/home/eoin/Dropbox/sci/notes/20211123-core2_operational_procedures.org" "/home/eoin/Dropbox/sci/notes/20211122-core2_troubleshooting.org" "/home/eoin/Dropbox/sci/notes/20211118-core2_security.org" "/home/eoin/Dropbox/sci/notes/20211114-core2_operating_systems.org" "/home/eoin/Dropbox/sci/notes/20211019-projects.org" "/home/eoin/Dropbox/sci/notes/20211003-administrative_office_application.org" "/home/eoin/Dropbox/sci/notes/20210616194744-index.org" "/home/eoin/Dropbox/sci/notes/20211020-shopping.org" "/home/eoin/Dropbox/sci/notes/20211020-downtime.org" "/home/eoin/Dropbox/sci/notes/20211019-actions.org" "/home/eoin/Dropbox/sci/trash.org" "/home/eoin/Dropbox/sci/subscriptions.org" "/home/eoin/Dropbox/sci/archive.org" "/home/eoin/Dropbox/sci/recurring_todo.org" "/home/eoin/Dropbox/sci/notes/20211005-comptia_aplus.org" "/home/eoin/Dropbox/sci/todo.org"))
- '(org-capture-templates
-   '(("i" "Inbox (Store Link)" entry
-      (file+headline +org-capture-todo-file "Inbox")
-      "* TODO %?
-%i
-%a" :prepend t)
-     ("o" "Inbox (No Link)" entry
-      (file+headline +org-capture-todo-file "Inbox")
-      "* TODO %?
-%i" :prepend t)
-     ("a" "Next Action" entry
-      (id "cd9ffc7d-d197-4521-b74d-4b1f93b301ca")
-      "* NEXT %?
-%i
-%a" :prepend t)
-     ("p" "Project" entry
-      (id "1e3f82bc-4ed2-4db3-b1d9-0023663d6286")
-      "* PROJ %?
-%i- [ ] Next Action:
-%a" :prepend t)
-     ("b" "Project (Blog)" entry
-      (id "1e3f82bc-4ed2-4db3-b1d9-0023663d6286")
-      "* PROJ %? :blog:
-%i- [ ] Next Action:
-%a" :prepend t)
-     ("f" "Project (Fiction)" entry
-      (id "1e3f82bc-4ed2-4db3-b1d9-0023663d6286")
-      "* PROJ %? :fiction:
-%i- [ ] Next Action:
-%a" :prepend t)
-     ("c" "Project (Config)" entry
-      (id "1e3f82bc-4ed2-4db3-b1d9-0023663d6286")
-      "* PROJ %? :config:
-%i- [ ] Next Action:
-%a" :prepend t)))
  '(pdf-view-midnight-colors (cons "#bbc2cf" "#282c34"))
  '(rustic-ansi-faces
    ["#282c34" "#ff6c6b" "#98be65" "#ECBE7B" "#51afef" "#c678dd" "#46D9FF" "#bbc2cf"])
