@@ -25,6 +25,7 @@
 (map! :n "SPC o t" 'eshell)
 (super-save-mode 1)
 (setq super-save-when-idle t)
+(add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))
 
 (require 'epa-file)
 (epa-file-enable)
@@ -46,7 +47,7 @@
 (setq browse-url-browser-function 'browse-url-generic)
 (setq gnutls-verify-error 'nil)
 
- (setq org-directory "~/Dropbox/sci/"
+(setq org-directory "~/Dropbox/sci/"
        org-roam-directory (concat org-directory "notes/")
        bibtex-completion-bibliography (concat org-directory "lib.bib"))
 
@@ -183,13 +184,28 @@
                               "#+title: ${title}\n")
            :unnarrowed t
            :jump-to-captured t)
-          ("a" "aws" plain "#+created: %u\n#+filetags:training:SSA-CO2\n"
-           :target (file+head "%<%Y%m%d>-${slug}.org"
+          ("r" "reference" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
+           :target (file+head "ref/%<%Y%m%d>-${slug}.org"
                               "#+title: ${title}\n")
            :unnarrowed t
            :jump-to-captured t)
-          ("r" "reference" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
-           :target (file+head "ref/%<%Y%m%d>-${slug}.org"
+          ("q" "quick" plain "#+created: %u\n#+filetags: %^G\n\n%?"
+           :target (file+head "%<%Y%m%d>-${slug}.org"
+                              "#+title: ${title}\n")
+           :unnarrowed t)
+          ;; Other roam directories
+          ("p" "work person" plain (file "~/Dropbox/work/templates/people.org")
+           :target (file "${slug}.org.gpg")
+           :unnarrowed t)
+          ;; ("l" "landlord" plain "#+created: %u\n#+filetags:fiction %^G\n\n%?"
+          ;;  :target (file+head "llord/${slug}.org"
+          ;;                     "#+title: ${title}\n")
+          ;;  :jump-to-captured t
+          ;;  :unnarrowed t)
+          ;;;;;;;;;;;;;;;;;;;
+          ;; Unused
+          ("a" "aws" plain "#+created: %u\n#+filetags:training:SSA-CO2\n"
+           :target (file+head "%<%Y%m%d>-${slug}.org"
                               "#+title: ${title}\n")
            :unnarrowed t
            :jump-to-captured t)
@@ -198,21 +214,9 @@
                               "#+title: ${title}\n")
            :unnarrowed t
            :jump-to-captured t)
-          ("q" "quick" plain "#+created: %u\n#+filetags: %^G\n\n%?"
-           :target (file+head "%<%Y%m%d>-${slug}.org"
-                              "#+title: ${title}\n")
-           :unnarrowed t)
-          ("l" "landlord" plain "#+created: %u\n#+filetags:fiction %^G\n\n%?"
-           :target (file+head "llord/${slug}.org"
-                              "#+title: ${title}\n")
-           :jump-to-captured t
-           :unnarrowed t)
           ("b" "bridge" plain "#+filetags: bridge\n\n* Question :drill:\n%?\n** Answer"
            :target (file+head "bridge/${slug}.org"
                               "#+title: ${title}\n")
-           :unnarrowed t)
-          ("p" "work person" plain (file "~/Dropbox/work/templates/people.org")
-           :target (file "${slug}.org.gpg")
            :unnarrowed t)
           ("t" "test" plain (file "~/Dropbox/sci/notes/templates/test.org")
            :target (file+head "%<%Y%m%d>-${slug}.org"

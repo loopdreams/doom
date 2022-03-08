@@ -23,11 +23,48 @@
  '(objed-cursor-color "#ff6c6b")
  '(org-agenda-files
    '("~/Dropbox/sci/notes/20220204-ccna_main.org" "/home/eoin/Dropbox/sci/notes/20211112-comptia_core2.org" "/home/eoin/Dropbox/sci/notes/20211123-core2_operational_procedures.org" "/home/eoin/Dropbox/sci/notes/20211122-core2_troubleshooting.org" "/home/eoin/Dropbox/sci/notes/20211118-core2_security.org" "/home/eoin/Dropbox/sci/notes/20211114-core2_operating_systems.org" "/home/eoin/Dropbox/sci/notes/20211019-projects.org" "/home/eoin/Dropbox/sci/notes/20211003-administrative_office_application.org" "/home/eoin/Dropbox/sci/notes/20210616194744-index.org" "/home/eoin/Dropbox/sci/notes/20211020-shopping.org" "/home/eoin/Dropbox/sci/notes/20211020-downtime.org" "/home/eoin/Dropbox/sci/notes/20211019-actions.org" "/home/eoin/Dropbox/sci/trash.org" "/home/eoin/Dropbox/sci/subscriptions.org" "/home/eoin/Dropbox/sci/archive.org" "/home/eoin/Dropbox/sci/recurring_todo.org" "/home/eoin/Dropbox/sci/notes/20211005-comptia_aplus.org" "/home/eoin/Dropbox/sci/todo.org"))
+ '(org-capture-templates
+   '(("i" "Inbox (Store Link)" entry
+      (file+headline +org-capture-todo-file "Inbox")
+      "* TODO %?
+%i
+%a" :prepend t)
+     ("o" "Inbox (No Link)" entry
+      (file+headline +org-capture-todo-file "Inbox")
+      "* TODO %?
+%i" :prepend t)
+     ("t" "TT" entry
+      (id "cd9ffc7d-d197-4521-b74d-4b1f93b301ca")
+      "* TT %?
+%i
+%a" :prepend t)
+     ("p" "Project" entry
+      (id "1e3f82bc-4ed2-4db3-b1d9-0023663d6286")
+      "* PROJ %?
+%i- [ ] Next Action:
+%a" :prepend t)
+     ("b" "Project (Blog)" entry
+      (id "1e3f82bc-4ed2-4db3-b1d9-0023663d6286")
+      "* PROJ %? :blog:
+%i- [ ] Next Action:
+%a" :prepend t)
+     ("f" "Project (Fiction)" entry
+      (id "1e3f82bc-4ed2-4db3-b1d9-0023663d6286")
+      "* PROJ %? :fiction:
+%i- [ ] Next Action:
+%a" :prepend t)
+     ("c" "Project (Config)" entry
+      (id "1e3f82bc-4ed2-4db3-b1d9-0023663d6286")
+      "* PROJ %? :config:
+%i- [ ] Next Action:
+%a" :prepend t)))
  '(pdf-view-midnight-colors (cons "#bbc2cf" "#282c34"))
  '(rustic-ansi-faces
    ["#282c34" "#ff6c6b" "#98be65" "#ECBE7B" "#51afef" "#c678dd" "#46D9FF" "#bbc2cf"])
  '(safe-local-variable-values
-   '((org-roam-db-location . "/home/eoin/Dropbox/work/org-roam.db")
+   '((org-roam-db-location . "/home/eoin/Dropbox/llord/org-roam.db")
+     (org-roam-directory . "/home/eoin/Dropbox/llord")
+     (org-roam-db-location . "/home/eoin/Dropbox/work/org-roam.db")
      (org-roam-directory . "/home/eoin/Dropbox/work")))
  '(smtpmail-smtp-server "mail.spool-five.com")
  '(smtpmail-smtp-service 25)
