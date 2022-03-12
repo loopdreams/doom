@@ -14,7 +14,7 @@
 
 ;; (setq doom-modeline-enable-word-count t)
 (display-time-mode 1)
-(doom/set-frame-opacity 90)
+(add-to-list 'default-frame-alist '(alpha . 90))
 (setq display-line-numbers-type 'relative
       scroll-margin 5)
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
@@ -26,6 +26,8 @@
 (super-save-mode 1)
 (setq super-save-when-idle t)
 (add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))
+
+(add-to-list 'load-path "~/.emacs.d/manual-packages")
 
 (require 'epa-file)
 (epa-file-enable)
@@ -45,9 +47,9 @@
 
 (setq browse-url-generic-program "/usr/bin/qutebrowser")
 (setq browse-url-browser-function 'browse-url-generic)
-(setq gnutls-verify-error 'nil)
+;; (setq gnutls-verify-error 'nil)
 
-(setq org-directory "~/Dropbox/sci/"
+ (setq org-directory "~/Dropbox/sci/"
        org-roam-directory (concat org-directory "notes/")
        bibtex-completion-bibliography (concat org-directory "lib.bib"))
 
@@ -135,9 +137,12 @@
                                        ("WAIT" . "#a89984")
                                        ("SOMEDAY" . "#8ec07c"))))
 ;; SVG-TAG-MODE
+;; Still not working...
 
-(setq svg-tag-tags
-      '((":TODO:" . ((lambda (tag) (svg-tag-make "TODO"))))))
+;; (require 'svg-tag-mode)
+;; (setq svg-tag-tags
+;;       '(("\\(:[A-Z]+:\\)" . ((lambda (tag)
+;;                                (svg-tag-make tag :beg 1 :end -1))))))
 
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode #'org-pretty-table-mode #'org-appear-mode #'prettify-symbols-mode)
 ;; (add-hook! 'org-mode-hook #'org-modern-mode)
@@ -367,6 +372,17 @@
 ;; (add-hook! (writeroom-mode olivetti-mode) 'centered-point-mode-on)
 ;; (add-hook! 'writeroom-mode-enable-hook '(lambda () (display-line-numbers-mode -1)))
 (remove-hook! (writeroom-mode) #'+zen-enable-mixed-pitch-mode-h) ;; added this since mixed-pitch is defaul on most 'writing' files (org, md). Otherwise, when exiting writeroom mode, font switched back to fixed-pitch
+
+(flycheck-define-checker vale
+  "A checker for prose"
+  :command ("vale" "--output" "line"
+            source)
+  :standard-input nil
+  :error-patterns
+  ((error line-start (file-name) ":" line ":" column ":" (id (one-or-more (not (any ":")))) ":" (message) line-end))
+  :modes (markdown-mode org-mode text-mode)
+  )
+(add-to-list 'flycheck-checkers 'vale 'append)
 
 (defun tildechat ()
     (interactive)

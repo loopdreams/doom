@@ -37,7 +37,7 @@
 #+BEGIN_SRC emacs-lisp
 ;; (setq doom-modeline-enable-word-count t)
 (display-time-mode 1)
-(doom/set-frame-opacity 90)
+(add-to-list 'default-frame-alist '(alpha . 90))
 (setq display-line-numbers-type 'relative
       scroll-margin 5)
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
@@ -50,6 +50,11 @@
 (setq super-save-when-idle t)
 (add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))
 #+END_SRC
+** Load Path for manual packages
+#+begin_src emacs-lisp
+(add-to-list 'load-path "~/.emacs.d/manual-packages")
+
+#+end_src
 ** Encryption
 + Enable [[https://orgmode.org/worg/org-tutorials/encrypting-files.html][encryption]]
 #+begin_src emacs-lisp
@@ -77,7 +82,7 @@ Set qutebrowser as default and fix for elpher browsing Gemini
 #+begin_src emacs-lisp
 (setq browse-url-generic-program "/usr/bin/qutebrowser")
 (setq browse-url-browser-function 'browse-url-generic)
-(setq gnutls-verify-error 'nil)
+;; (setq gnutls-verify-error 'nil)
 #+end_src
 * Org
 ** Directories and misc
@@ -182,9 +187,12 @@ Seems to slow down the first time you open an org file, but then no delay.
                                        ("WAIT" . "#a89984")
                                        ("SOMEDAY" . "#8ec07c"))))
 ;; SVG-TAG-MODE
+;; Still not working...
 
-(setq svg-tag-tags
-      '((":TODO:" . ((lambda (tag) (svg-tag-make "TODO"))))))
+;; (require 'svg-tag-mode)
+;; (setq svg-tag-tags
+;;       '(("\\(:[A-Z]+:\\)" . ((lambda (tag)
+;;                                (svg-tag-make tag :beg 1 :end -1))))))
 
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode #'org-pretty-table-mode #'org-appear-mode #'prettify-symbols-mode)
 ;; (add-hook! 'org-mode-hook #'org-modern-mode)
@@ -405,7 +413,7 @@ See issue here: [[https://github.com/org-roam/org-roam/issues/1728][github issue
       message-sendmail-extra-arguments '("-a" "eoincarney0@gmail.com")
       message-send-mail-function 'message-send-mail-with-sendmail)
 #+end_src
-* Writing mode
+* Writing
 ** Centered-point mode
 #+begin_src emacs-lisp
 (defcustom centered-point-position 0.45
@@ -451,6 +459,20 @@ Disabled the 'centered point mode' hook for now. It started getting in the way t
 (remove-hook! (writeroom-mode) #'+zen-enable-mixed-pitch-mode-h) ;; added this since mixed-pitch is defaul on most 'writing' files (org, md). Otherwise, when exiting writeroom mode, font switched back to fixed-pitch
 
 #+END_SRC
+** Prose Liniting with Vale
+#+begin_src emacs-lisp
+(flycheck-define-checker vale
+  "A checker for prose"
+  :command ("vale" "--output" "line"
+            source)
+  :standard-input nil
+  :error-patterns
+  ((error line-start (file-name) ":" line ":" column ":" (id (one-or-more (not (any ":")))) ":" (message) line-end))
+  :modes (markdown-mode org-mode text-mode)
+  )
+(add-to-list 'flycheck-checkers 'vale 'append)
+
+#+end_src
 * ERC
 Seems to only work in emacs 28+
 #+begin_src emacs-lisp
