@@ -18,8 +18,8 @@
 * Theme
 #+BEGIN_SRC emacs-lisp
 ;; (setq doom-theme 'doom-miramare)
-(setq doom-theme 'doom-nord-light)
-;; (setq doom-theme 'doom-acario-light)
+;; (setq doom-theme 'doom-nord-light)
+(setq doom-theme 'modus-operandi)
 #+END_SRC
 * General Settings
 ** Misc
@@ -166,10 +166,7 @@ Seems to slow down the first time you open an org file, but then no delay.
 
 (after! org
         (setq org-superstar-headline-bullets-list '("◉" "○" "✹" "◦"))
-        ;; (setq org-superstar-headline-bullets-list '("❁" "❃" "✹" "✦"))
-        ;; (setq org-superstar-headline-bullets-list '("❁" "◉" "○" "◦"))
-        ;; (setq org-superstar-headline-bullets-list '(" "))
-        ;; (setq org-superstar-headline-bullets-list '("♠" "♥" "♦" "♣"))
+        ;; Other bullets I liked: "❁" "❃" "✹" "✦" "❁" "◉" "○" "◦" "♠" "♥" "♦" "♣"
         (setq org-superstar-special-todo-items t)
         (setq org-superstar-todo-bullet-alist '(
                                                 ("TODO" . 9744)
@@ -186,6 +183,10 @@ Seems to slow down the first time you open an org file, but then no delay.
                                        ("PROJ" . "#83a598")
                                        ("WAIT" . "#a89984")
                                        ("SOMEDAY" . "#8ec07c"))))
+(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode #'org-pretty-table-mode #'org-appear-mode)
+#+END_SRC
+*** Misc Aesthetics (disabled to test performance)
+#+begin_src emacs-lisp
 ;; SVG-TAG-MODE
 ;; Still not working...
 
@@ -194,24 +195,23 @@ Seems to slow down the first time you open an org file, but then no delay.
 ;;       '(("\\(:[A-Z]+:\\)" . ((lambda (tag)
 ;;                                (svg-tag-make tag :beg 1 :end -1))))))
 
-(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode #'org-pretty-table-mode #'org-appear-mode #'prettify-symbols-mode)
 ;; (add-hook! 'org-mode-hook #'org-modern-mode)
 ;; displays dashes as bullets, taken from https://mstempl.netlify.app/post/beautify-org-mode/
-(font-lock-add-keywords 'org-mode
-                        '(("^ *\\([-]\\) "
-                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-(font-lock-add-keywords 'org-mode
-                        '(("^ *\\([+]\\) "
-                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "◦"))))))
+;; (font-lock-add-keywords 'org-mode
+;;                         '(("^ *\\([-]\\) "
+;;                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+;; (font-lock-add-keywords 'org-mode
+;;                         '(("^ *\\([+]\\) "
+;;                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "◦"))))))
 ;; prettify symbols, taken from same source as above
-(setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
-                                       ("#+END_SRC" . "†")
-                                       ("#+begin_src" . "†")
-                                       ("#+end_src" . "†")
-                                       (">=" . "≥")
-                                       ("=>" . "⇨")))
-(setq prettify-symbols-unprettify-at-point 'right-edge)
-#+END_SRC
+;; (setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
+;;                                        ("#+END_SRC" . "†")
+;;                                        ("#+begin_src" . "†")
+;;                                        ("#+end_src" . "†")
+;;                                        (">=" . "≥")
+;;                                        ("=>" . "⇨")))
+;; (setq prettify-symbols-unprettify-at-point 'right-edge)
+#+end_src
 ** Capture templates - Org and Org Roam
 #+begin_src emacs-lisp
 (customize-set-variable 'org-capture-templates '(
@@ -292,7 +292,6 @@ Seems to slow down the first time you open an org file, but then no delay.
           ;;   :unnarrowed t)))
           ;;;;;;;
 #+end_src
-
 ** Org Roam
 *** Org Roam V2
 #+begin_src emacs-lisp
@@ -333,13 +332,11 @@ Adding the hook seems to fix the problem of the buffer not loading in the right 
       :desc "Daily Today"       "t"     'org-roam-dailies-find-today
       :desc "Daily Date"        "d"     'org-roam-dailies-goto-date)
 #+end_src
-
 *** Temporary fix for tag display
 See issue here: [[https://github.com/org-roam/org-roam/issues/1728][github issue]]
 #+begin_src emacs-lisp
 (setq org-roam-node-display-template "${title:*} ${tags:30}") ;the format here is $(field-name:length). Including the 'length' integer causes the alignment of the tags to the right, ommitting it leaves them on the left.
 #+end_src
-
 *** Org-roam bibtex
 #+begin_src emacs-lisp
 (use-package! org-roam-bibtex
@@ -404,24 +401,36 @@ See issue here: [[https://github.com/org-roam/org-roam/issues/1728][github issue
 * Mail
 ** Gmail
 #+begin_src emacs-lisp
-(setq mu4e-sent-folder "/[eoin].Sent Mail")
-(setq mu4e-trash-folder "/[eoin].Bin")
-(setq mu4e-get-mail-command "mbsync -a"
-      ;; get emails and index every 5 minutes
-      mu4e-update-interval 300
-      ;; send emails with format=flowed
-      mu4e-compose-format-flowed t
-      ;; don't need to run cleanup after indexing for gmail
-      mu4e-index-cleanup nil
-      mu4e-index-lazy-check t
-      ;; more sensible date format
-      mu4e-headers-date-format "%d.%m.%y")
+(after! mu4e
+(setq mu4e-get-mail-command "offlineimap")
+(setq mu4e-update-interval 300)
+(setq mail-user-agent 'mu4e-user-agent)
+
+(setq mu4e-sent-folder "/[Gmail].Sent Mail")
+(setq mu4e-drafts-folder "/[Gmail].Drafts")
+(setq mu4e-trash-folder "/[Gmail].Bin")
+(setq mu4e-maildir-shortcuts
+      '((:maildir "/INBOX"      :key ?i)))
+(setq user-mail-address "eoincarney0@gmail.com"
+      user-full-name "Eoin Carney")
 (setq sendmail-program "/usr/bin/msmtp"
       send-mail-function 'smtpmail-send-it
       message-sendmail-f-is-evil t
-      message-sendmail-extra-arguments '("-a" "eoincarney0@gmail.com")
-      message-send-mail-function 'message-send-mail-with-sendmail)
+      message-sendmail-extra-arguments '("--read-envelope-from")
+      message-send-mail-function 'message-send-mail-with-sendmail))
+;; (setq auth-sources '("~/.imap_authinfo.gpg"))
+;; (setq message-send-mail-function 'smtpmail-send-it
+;;       starttls-use-gnutls t
+;;       smtpmail-starttls-credentials
+;;       '(("smtp.gmail.com" 587 nil nil))
+;;       smtpmail-auth-credentials
+;;       (expand-file-name "~/.imap_authinfo.gpg")
+;;       smtpmail-default-smtp-server "smtp.gmail.com"
+;;       smtpmail-smtp-server "smtp.gmail.com"
+;;       smtpmail-smtp-service 587
+;;       smtpmail-debug-info t)
 #+end_src
+
 * Writing
 ** Centered-point mode
 #+begin_src emacs-lisp

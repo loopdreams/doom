@@ -31,8 +31,6 @@
      (org-roam-directory . "/home/eoin/Dropbox/llord")
      (org-roam-db-location . "/home/eoin/Dropbox/work/org-roam.db")
      (org-roam-directory . "/home/eoin/Dropbox/work")))
- '(smtpmail-smtp-server "mail.spool-five.com")
- '(smtpmail-smtp-service 25)
  '(vc-annotate-background "#282c34")
  '(vc-annotate-color-map
    (list
@@ -55,7 +53,7 @@
     (cons 340 "#5B6268")
     (cons 360 "#5B6268")))
  '(vc-annotate-very-old-color nil)
- '(warning-suppress-types '(((flycheck syntax-checker)))))
+ '(warning-suppress-types '(((flycheck syntax-checker)) ((flycheck syntax-checker)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

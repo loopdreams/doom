@@ -9,8 +9,8 @@
 (setq-default line-spacing 0.3)
 
 ;; (setq doom-theme 'doom-miramare)
-(setq doom-theme 'doom-nord-light)
-;; (setq doom-theme 'doom-acario-light)
+;; (setq doom-theme 'doom-nord-light)
+(setq doom-theme 'modus-operandi)
 
 ;; (setq doom-modeline-enable-word-count t)
 (display-time-mode 1)
@@ -49,7 +49,7 @@
 (setq browse-url-browser-function 'browse-url-generic)
 ;; (setq gnutls-verify-error 'nil)
 
-(setq org-directory "~/Dropbox/sci/"
+ (setq org-directory "~/Dropbox/sci/"
        org-roam-directory (concat org-directory "notes/")
        bibtex-completion-bibliography (concat org-directory "lib.bib"))
 
@@ -116,10 +116,7 @@
 
 (after! org
         (setq org-superstar-headline-bullets-list '("◉" "○" "✹" "◦"))
-        ;; (setq org-superstar-headline-bullets-list '("❁" "❃" "✹" "✦"))
-        ;; (setq org-superstar-headline-bullets-list '("❁" "◉" "○" "◦"))
-        ;; (setq org-superstar-headline-bullets-list '(" "))
-        ;; (setq org-superstar-headline-bullets-list '("♠" "♥" "♦" "♣"))
+        ;; Other bullets I liked: "❁" "❃" "✹" "✦" "❁" "◉" "○" "◦" "♠" "♥" "♦" "♣"
         (setq org-superstar-special-todo-items t)
         (setq org-superstar-todo-bullet-alist '(
                                                 ("TODO" . 9744)
@@ -136,6 +133,8 @@
                                        ("PROJ" . "#83a598")
                                        ("WAIT" . "#a89984")
                                        ("SOMEDAY" . "#8ec07c"))))
+(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode #'org-pretty-table-mode #'org-appear-mode)
+
 ;; SVG-TAG-MODE
 ;; Still not working...
 
@@ -144,23 +143,22 @@
 ;;       '(("\\(:[A-Z]+:\\)" . ((lambda (tag)
 ;;                                (svg-tag-make tag :beg 1 :end -1))))))
 
-(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode #'org-pretty-table-mode #'org-appear-mode #'prettify-symbols-mode)
 ;; (add-hook! 'org-mode-hook #'org-modern-mode)
 ;; displays dashes as bullets, taken from https://mstempl.netlify.app/post/beautify-org-mode/
-(font-lock-add-keywords 'org-mode
-                        '(("^ *\\([-]\\) "
-                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-(font-lock-add-keywords 'org-mode
-                        '(("^ *\\([+]\\) "
-                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "◦"))))))
+;; (font-lock-add-keywords 'org-mode
+;;                         '(("^ *\\([-]\\) "
+;;                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+;; (font-lock-add-keywords 'org-mode
+;;                         '(("^ *\\([+]\\) "
+;;                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "◦"))))))
 ;; prettify symbols, taken from same source as above
-(setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
-                                       ("#+END_SRC" . "†")
-                                       ("#+begin_src" . "†")
-                                       ("#+end_src" . "†")
-                                       (">=" . "≥")
-                                       ("=>" . "⇨")))
-(setq prettify-symbols-unprettify-at-point 'right-edge)
+;; (setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
+;;                                        ("#+END_SRC" . "†")
+;;                                        ("#+begin_src" . "†")
+;;                                        ("#+end_src" . "†")
+;;                                        (">=" . "≥")
+;;                                        ("=>" . "⇨")))
+;; (setq prettify-symbols-unprettify-at-point 'right-edge)
 
 (customize-set-variable 'org-capture-templates '(
       ("t" "Task")
@@ -325,23 +323,34 @@
 (custom-set-faces!
   '(doom-dashboard-banner :foreground "slategray"))
 
-(setq mu4e-sent-folder "/[eoin].Sent Mail")
-(setq mu4e-trash-folder "/[eoin].Bin")
-(setq mu4e-get-mail-command "mbsync -a"
-      ;; get emails and index every 5 minutes
-      mu4e-update-interval 300
-      ;; send emails with format=flowed
-      mu4e-compose-format-flowed t
-      ;; don't need to run cleanup after indexing for gmail
-      mu4e-index-cleanup nil
-      mu4e-index-lazy-check t
-      ;; more sensible date format
-      mu4e-headers-date-format "%d.%m.%y")
+(after! mu4e
+(setq mu4e-get-mail-command "offlineimap")
+(setq mu4e-update-interval 300)
+(setq mail-user-agent 'mu4e-user-agent)
+
+(setq mu4e-sent-folder "/[Gmail].Sent Mail")
+(setq mu4e-drafts-folder "/[Gmail].Drafts")
+(setq mu4e-trash-folder "/[Gmail].Bin")
+(setq mu4e-maildir-shortcuts
+      '((:maildir "/INBOX"      :key ?i)))
+(setq user-mail-address "eoincarney0@gmail.com"
+      user-full-name "Eoin Carney")
 (setq sendmail-program "/usr/bin/msmtp"
       send-mail-function 'smtpmail-send-it
       message-sendmail-f-is-evil t
-      message-sendmail-extra-arguments '("-a" "eoincarney0@gmail.com")
-      message-send-mail-function 'message-send-mail-with-sendmail)
+      message-sendmail-extra-arguments '("--read-envelope-from")
+      message-send-mail-function 'message-send-mail-with-sendmail))
+;; (setq auth-sources '("~/.imap_authinfo.gpg"))
+;; (setq message-send-mail-function 'smtpmail-send-it
+;;       starttls-use-gnutls t
+;;       smtpmail-starttls-credentials
+;;       '(("smtp.gmail.com" 587 nil nil))
+;;       smtpmail-auth-credentials
+;;       (expand-file-name "~/.imap_authinfo.gpg")
+;;       smtpmail-default-smtp-server "smtp.gmail.com"
+;;       smtpmail-smtp-server "smtp.gmail.com"
+;;       smtpmail-smtp-service 587
+;;       smtpmail-debug-info t)
 
 (defcustom centered-point-position 0.45
   "Percentage of screen where `centered-point-mode' keeps point."
