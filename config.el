@@ -9,12 +9,12 @@
 (setq-default line-spacing 0.3)
 
 ;; (setq doom-theme 'doom-miramare)
-(setq doom-theme 'doom-nord-light)
-;; (setq doom-theme 'doom-acario-light)
+;; (setq doom-theme 'doom-nord-light)
+(setq doom-theme 'modus-operandi)
 
 ;; (setq doom-modeline-enable-word-count t)
 (display-time-mode 1)
-(doom/set-frame-opacity 90)
+(add-to-list 'default-frame-alist '(alpha . 90))
 (setq display-line-numbers-type 'relative
       scroll-margin 5)
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
@@ -25,6 +25,9 @@
 (map! :n "SPC o t" 'eshell)
 (super-save-mode 1)
 (setq super-save-when-idle t)
+(add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))
+
+(add-to-list 'load-path "~/.emacs.d/manual-packages")
 
 (require 'epa-file)
 (epa-file-enable)
@@ -44,9 +47,9 @@
 
 (setq browse-url-generic-program "/usr/bin/qutebrowser")
 (setq browse-url-browser-function 'browse-url-generic)
-(setq gnutls-verify-error 'nil)
+;; (setq gnutls-verify-error 'nil)
 
-(setq org-directory "~/Dropbox/sci/"
+ (setq org-directory "~/Dropbox/sci/"
        org-roam-directory (concat org-directory "notes/")
        bibtex-completion-bibliography (concat org-directory "lib.bib"))
 
@@ -76,25 +79,7 @@
                           "BUY(b)"
                           "|"
                           "DONE(d!/!)"
-                          "CANCELLED(c)")))
-        ;; (setq org-superstar-headline-bullets-list '("❁" "❃" "✹" "✦"))
-        ;; (setq org-superstar-headline-bullets-list '("❁" "◉" "○" "◦"))
-        (setq org-superstar-headline-bullets-list '("◉" "○" "✹" "◦"))
-        ;; (setq org-superstar-headline-bullets-list '(" "))
-        ;; (setq org-superstar-headline-bullets-list '("♠" "♥" "♦" "♣"))
-        (setq org-superstar-special-todo-items t)
-        (setq org-superstar-todo-bullet-alist '(
-                                                ("TODO" . 9744)
-                                                ("TT"   . 9744)
-                                                ("NEXT" . 9744)
-                                                ("CONFIG" . 9744)
-                                                ("DONE" . 9747)))
-        (setq org-todo-keyword-faces '(
-                                       ("TODO" . "#b16286")
-                                       ("TT"   . "#b16286")
-                                       ("PROJ" . "#83a598")
-                                       ("WAIT" . "#a89984")
-                                       ("SOMEDAY" . "#8ec07c"))))
+                          "CANCELLED(c)"))))
 
 (setq gtd/next-action-head "Next actions"
       gtd/waiting-head "Waiting on"
@@ -129,46 +114,68 @@
   (setq org-n-level-faces 4)
   (setq org-cycle-level-faces nil))
 
+(after! org
+        (setq org-superstar-headline-bullets-list '("◉" "○" "✹" "◦"))
+        ;; Other bullets I liked: "❁" "❃" "✹" "✦" "❁" "◉" "○" "◦" "♠" "♥" "♦" "♣"
+        (setq org-superstar-special-todo-items t)
+        (setq org-superstar-todo-bullet-alist '(
+                                                ("TODO" . 9744)
+                                                ("TT"   . 9744)
+                                                ("NEXT" . 9744)
+                                                ("CONFIG" . 9744)
+                                                ("DONE" . 9747)))
+        (setq org-ellipsis " ▼")
+        (setq org-list-demote-modify-bullet
+              '(("+" . "*")("*" . "-")("-" . "+")))
+        (setq org-todo-keyword-faces '(
+                                       ("TODO" . "#b16286")
+                                       ("TT"   . "#b16286")
+                                       ("PROJ" . "#83a598")
+                                       ("WAIT" . "#a89984")
+                                       ("SOMEDAY" . "#8ec07c"))))
+(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode #'org-pretty-table-mode #'org-appear-mode)
+
 ;; SVG-TAG-MODE
+;; Still not working...
 
-(setq svg-tag-tags
-      '((":TODO:" . ((lambda (tag) (svg-tag-make "TODO"))))))
+;; (require 'svg-tag-mode)
+;; (setq svg-tag-tags
+;;       '(("\\(:[A-Z]+:\\)" . ((lambda (tag)
+;;                                (svg-tag-make tag :beg 1 :end -1))))))
 
-(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode #'org-pretty-table-mode #'org-appear-mode #'prettify-symbols-mode)
-(setq org-ellipsis " ▼")
 ;; (add-hook! 'org-mode-hook #'org-modern-mode)
-(setq org-list-demote-modify-bullet
-      '(("+" . "*")("*" . "-")("-" . "+")))
 ;; displays dashes as bullets, taken from https://mstempl.netlify.app/post/beautify-org-mode/
-(font-lock-add-keywords 'org-mode
-                        '(("^ *\\([-]\\) "
-                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-(font-lock-add-keywords 'org-mode
-                        '(("^ *\\([+]\\) "
-                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "◦"))))))
+;; (font-lock-add-keywords 'org-mode
+;;                         '(("^ *\\([-]\\) "
+;;                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+;; (font-lock-add-keywords 'org-mode
+;;                         '(("^ *\\([+]\\) "
+;;                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "◦"))))))
 ;; prettify symbols, taken from same source as above
-(setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
-                                       ("#+END_SRC" . "†")
-                                       ("#+begin_src" . "†")
-                                       ("#+end_src" . "†")
-                                       (">=" . "≥")
-                                       ("=>" . "⇨")))
-(setq prettify-symbols-unprettify-at-point 'right-edge)
+;; (setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
+;;                                        ("#+END_SRC" . "†")
+;;                                        ("#+begin_src" . "†")
+;;                                        ("#+end_src" . "†")
+;;                                        (">=" . "≥")
+;;                                        ("=>" . "⇨")))
+;; (setq prettify-symbols-unprettify-at-point 'right-edge)
 
 (customize-set-variable 'org-capture-templates '(
-      ("i" "Inbox (Store Link)" entry (file+headline +org-capture-todo-file "Inbox")
-       "* TODO %?\n%i\n%a" :prepend t)
-      ("o" "Inbox (No Link)" entry (file+headline +org-capture-todo-file "Inbox")
-       "* TODO %?\n%i" :prepend t)
-      ("t" "TT" entry (id "cd9ffc7d-d197-4521-b74d-4b1f93b301ca")
+      ("t" "Task")
+      ("tt" "TT" entry (id "cd9ffc7d-d197-4521-b74d-4b1f93b301ca")
        "* TT %?\n%i\n%a" :prepend t)
-      ("p" "Project" entry (id "1e3f82bc-4ed2-4db3-b1d9-0023663d6286")
+      ("ti" "Inbox (Store Link)" entry (file+headline +org-capture-todo-file "Inbox")
+       "* TODO %?\n%i\n%a" :prepend t)
+      ("to" "Inbox (No Link)" entry (file+headline +org-capture-todo-file "Inbox")
+       "* TODO %?\n%i" :prepend t)
+      ("p" "Project")
+      ("pp" "Project" entry (id "1e3f82bc-4ed2-4db3-b1d9-0023663d6286")
        "* PROJ %?\n%i- [ ] Next Action:\n%a" :prepend t)
-      ("b" "Project (Blog)" entry (id "1e3f82bc-4ed2-4db3-b1d9-0023663d6286")
+      ("pb" "Project (Blog)" entry (id "1e3f82bc-4ed2-4db3-b1d9-0023663d6286")
        "* PROJ %? :blog:\n%i- [ ] Next Action:\n%a" :prepend t)
-      ("f" "Project (Fiction)" entry (id "1e3f82bc-4ed2-4db3-b1d9-0023663d6286")
+      ("pf" "Project (Fiction)" entry (id "1e3f82bc-4ed2-4db3-b1d9-0023663d6286")
        "* PROJ %? :fiction:\n%i- [ ] Next Action:\n%a" :prepend t)
-      ("c" "Project (Config)" entry (id "1e3f82bc-4ed2-4db3-b1d9-0023663d6286")
+      ("pc" "Project (Config)" entry (id "1e3f82bc-4ed2-4db3-b1d9-0023663d6286")
        "* PROJ %? :config:\n%i- [ ] Next Action:\n%a" :prepend t)))
 (after! org-roam
   (setq org-roam-capture-templates
@@ -182,18 +189,8 @@
                               "#+title: ${title}\n")
            :unnarrowed t
            :jump-to-captured t)
-          ("a" "aws" plain "#+created: %u\n#+filetags:training:SSA-CO2\n"
-           :target (file+head "%<%Y%m%d>-${slug}.org"
-                              "#+title: ${title}\n")
-           :unnarrowed t
-           :jump-to-captured t)
           ("r" "reference" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
            :target (file+head "ref/%<%Y%m%d>-${slug}.org"
-                              "#+title: ${title}\n")
-           :unnarrowed t
-           :jump-to-captured t)
-          ("c" "ccna" plain "#+created: %u\n#+filetags:training:ccna\n"
-           :target (file+head "%<%Y%m%d>-${slug}.org"
                               "#+title: ${title}\n")
            :unnarrowed t
            :jump-to-captured t)
@@ -201,29 +198,45 @@
            :target (file+head "%<%Y%m%d>-${slug}.org"
                               "#+title: ${title}\n")
            :unnarrowed t)
-          ;; ("p" "python" plain "#+created: %u\n#+filetags: python\n[[id:65c3183f-70ff-4d85-a7fc-e6cd54b35306][python]]\n\n%?"
-          ;;  :target (file+head "python-${slug}.org"
-          ;;                     "#+title: ${title}\n")
-          ;;  :unnarrowed t)
-          ("w" "witness" plain "#+created: %u\n#+filetags: %^G\n\n%?"
-           :target (file+head "witness_${slug}.org"
-                              "#+title: ${title}\n")
-           :jump-to-captured t
-           :unnarrowed t)
-          ("b" "bridge" plain "#+filetags: bridge\n\n* Question :drill:\n%?\n** Answer"
-           :target (file+head "bridge/${slug}.org"
-                              "#+title: ${title}\n")
-           :unnarrowed t)
+          ;; Other roam directories
           ("p" "work person" plain (file "~/Dropbox/work/templates/people.org")
            :target (file "${slug}.org.gpg")
            :unnarrowed t)
-          ("t" "test" plain (file "~/Dropbox/sci/notes/templates/test.org")
+          ("l" "The Landlord")
+          ("lc" "llord - chapter" plain (file "~/Dropbox/llord/templates/chapt.org")
+           :target (file+head "chapters/${slug}.org"
+                              "#+title: ${title}\n")
+           :jump-to-captured t
+           :unnarrowed t)
+          ("lp" "llord - character" plain (file "~/Dropbox/llord/templates/char.org")
            :target (file+head "%<%Y%m%d>-${slug}.org"
                               "#+title: ${title}\n")
-            :unnarrowed t)))
+           :jump-to-captured t
+           :unnarrowed t)))
     (setq org-roam-dailies-capture-templates
         '(("d" "default" entry "* %<%H:%M> -  [[id:477e986a-2fba-4982-8158-b309baf0b14b][%?]]"
             :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")))))
+          ;;;;;;;;;;;;;;;;;;;
+          ;; Unused
+          ;; ("a" "aws" plain "#+created: %u\n#+filetags:training:SSA-CO2\n"
+          ;;  :target (file+head "%<%Y%m%d>-${slug}.org"
+          ;;                     "#+title: ${title}\n")
+          ;;  :unnarrowed t
+          ;;  :jump-to-captured t)
+          ;; ("c" "ccna" plain "#+created: %u\n#+filetags:training:ccna\n"
+          ;;  :target (file+head "%<%Y%m%d>-${slug}.org"
+          ;;                     "#+title: ${title}\n")
+          ;;  :unnarrowed t
+          ;;  :jump-to-captured t)
+          ;; ("b" "bridge" plain "#+filetags: bridge\n\n* Question :drill:\n%?\n** Answer"
+          ;;  :target (file+head "bridge/${slug}.org"
+          ;;                     "#+title: ${title}\n")
+          ;;  :unnarrowed t)
+          ;; ("t" "test" plain (file "~/Dropbox/sci/notes/templates/test.org")
+          ;;  :target (file+head "%<%Y%m%d>-${slug}.org"
+          ;;                     "#+title: ${title}\n")
+          ;;   :unnarrowed t)))
+          ;;;;;;;
 
 (use-package! org-roam
   :init
@@ -310,23 +323,34 @@
 (custom-set-faces!
   '(doom-dashboard-banner :foreground "slategray"))
 
-(setq mu4e-sent-folder "/[eoin].Sent Mail")
-(setq mu4e-trash-folder "/[eoin].Bin")
-(setq mu4e-get-mail-command "mbsync -a"
-      ;; get emails and index every 5 minutes
-      mu4e-update-interval 300
-      ;; send emails with format=flowed
-      mu4e-compose-format-flowed t
-      ;; don't need to run cleanup after indexing for gmail
-      mu4e-index-cleanup nil
-      mu4e-index-lazy-check t
-      ;; more sensible date format
-      mu4e-headers-date-format "%d.%m.%y")
+(after! mu4e
+(setq mu4e-get-mail-command "offlineimap")
+(setq mu4e-update-interval 300)
+(setq mail-user-agent 'mu4e-user-agent)
+
+(setq mu4e-sent-folder "/[Gmail].Sent Mail")
+(setq mu4e-drafts-folder "/[Gmail].Drafts")
+(setq mu4e-trash-folder "/[Gmail].Bin")
+(setq mu4e-maildir-shortcuts
+      '((:maildir "/INBOX"      :key ?i)))
+(setq user-mail-address "eoincarney0@gmail.com"
+      user-full-name "Eoin Carney")
 (setq sendmail-program "/usr/bin/msmtp"
       send-mail-function 'smtpmail-send-it
       message-sendmail-f-is-evil t
-      message-sendmail-extra-arguments '("-a" "eoincarney0@gmail.com")
-      message-send-mail-function 'message-send-mail-with-sendmail)
+      message-sendmail-extra-arguments '("--read-envelope-from")
+      message-send-mail-function 'message-send-mail-with-sendmail))
+;; (setq auth-sources '("~/.imap_authinfo.gpg"))
+;; (setq message-send-mail-function 'smtpmail-send-it
+;;       starttls-use-gnutls t
+;;       smtpmail-starttls-credentials
+;;       '(("smtp.gmail.com" 587 nil nil))
+;;       smtpmail-auth-credentials
+;;       (expand-file-name "~/.imap_authinfo.gpg")
+;;       smtpmail-default-smtp-server "smtp.gmail.com"
+;;       smtpmail-smtp-server "smtp.gmail.com"
+;;       smtpmail-smtp-service 587
+;;       smtpmail-debug-info t)
 
 (defcustom centered-point-position 0.45
   "Percentage of screen where `centered-point-mode' keeps point."
@@ -367,6 +391,17 @@
 ;; (add-hook! 'writeroom-mode-enable-hook '(lambda () (display-line-numbers-mode -1)))
 (remove-hook! (writeroom-mode) #'+zen-enable-mixed-pitch-mode-h) ;; added this since mixed-pitch is defaul on most 'writing' files (org, md). Otherwise, when exiting writeroom mode, font switched back to fixed-pitch
 
+(flycheck-define-checker vale
+  "A checker for prose"
+  :command ("vale" "--output" "line"
+            source)
+  :standard-input nil
+  :error-patterns
+  ((error line-start (file-name) ":" line ":" column ":" (id (one-or-more (not (any ":")))) ":" (message) line-end))
+  :modes (markdown-mode org-mode text-mode)
+  )
+(add-to-list 'flycheck-checkers 'vale 'append)
+
 (defun tildechat ()
     (interactive)
     (erc-tls :server "irc.tilde.chat"
@@ -385,8 +420,3 @@
              :client-certificate
              '("/home/eoin/.certs/erc.key"
                "/home/eoin/.certs/erc.crt")))
-
-;; (require 'ivy-posframe)
-;; ;; display at `ivy-posframe-style'
-;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display)))
-;; (ivy-posframe-mode 1)

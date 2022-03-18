@@ -91,7 +91,7 @@
 (package! ivy-posframe)
 (package! org-modern
   :recipe (:host github :repo "minad/org-modern"))
-(package! svg-tag-mode
-  :recipe (:host github :repo "rougier/svg-tag-mode"))
+(package! svg-lib)
+(package! svg-tag-mode)
 (package! mermaid-mode) ; for graphs
 (package! ledger-mode)

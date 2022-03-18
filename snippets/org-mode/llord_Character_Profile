@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: Character Profile
+# uuid: char_profile
+# key: Profile
+# condition: t
+# --
+* Profile
+- Age :: $1
+- Gender :: $2
+- Occupation :: $3
+- Appearance :: $4
+- Relationships :: $5
+- Motivation :: $6
+* Notes
