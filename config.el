@@ -9,7 +9,7 @@
 (setq-default line-spacing 0.3)
 
 ;; (setq doom-theme 'doom-miramare)
-(setq doom-theme 'doom-dracula)
+(setq doom-theme 'doom-nord-light)
 ;; (setq doom-theme 'doom-acario-light)
 
 ;; (setq doom-modeline-enable-word-count t)
