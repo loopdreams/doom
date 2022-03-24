@@ -23,6 +23,8 @@
 *** https://sachachua.com/blog/feed/
 *** https://www.lunduke.com/feed/
 *** https://astrid.tech/atom.xml
+*** https://ranprieur.com/feed.php
+*** https://helpdeskheadesk.net/index.xml
 ** Philosophy :philosophy:
 *** https://bluelabyrinths.com/feed/
 *** https://www.philosophy2u.com/blog-feed.xml
