@@ -12,6 +12,33 @@
 ;; (setq doom-theme 'doom-nord-light)
 (setq doom-theme 'modus-operandi)
 
+(defun doom-dashboard-draw-ascii-emacs-banner-fn ()
+    (let* ((banner
+    '(" Y88b      /     "
+    "  Y88b    /      "
+    "   Y88b  /       "
+    "    Y888/        "
+    "     Y8/         "
+    "      Y          "))
+
+    (longest-line (apply #'max (mapcar #'length banner))))
+    (put-text-property
+    (point)
+    (dolist (line banner (point))
+    (insert (+doom-dashboard--center
+    +doom-dashboard--width
+    (concat
+    line (make-string (max 0 (- longest-line (length line)))
+    32)))
+    "\n"))
+    'face 'doom-dashboard-banner)))
+
+;; (unless (display-graphic-p) ; for some reason this messes up the graphical splash screen atm
+    (setq +doom-dashboard-ascii-banner-fn #'doom-dashboard-draw-ascii-emacs-banner-fn)
+
+(custom-set-faces!
+    '(doom-dashboard-banner :foreground "slategray"))
+
 ;; (setq doom-modeline-enable-word-count t)
 (display-time-mode 1)
 (add-to-list 'default-frame-alist '(alpha . 90))
@@ -21,11 +48,9 @@
 (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
 (add-to-list 'auto-mode-alist '("\\.gmi\\'" . markdown-mode))
 (add-hook! markdown-mode 'mixed-pitch-mode)
-(setq elpher-start-page-url "gemini://warmedal.se/~antenna/")
 (map! :n "SPC o t" 'eshell)
 (super-save-mode 1)
 (setq super-save-when-idle t)
-(add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))
 (setq display-line-numbers-type nil)
 
 (add-to-list 'load-path "~/.emacs.d/manual-packages")
@@ -48,13 +73,12 @@
 
 (setq browse-url-generic-program "/usr/bin/qutebrowser")
 (setq browse-url-browser-function 'browse-url-generic)
-;; (setq gnutls-verify-error 'nil)
+;; (setq gnutls-verify-error 'nil) ;; not necessary any more
+(setq elpher-start-page-url "gemini://warmedal.se/~antenna/")
 
     (setq org-directory "~/Dropbox/sci/"
     org-roam-directory (concat org-directory "notes/")
     bibtex-completion-bibliography (concat org-directory "lib.bib"))
-
-(setq org-roam-completion-everywhere t)
 
 (add-to-list 'org-modules 'org-id)
 (require 'ox-gemini)
@@ -238,6 +262,7 @@
     (setq org-roam-graph-viewer "/usr/bin/qutebrowser")
     :config
     (org-roam-setup))
+(setq org-roam-completion-everywhere t)
 
 (add-hook! 'org-roam-mode-hook (add-to-list 'display-buffer-alist
     '("\\*org-roam\\*"
@@ -290,33 +315,6 @@
     (elfeed-goodies/setup)
     (setq elfeed-goodies/entry-pane-size 0.7)
 
-(defun doom-dashboard-draw-ascii-emacs-banner-fn ()
-    (let* ((banner
-    '(" Y88b      /     "
-    "  Y88b    /      "
-    "   Y88b  /       "
-    "    Y888/        "
-    "     Y8/         "
-    "      Y          "))
-
-    (longest-line (apply #'max (mapcar #'length banner))))
-    (put-text-property
-    (point)
-    (dolist (line banner (point))
-    (insert (+doom-dashboard--center
-    +doom-dashboard--width
-    (concat
-    line (make-string (max 0 (- longest-line (length line)))
-    32)))
-    "\n"))
-    'face 'doom-dashboard-banner)))
-
-;; (unless (display-graphic-p) ; for some reason this messes up the graphical splash screen atm
-    (setq +doom-dashboard-ascii-banner-fn #'doom-dashboard-draw-ascii-emacs-banner-fn)
-
-(custom-set-faces!
-    '(doom-dashboard-banner :foreground "slategray"))
-
 (after! mu4e
 (setq mu4e-get-mail-command "offlineimap")
 (setq mu4e-update-interval 300)
@@ -334,17 +332,6 @@
     message-sendmail-f-is-evil t
     message-sendmail-extra-arguments '("--read-envelope-from")
     message-send-mail-function 'message-send-mail-with-sendmail))
-;; (setq auth-sources '("~/.imap_authinfo.gpg"))
-;; (setq message-send-mail-function 'smtpmail-send-it
-;;       starttls-use-gnutls t
-;;       smtpmail-starttls-credentials
-;;       '(("smtp.gmail.com" 587 nil nil))
-;;       smtpmail-auth-credentials
-;;       (expand-file-name "~/.imap_authinfo.gpg")
-;;       smtpmail-default-smtp-server "smtp.gmail.com"
-;;       smtpmail-smtp-server "smtp.gmail.com"
-;;       smtpmail-smtp-service 587
-;;       smtpmail-debug-info t)
 
 (defcustom centered-point-position 0.45
     "Percentage of screen where `centered-point-mode' keeps point."
@@ -416,8 +403,11 @@
     '("/home/eoin/.certs/erc.key"
     "/home/eoin/.certs/erc.crt")))
 
-(defun ledger-clean-after-save ()
-    (interactive)
-    (when (eq major-mode 'ledger-mode)
-    (ledger-mode-clean-buffer)))
-(add-hook 'after-save-hook #'ledger-clean-after-save)
+(defun ledger-clean-and-save ()
+  (interactive)
+  (ledger-mode-clean-buffer)
+  (save-buffer))
+(map! :localleader
+      (:map ledger-mode-map
+      "c" #'ledger-clean-and-save))
+(add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))
