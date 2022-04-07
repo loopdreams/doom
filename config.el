@@ -1,31 +1,57 @@
 (setq user-full-name "Eoin Carney"
-      user-mail-address "eoincarney0@gmail.com")
+    user-mail-address "eoincarney0@gmail.com")
 
 (setq doom-font
-      (font-spec :family "GoMono Nerd Font" :size 16)
-      ;; (font-spec :family "FuraMono Nerd Font" :size 16)
-      mixed-pitch-set-height 20
-      doom-variable-pitch-font (font-spec :family "ETBembo" :size 20))
+    (font-spec :family "GoMono Nerd Font" :size 16)
+    ;; (font-spec :family "FuraMono Nerd Font" :size 16)
+    mixed-pitch-set-height 20
+    doom-variable-pitch-font (font-spec :family "ETBembo" :size 20))
 (setq-default line-spacing 0.3)
 
 ;; (setq doom-theme 'doom-miramare)
 ;; (setq doom-theme 'doom-nord-light)
 (setq doom-theme 'modus-operandi)
 
+(defun doom-dashboard-draw-ascii-emacs-banner-fn ()
+    (let* ((banner
+    '(" Y88b      /     "
+    "  Y88b    /      "
+    "   Y88b  /       "
+    "    Y888/        "
+    "     Y8/         "
+    "      Y          "))
+
+    (longest-line (apply #'max (mapcar #'length banner))))
+    (put-text-property
+    (point)
+    (dolist (line banner (point))
+    (insert (+doom-dashboard--center
+    +doom-dashboard--width
+    (concat
+    line (make-string (max 0 (- longest-line (length line)))
+    32)))
+    "\n"))
+    'face 'doom-dashboard-banner)))
+
+;; (unless (display-graphic-p) ; for some reason this messes up the graphical splash screen atm
+    (setq +doom-dashboard-ascii-banner-fn #'doom-dashboard-draw-ascii-emacs-banner-fn)
+
+(custom-set-faces!
+    '(doom-dashboard-banner :foreground "slategray"))
+
 ;; (setq doom-modeline-enable-word-count t)
 (display-time-mode 1)
 (add-to-list 'default-frame-alist '(alpha . 90))
 (setq display-line-numbers-type 'relative
-      scroll-margin 5)
+    scroll-margin 5)
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
 (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
 (add-to-list 'auto-mode-alist '("\\.gmi\\'" . markdown-mode))
 (add-hook! markdown-mode 'mixed-pitch-mode)
-(setq elpher-start-page-url "gemini://warmedal.se/~antenna/")
 (map! :n "SPC o t" 'eshell)
 (super-save-mode 1)
 (setq super-save-when-idle t)
-(add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))
+(setq display-line-numbers-type nil)
 
 (add-to-list 'load-path "~/.emacs.d/manual-packages")
 
@@ -39,109 +65,101 @@
 (setq org-crypt-key nil)
 
 (setq evil-vsplit-window-right t
-      evil-split-window-below t)
+    evil-split-window-below t)
 (defadvice! prompt-for-buffer (&rest _)
-  :after '(evil-window-split evil-window-vsplit)
-  (+ivy/switch-buffer))
+    :after '(evil-window-split evil-window-vsplit)
+    (+ivy/switch-buffer))
 (setq +ivy-buffer-preview t)
 
 (setq browse-url-generic-program "/usr/bin/qutebrowser")
 (setq browse-url-browser-function 'browse-url-generic)
-;; (setq gnutls-verify-error 'nil)
+;; (setq gnutls-verify-error 'nil) ;; not necessary any more
+(setq elpher-start-page-url "gemini://warmedal.se/~antenna/")
 
-(setq org-directory "~/Dropbox/sci/"
-       org-roam-directory (concat org-directory "notes/")
-       bibtex-completion-bibliography (concat org-directory "lib.bib"))
-
-(setq org-roam-completion-everywhere t)
+    (setq org-directory "~/Dropbox/sci/"
+    org-roam-directory (concat org-directory "notes/")
+    bibtex-completion-bibliography (concat org-directory "lib.bib"))
 
 (add-to-list 'org-modules 'org-id)
 (require 'ox-gemini)
 
 (map!
- :n "<f5>" 'org-agenda
- :n "<f6>" (lambda() (interactive)(find-file (concat org-directory "todo.org")))
- :n "<f7>" (lambda() (interactive)(find-file (concat org-directory "notes/20211019-projects.org")))
- :n "<f8>" (lambda() (interactive)(find-file (concat org-directory "notes/20211019-actions.org")))
- :n "<f9>" '+calendar/open-calendar)
+    :n "<f5>" 'org-agenda
+    :n "<f6>" (lambda() (interactive)(find-file (concat org-directory "todo.org")))
+    :n "<f7>" (lambda() (interactive)(find-file (concat org-directory "notes/20211019-projects.org")))
+    :n "<f8>" (lambda() (interactive)(find-file (concat org-directory "notes/20211019-actions.org")))
+    :n "<f9>" '+calendar/open-calendar)
 
 (after! org
-        (setq org-todo-keywords
-              '((sequence "TODO(t)"
-                          "TT(k)"
-                          "PROJ(p)"
-                          "NEXT(n)"
-                          "WAIT(w)"
-                          "SOMEDAY(s)"
-                          "RLX(r)"
-                          "BRIDGE"
-                          "STUCK(x)"
-                          "BUY(b)"
-                          "|"
-                          "DONE(d!/!)"
-                          "CANCELLED(c)"))))
+    (setq org-todo-keywords
+    '((sequence "TODO(t)"
+    "TT"
+    "PROJ(p)"
+    "NEXT(n)"
+    "PROG(i!/!)"
+    "WAIT(w)"
+    "SOMEDAY(s)"
+    "RLX(r)"
+    "STUCK(x)"
+    "BUY(b)"
+    "|"
+    "DONE(d!/!)"
+    "CANCELLED(c!/!)"))))
 
 (setq gtd/next-action-head "Next actions"
-      gtd/waiting-head "Waiting on"
-      gtd/project-head "Projects"
-      gtd/shop-head "Shopping"
-      gtd/someday-head "Someday/maybe")
+    gtd/waiting-head "Waiting on"
+    gtd/project-head "Projects"
+    gtd/shop-head "Shopping"
+    gtd/someday-head "Someday/maybe")
 
 (setq org-agenda-custom-commands
-      '(
-        ("g" "GTD view"
-         (
-          (todo "TT" ((org-agenda-overriding-header gtd/next-action-head)))
-          (agenda "" ((org-agenda-span 'day)
-                      (org-agenda-start-day 'nil))) ;; this is needed because doom starts agenda with day set to -3d
-          (todo "WAIT" ((org-agenda-overriding-header gtd/waiting-head)))
-          (todo "PROJ" ((org-agenda-overriding-header gtd/project-head)))
-          (todo "BUY"  ((org-agenda-overriding-header gtd/shop-head)))
-          (todo "SOMEDAY" ((org-agenda-overriding-header gtd/someday-head)))
-        ))))
+    '(
+    ("g" "GTD view"
+    (
+    (todo "TT" ((org-agenda-overriding-header gtd/next-action-head)))
+    (agenda "" ((org-agenda-span 'day)
+    (org-agenda-start-day 'nil))) ;; this is needed because doom starts agenda with day set to -3d
+    (todo "PROJ" ((org-agenda-overriding-header gtd/project-head)))
+    (todo "WAIT" ((org-agenda-overriding-header gtd/waiting-head)))
+    (todo "BUY"  ((org-agenda-overriding-header gtd/shop-head)))
+    (todo "SOMEDAY" ((org-agenda-overriding-header gtd/someday-head)))
+    ))))
 
-(add-hook! org-mode
-  (setq org-hidden-keywords '(title))
-  (set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default)
-  (set-face-attribute 'org-level-7 nil :inherit 'org-level-8)
-  (set-face-attribute 'org-level-6 nil :inherit 'org-level-8)
-  (set-face-attribute 'org-level-5 nil :inherit 'org-level-8)
-  (set-face-attribute 'org-level-4 nil :inherit 'org-level-8 :height 1.1)
-  (set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.12)
-  (set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.25)
-  (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.4)
-  (set-face-attribute 'org-document-title nil :inherit 'org-level-8 :height 2.0 :foreground 'unspecified)
-  (setq org-n-level-faces 4)
-  (setq org-cycle-level-faces nil))
-
-(after! org
-        (setq org-superstar-headline-bullets-list '("◉" "○" "✹" "◦"))
-        ;; Other bullets I liked: "❁" "❃" "✹" "✦" "❁" "◉" "○" "◦" "♠" "♥" "♦" "♣"
-        (setq org-superstar-special-todo-items t)
-        (setq org-superstar-todo-bullet-alist '(
-                                                ("TODO" . 9744)
-                                                ("TT"   . 9744)
-                                                ("NEXT" . 9744)
-                                                ("CONFIG" . 9744)
-                                                ("DONE" . 9747)))
-        (setq org-ellipsis " ▼")
-        (setq org-list-demote-modify-bullet
-              '(("+" . "*")("*" . "-")("-" . "+")))
-        (setq org-todo-keyword-faces '(
-                                       ("TODO" . "#b16286")
-                                       ("TT"   . "#b16286")
-                                       ("PROJ" . "#83a598")
-                                       ("WAIT" . "#a89984")
-                                       ("SOMEDAY" . "#8ec07c"))))
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode #'org-pretty-table-mode #'org-appear-mode)
 
-;; SVG-TAG-MODE
-;; Still not working...
+(add-hook! org-mode
+    (setq org-hidden-keywords '(title))
+    (set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default)
+    (set-face-attribute 'org-level-7 nil :inherit 'org-level-8)
+    (set-face-attribute 'org-level-6 nil :inherit 'org-level-8)
+    (set-face-attribute 'org-level-5 nil :inherit 'org-level-8)
+    (set-face-attribute 'org-level-4 nil :inherit 'org-level-8 :height 1.1)
+    (set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.12)
+    (set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.25)
+    (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.4)
+    (set-face-attribute 'org-document-title nil :inherit 'org-level-8 :height 2.0 :foreground 'unspecified)
+    (setq org-n-level-faces 4)
+    (setq org-cycle-level-faces nil))
 
-;; (require 'svg-tag-mode)
-;; (setq svg-tag-tags
-;;       '(("\\(:[A-Z]+:\\)" . ((lambda (tag)
-;;                                (svg-tag-make tag :beg 1 :end -1))))))
+(after! org
+    (setq org-superstar-headline-bullets-list '("◉" "○" "✹" "◦"))
+    ;; Other bullets I liked: "❁" "❃" "✹" "✦" "❁" "◉" "○" "◦" "♠" "♥" "♦" "♣"
+    (setq org-superstar-special-todo-items t)
+    (setq org-superstar-todo-bullet-alist '(
+    ("TODO" . 9744)
+    ("TT"   . 9744)
+    ("NEXT" . 9744)
+    ("CONFIG" . 9744)
+    ("DONE" . 9747)))
+    (setq org-ellipsis " ▼")
+    (setq org-list-demote-modify-bullet
+    '(("+" . "*")("*" . "-")("-" . "+")))
+    (setq org-todo-keyword-faces '(
+    ("TODO" . "#b16286")
+    ("TT"   . "#b16286")
+    ("PROJ" . "#83a598")
+    ("WAIT" . "#a89984")
+    ("SOMEDAY" . "#8ec07c"))))
 
 ;; (add-hook! 'org-mode-hook #'org-modern-mode)
 ;; displays dashes as bullets, taken from https://mstempl.netlify.app/post/beautify-org-mode/
@@ -161,167 +179,141 @@
 ;; (setq prettify-symbols-unprettify-at-point 'right-edge)
 
 (customize-set-variable 'org-capture-templates '(
-      ("t" "Task")
-      ("tt" "TT" entry (id "cd9ffc7d-d197-4521-b74d-4b1f93b301ca")
-       "* TT %?\n%i\n%a" :prepend t)
-      ("ti" "Inbox (Store Link)" entry (file+headline +org-capture-todo-file "Inbox")
-       "* TODO %?\n%i\n%a" :prepend t)
-      ("to" "Inbox (No Link)" entry (file+headline +org-capture-todo-file "Inbox")
-       "* TODO %?\n%i" :prepend t)
-      ("p" "Project")
-      ("pp" "Project" entry (id "1e3f82bc-4ed2-4db3-b1d9-0023663d6286")
-       "* PROJ %?\n%i- [ ] Next Action:\n%a" :prepend t)
-      ("pb" "Project (Blog)" entry (id "1e3f82bc-4ed2-4db3-b1d9-0023663d6286")
-       "* PROJ %? :blog:\n%i- [ ] Next Action:\n%a" :prepend t)
-      ("pf" "Project (Fiction)" entry (id "1e3f82bc-4ed2-4db3-b1d9-0023663d6286")
-       "* PROJ %? :fiction:\n%i- [ ] Next Action:\n%a" :prepend t)
-      ("pc" "Project (Config)" entry (id "1e3f82bc-4ed2-4db3-b1d9-0023663d6286")
-       "* PROJ %? :config:\n%i- [ ] Next Action:\n%a" :prepend t)))
+    ("t" "Task")
+    ("tt" "TT" entry (id "cd9ffc7d-d197-4521-b74d-4b1f93b301ca")
+    "* TT %?\n%i\n%a" :prepend t)
+    ("ti" "Inbox (Store Link)" entry (file+headline +org-capture-todo-file "Inbox")
+    "* TODO %?\n%i\n%a" :prepend t)
+    ("to" "Inbox (No Link)" entry (file+headline +org-capture-todo-file "Inbox")
+    "* TODO %?\n%i" :prepend t)
+    ("p" "Project")
+    ("pp" "Project" entry (id "a359813e-8bde-463d-8406-0d5fa76357dd")
+    "* PROJ %?\n%i- [ ] Next Action:\n%a" :prepend t)
+    ("pb" "Project (Blog)" entry (id "a359813e-8bde-463d-8406-0d5fa76357dd")
+    "* PROJ %? :blog:\n%i- [ ] Next Action:\n%a" :prepend t)
+    ("pf" "Project (Fiction)" entry (id "a359813e-8bde-463d-8406-0d5fa76357dd")
+    "* PROJ %? :fiction:\n%i- [ ] Next Action:\n%a" :prepend t)
+    ("pc" "Project (Config)" entry (id "a359813e-8bde-463d-8406-0d5fa76357dd")
+    "* PROJ %? :config:\n%i- [ ] Next Action:\n%a" :prepend t)))
 (after! org-roam
-  (setq org-roam-capture-templates
-        '(("d" "default" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
-           :target (file+head "%<%Y%m%d>-${slug}.org"
-                              "#+title: ${title}\n")
-           :unnarrowed t
-           :jump-to-captured t)
-          ("e" "encrypted" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
-           :target (file+head "%<%Y%m%d>-${slug}.org.gpg"
-                              "#+title: ${title}\n")
-           :unnarrowed t
-           :jump-to-captured t)
-          ("r" "reference" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
-           :target (file+head "ref/%<%Y%m%d>-${slug}.org"
-                              "#+title: ${title}\n")
-           :unnarrowed t
-           :jump-to-captured t)
-          ("q" "quick" plain "#+created: %u\n#+filetags: %^G\n\n%?"
-           :target (file+head "%<%Y%m%d>-${slug}.org"
-                              "#+title: ${title}\n")
-           :unnarrowed t)
-          ;; Other roam directories
-          ("p" "work person" plain (file "~/Dropbox/work/templates/people.org")
-           :target (file "${slug}.org.gpg")
-           :unnarrowed t)
-          ("l" "The Landlord")
-          ("lc" "llord - chapter" plain (file "~/Dropbox/llord/templates/chapt.org")
-           :target (file+head "chapters/${slug}.org"
-                              "#+title: ${title}\n")
-           :jump-to-captured t
-           :unnarrowed t)
-          ("lp" "llord - character" plain (file "~/Dropbox/llord/templates/char.org")
-           :target (file+head "%<%Y%m%d>-${slug}.org"
-                              "#+title: ${title}\n")
-           :jump-to-captured t
-           :unnarrowed t)))
+    (setq org-roam-capture-templates
+    '(("d" "default" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
+    :target (file+head "%<%Y%m%d>-${slug}.org"
+    "#+title: ${title}\n")
+    :unnarrowed t
+    :jump-to-captured t)
+    ("e" "encrypted" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
+    :target (file+head "%<%Y%m%d>-${slug}.org.gpg"
+    "#+title: ${title}\n")
+    :unnarrowed t
+    :jump-to-captured t)
+    ("r" "reference" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
+    :target (file+head "ref/%<%Y%m%d>-${slug}.org"
+    "#+title: ${title}\n")
+    :unnarrowed t
+    :jump-to-captured t)
+    ("q" "quick" plain "#+created: %u\n#+filetags: %^G\n\n%?"
+    :target (file+head "%<%Y%m%d>-${slug}.org"
+    "#+title: ${title}\n")
+    :unnarrowed t)
+    ;; Other roam directories
+    ("p" "work person" plain (file "~/Dropbox/work/templates/people.org")
+    :target (file "${slug}.org.gpg")
+    :unnarrowed t)
+    ("l" "The Landlord")
+    ("lc" "llord - chapter" plain (file "~/Dropbox/llord/templates/chapt.org")
+    :target (file+head "chapters/${slug}.org"
+    "#+title: ${title}\n")
+    :jump-to-captured t
+    :unnarrowed t)
+    ("lp" "llord - character" plain (file "~/Dropbox/llord/templates/char.org")
+    :target (file+head "%<%Y%m%d>-${slug}.org"
+    "#+title: ${title}\n")
+    :jump-to-captured t
+    :unnarrowed t)))
     (setq org-roam-dailies-capture-templates
-        '(("d" "default" entry "* %<%H:%M> -  [[id:477e986a-2fba-4982-8158-b309baf0b14b][%?]]"
-            :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")))))
-          ;;;;;;;;;;;;;;;;;;;
-          ;; Unused
-          ;; ("a" "aws" plain "#+created: %u\n#+filetags:training:SSA-CO2\n"
-          ;;  :target (file+head "%<%Y%m%d>-${slug}.org"
-          ;;                     "#+title: ${title}\n")
-          ;;  :unnarrowed t
-          ;;  :jump-to-captured t)
-          ;; ("c" "ccna" plain "#+created: %u\n#+filetags:training:ccna\n"
-          ;;  :target (file+head "%<%Y%m%d>-${slug}.org"
-          ;;                     "#+title: ${title}\n")
-          ;;  :unnarrowed t
-          ;;  :jump-to-captured t)
-          ;; ("b" "bridge" plain "#+filetags: bridge\n\n* Question :drill:\n%?\n** Answer"
-          ;;  :target (file+head "bridge/${slug}.org"
-          ;;                     "#+title: ${title}\n")
-          ;;  :unnarrowed t)
-          ;; ("t" "test" plain (file "~/Dropbox/sci/notes/templates/test.org")
-          ;;  :target (file+head "%<%Y%m%d>-${slug}.org"
-          ;;                     "#+title: ${title}\n")
-          ;;   :unnarrowed t)))
-          ;;;;;;;
+    '(("d" "default" entry "* %<%H:%M> -  [[id:477e986a-2fba-4982-8158-b309baf0b14b][%?]]"
+    :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")))))
+    ;;;;;;;;;;;;;;;;;;;
+    ;; Unused
+    ;; ("a" "aws" plain "#+created: %u\n#+filetags:training:SSA-CO2\n"
+    ;;  :target (file+head "%<%Y%m%d>-${slug}.org"
+    ;;                     "#+title: ${title}\n")
+    ;;  :unnarrowed t
+    ;;  :jump-to-captured t)
+    ;; ("c" "ccna" plain "#+created: %u\n#+filetags:training:ccna\n"
+    ;;  :target (file+head "%<%Y%m%d>-${slug}.org"
+    ;;                     "#+title: ${title}\n")
+    ;;  :unnarrowed t
+    ;;  :jump-to-captured t)
+    ;; ("b" "bridge" plain "#+filetags: bridge\n\n* Question :drill:\n%?\n** Answer"
+    ;;  :target (file+head "bridge/${slug}.org"
+    ;;                     "#+title: ${title}\n")
+    ;;  :unnarrowed t)
+    ;; ("t" "test" plain (file "~/Dropbox/sci/notes/templates/test.org")
+    ;;  :target (file+head "%<%Y%m%d>-${slug}.org"
+    ;;                     "#+title: ${title}\n")
+    ;;   :unnarrowed t)))
+    ;;;;;;;
 
 (use-package! org-roam
-  :init
-  (setq org-roam-v2-ack t)
-  (setq org-roam-graph-viewer "/usr/bin/qutebrowser")
-  :config
-  (org-roam-setup))
+    :init
+    (setq org-roam-v2-ack t)
+    (setq org-roam-graph-viewer "/usr/bin/qutebrowser")
+    :config
+    (org-roam-setup))
+(setq org-roam-completion-everywhere t)
 
 (add-hook! 'org-roam-mode-hook (add-to-list 'display-buffer-alist
-             '("\\*org-roam\\*"
-               (display-buffer-in-side-window)
-               (side . right)
-               (slot . 0)
-               (window-width . 0.33)
-               (window-parameters . ((no-other-window . t)
-                                     (no-delete-other-windows . t))))))
+    '("\\*org-roam\\*"
+    (display-buffer-in-side-window)
+    (side . right)
+    (slot . 0)
+    (window-width . 0.33)
+    (window-parameters . ((no-other-window . t)
+    (no-delete-other-windows . t))))))
 
 (map! :map org-roam-mode-map
-      :leader
-      :prefix "r"
-      :desc "Find Note"         "r"     'org-roam-node-find
-      :desc "Insert Note"       "i"     'org-roam-node-insert
-      :desc "Toggle Buffer"     "b"     'org-roam-buffer-toggle
-      :desc "Add Tag"           "t"     'org-roam-tag-add
-      :desc "Bibtex Link"       "c"     'orb-insert-link)
+    :leader
+    :prefix "r"
+    :desc "Find Note"         "r"     'org-roam-node-find
+    :desc "Insert Note"       "i"     'org-roam-node-insert
+    :desc "Toggle Buffer"     "b"     'org-roam-buffer-toggle
+    :desc "Add Tag"           "t"     'org-roam-tag-add
+    :desc "Bibtex Link"       "c"     'orb-insert-link)
 (map! :map org-roam-mode-map
-      :leader
-      :prefix "r d"
-      :desc "Daily Capture"     "c"     'org-roam-dailies-capture-today
-      :desc "Daily Find"        "f"     'org-roam-dailies-find-directory
-      :desc "Daily Today"       "t"     'org-roam-dailies-find-today
-      :desc "Daily Date"        "d"     'org-roam-dailies-goto-date)
+    :leader
+    :prefix "r d"
+    :desc "Daily Capture"     "c"     'org-roam-dailies-capture-today
+    :desc "Daily Find"        "f"     'org-roam-dailies-find-directory
+    :desc "Daily Today"       "t"     'org-roam-dailies-find-today
+    :desc "Daily Date"        "d"     'org-roam-dailies-goto-date)
 
 (setq org-roam-node-display-template "${title:*} ${tags:30}") ;the format here is $(field-name:length). Including the 'length' integer causes the alignment of the tags to the right, ommitting it leaves them on the left.
 
 (use-package! org-roam-bibtex
-  :after org-roam
-  :hook (org-roam-mode . org-roam-bibtex-mode)
-  :config
-  (require 'org-ref))
+    :after org-roam
+    :hook (org-roam-mode . org-roam-bibtex-mode)
+    :config
+    (require 'org-ref))
 
 (use-package! websocket
-  :after org-roam)
+    :after org-roam)
 (use-package! org-roam-ui
-  :after org-roam
-  :config
-  (setq org-roam-ui-sync-theme t
-        org-roam-ui-follow t
-        org-roam-ui-update-on-save t))
+    :after org-roam
+    :config
+    (setq org-roam-ui-sync-theme t
+    org-roam-ui-follow t
+    org-roam-ui-update-on-save t))
 
 (setq-default elfeed-search-filter "@1-week-ago +unread ")
 (use-package! elfeed-org
-  :after elfeed
-  :init
-  (setq rmh-elfeed-org-files (list "~/.doom.d/elfeed.org")))
+    :after elfeed
+    :init
+    (setq rmh-elfeed-org-files (list "~/.doom.d/elfeed.org")))
 (require 'elfeed-goodies)
-        (elfeed-goodies/setup)
-        (setq elfeed-goodies/entry-pane-size 0.7)
-
-(defun doom-dashboard-draw-ascii-emacs-banner-fn ()
-  (let* ((banner
-            '(" Y88b      /     "
-              "  Y88b    /      "
-              "   Y88b  /       "
-              "    Y888/        "
-              "     Y8/         "
-              "      Y          "))
-
-         (longest-line (apply #'max (mapcar #'length banner))))
-    (put-text-property
-     (point)
-     (dolist (line banner (point))
-       (insert (+doom-dashboard--center
-                +doom-dashboard--width
-                (concat
-                 line (make-string (max 0 (- longest-line (length line)))
-                                   32)))
-               "\n"))
-     'face 'doom-dashboard-banner)))
-
-;; (unless (display-graphic-p) ; for some reason this messes up the graphical splash screen atm
-  (setq +doom-dashboard-ascii-banner-fn #'doom-dashboard-draw-ascii-emacs-banner-fn)
-
-(custom-set-faces!
-  '(doom-dashboard-banner :foreground "slategray"))
+    (elfeed-goodies/setup)
+    (setq elfeed-goodies/entry-pane-size 0.7)
 
 (after! mu4e
 (setq mu4e-get-mail-command "offlineimap")
@@ -332,55 +324,44 @@
 (setq mu4e-drafts-folder "/[Gmail].Drafts")
 (setq mu4e-trash-folder "/[Gmail].Bin")
 (setq mu4e-maildir-shortcuts
-      '((:maildir "/INBOX"      :key ?i)))
+    '((:maildir "/INBOX"      :key ?i)))
 (setq user-mail-address "eoincarney0@gmail.com"
-      user-full-name "Eoin Carney")
+    user-full-name "Eoin Carney")
 (setq sendmail-program "/usr/bin/msmtp"
-      send-mail-function 'smtpmail-send-it
-      message-sendmail-f-is-evil t
-      message-sendmail-extra-arguments '("--read-envelope-from")
-      message-send-mail-function 'message-send-mail-with-sendmail))
-;; (setq auth-sources '("~/.imap_authinfo.gpg"))
-;; (setq message-send-mail-function 'smtpmail-send-it
-;;       starttls-use-gnutls t
-;;       smtpmail-starttls-credentials
-;;       '(("smtp.gmail.com" 587 nil nil))
-;;       smtpmail-auth-credentials
-;;       (expand-file-name "~/.imap_authinfo.gpg")
-;;       smtpmail-default-smtp-server "smtp.gmail.com"
-;;       smtpmail-smtp-server "smtp.gmail.com"
-;;       smtpmail-smtp-service 587
-;;       smtpmail-debug-info t)
+    send-mail-function 'smtpmail-send-it
+    message-sendmail-f-is-evil t
+    message-sendmail-extra-arguments '("--read-envelope-from")
+    message-send-mail-function 'message-send-mail-with-sendmail))
 
 (defcustom centered-point-position 0.45
-  "Percentage of screen where `centered-point-mode' keeps point."
-  :type 'float)
+    "Percentage of screen where `centered-point-mode' keeps point."
+    :type 'float)
 
 (setq centered-point--preserve-pos nil)
 
 (define-minor-mode centered-point-mode
-  "Keep the cursor at `centered-point-position' in the window"
-  :lighter " centerpoint"
-  (cond (centered-point-mode (add-hook 'post-command-hook 'center-point nil t)
-                             (setq centered-point--preserve-pos
-                                   scroll-preserve-screen-position)
-                             (setq-local scroll-preserve-screen-position 'all))
-        (t (remove-hook 'post-command-hook 'center-point t)
-           (setq-local scroll-preserve-screen-position
-                       centered-point--preserve-pos))))
+    "Keep the cursor at `centered-point-position' in the window"
+    :lighter " centerpoint"
+    (cond (centered-point-mode (add-hook 'post-command-hook 'center-point nil t)
+    (setq centered-point--preserve-pos
+    scroll-preserve-screen-position)
+    (setq-local scroll-preserve-screen-position 'all))
+    (t (remove-hook 'post-command-hook 'center-point t)
+    (setq-local scroll-preserve-screen-position
+    centered-point--preserve-pos))))
 
 (defun center-point ()
-  "Move point to the line at `centered-point-position'."
-  (interactive)
-  (when (eq (current-buffer) (window-buffer))
+    "Move point to the line at `centered-point-position'."
+    (interactive)
+    (when (eq (current-buffer) (window-buffer))
     (let ((recenter-positions (list centered-point-position)))
-      (recenter-top-bottom))))
+    (recenter-top-bottom))))
 
 (defun centered-point-mode-on ()
-  (centered-point-mode 1))
+    (centered-point-mode 1))
 
 (define-globalized-minor-mode global-centered-point-mode centered-point-mode
-  centered-point-mode-on)
+    centered-point-mode-on)
 
 (map! :leader
     "Z" 'display-fill-column-indicator-mode
@@ -392,31 +373,41 @@
 (remove-hook! (writeroom-mode) #'+zen-enable-mixed-pitch-mode-h) ;; added this since mixed-pitch is defaul on most 'writing' files (org, md). Otherwise, when exiting writeroom mode, font switched back to fixed-pitch
 
 (flycheck-define-checker vale
-  "A checker for prose"
-  :command ("vale" "--output" "line"
-            source)
-  :standard-input nil
-  :error-patterns
-  ((error line-start (file-name) ":" line ":" column ":" (id (one-or-more (not (any ":")))) ":" (message) line-end))
-  :modes (markdown-mode org-mode text-mode)
-  )
+    "A checker for prose"
+    :command ("vale" "--output" "line"
+    source)
+    :standard-input nil
+    :error-patterns
+    ((error line-start (file-name) ":" line ":" column ":" (id (one-or-more (not (any ":")))) ":" (message) line-end))
+    :modes (markdown-mode org-mode text-mode)
+    )
 (add-to-list 'flycheck-checkers 'vale 'append)
+(setq flycheck-checker-error-threshold 2000)
 
 (defun tildechat ()
     (interactive)
     (erc-tls :server "irc.tilde.chat"
-             :port 6697
-             :nick "eoin"
-             :full-name "eoin carney"
-             :client-certificate
-             '("/home/eoin/.certs/erc.key"
-               "/home/eoin/.certs/erc.crt")))
+    :port 6697
+    :nick "eoin"
+    :full-name "eoin carney"
+    :client-certificate
+    '("/home/eoin/.certs/erc.key"
+    "/home/eoin/.certs/erc.crt")))
 (defun liberachat ()
     (interactive)
     (erc-tls :server "irc.libera.chat"
-             :port 6697
-             :nick "loopdreams"
-             :full-name "loopdreams"
-             :client-certificate
-             '("/home/eoin/.certs/erc.key"
-               "/home/eoin/.certs/erc.crt")))
+    :port 6697
+    :nick "loopdreams"
+    :full-name "loopdreams"
+    :client-certificate
+    '("/home/eoin/.certs/erc.key"
+    "/home/eoin/.certs/erc.crt")))
+
+(defun ledger-clean-and-save ()
+  (interactive)
+  (ledger-mode-clean-buffer)
+  (save-buffer))
+(map! :localleader
+      (:map ledger-mode-map
+      "c" #'ledger-clean-and-save))
+(add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))
