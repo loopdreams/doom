@@ -94,5 +94,4 @@
 (package! svg-lib)
 (package! svg-tag-mode)
 (package! mermaid-mode) ; for graphs
-(package! ledger-mode)
 (package! gnuplot)

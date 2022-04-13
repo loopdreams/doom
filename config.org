@@ -17,9 +17,7 @@
 #+END_SRC
 * Theme
 #+BEGIN_SRC emacs-lisp
-;; (setq doom-theme 'doom-miramare)
-;; (setq doom-theme 'doom-nord-light)
-(setq doom-theme 'modus-operandi)
+(setq doom-theme 'doom-nord)
 #+END_SRC
 * Dashboard
 #+BEGIN_SRC emacs-lisp
@@ -50,7 +48,6 @@
 (custom-set-faces!
     '(doom-dashboard-banner :foreground "slategray"))
 #+END_SRC
-
 * General Settings
 ** Misc
 + Modeline word count - DISABLED - slows down org significantly in larger files
@@ -82,7 +79,6 @@
 ** Load Path for manual packages
 #+begin_src emacs-lisp
 (add-to-list 'load-path "~/.emacs.d/manual-packages")
-
 #+end_src
 ** Encryption
 + Enable [[https://orgmode.org/worg/org-tutorials/encrypting-files.html][encryption]]
@@ -111,7 +107,6 @@ Set qutebrowser as default and elpher start page
 #+begin_src emacs-lisp
 (setq browse-url-generic-program "/usr/bin/qutebrowser")
 (setq browse-url-browser-function 'browse-url-generic)
-;; (setq gnutls-verify-error 'nil) ;; not necessary any more
 (setq elpher-start-page-url "gemini://warmedal.se/~antenna/")
 #+end_src
 * Org
@@ -169,8 +164,7 @@ Set qutebrowser as default and elpher start page
     (todo "PROJ" ((org-agenda-overriding-header gtd/project-head)))
     (todo "WAIT" ((org-agenda-overriding-header gtd/waiting-head)))
     (todo "BUY"  ((org-agenda-overriding-header gtd/shop-head)))
-    (todo "SOMEDAY" ((org-agenda-overriding-header gtd/someday-head)))
-    ))))
+    (todo "SOMEDAY" ((org-agenda-overriding-header gtd/someday-head)))))))
 #+end_src
 ** Aesthetics
 Org superstar and changing height of headings
@@ -198,7 +192,6 @@ Seems to slow down the first time you open an org file, but then no delay.
     (setq org-cycle-level-faces nil))
 #+END_SRC
 *** Bullets and keyword faces
-
 #+begin_src emacs-lisp
 (after! org
     (setq org-superstar-headline-bullets-list '("◉" "○" "✹" "◦"))
@@ -219,27 +212,6 @@ Seems to slow down the first time you open an org file, but then no delay.
     ("PROJ" . "#83a598")
     ("WAIT" . "#a89984")
     ("SOMEDAY" . "#8ec07c"))))
-#+end_src
-
-*** Misc Aesthetics (disabled to test performance)
-
-#+begin_src emacs-lisp
-;; (add-hook! 'org-mode-hook #'org-modern-mode)
-;; displays dashes as bullets, taken from https://mstempl.netlify.app/post/beautify-org-mode/
-;; (font-lock-add-keywords 'org-mode
-;;                         '(("^ *\\([-]\\) "
-;;                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-;; (font-lock-add-keywords 'org-mode
-;;                         '(("^ *\\([+]\\) "
-;;                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "◦"))))))
-;; prettify symbols, taken from same source as above
-;; (setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
-;;                                        ("#+END_SRC" . "†")
-;;                                        ("#+begin_src" . "†")
-;;                                        ("#+end_src" . "†")
-;;                                        (">=" . "≥")
-;;                                        ("=>" . "⇨")))
-;; (setq prettify-symbols-unprettify-at-point 'right-edge)
 #+end_src
 ** Capture templates - Org and Org Roam
 #+begin_src emacs-lisp
@@ -325,6 +297,7 @@ Seems to slow down the first time you open an org file, but then no delay.
 *** Org Roam V2
 #+begin_src emacs-lisp
 (use-package! org-roam
+    :defer t
     :init
     (setq org-roam-v2-ack t)
     (setq org-roam-graph-viewer "/usr/bin/qutebrowser")
@@ -512,4 +485,8 @@ Seems to only work in emacs 28+
       (:map ledger-mode-map
       "c" #'ledger-clean-and-save))
 (add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))
+#+end_src
+* Html
+#+begin_src emacs-lisp
+(set-file-template! "\\.html$" :trigger "__spoolfive.html" :mode 'web-mode)
 #+end_src

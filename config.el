@@ -8,9 +8,7 @@
     doom-variable-pitch-font (font-spec :family "ETBembo" :size 20))
 (setq-default line-spacing 0.3)
 
-;; (setq doom-theme 'doom-miramare)
-;; (setq doom-theme 'doom-nord-light)
-(setq doom-theme 'modus-operandi)
+(setq doom-theme 'doom-nord)
 
 (defun doom-dashboard-draw-ascii-emacs-banner-fn ()
     (let* ((banner
@@ -73,7 +71,6 @@
 
 (setq browse-url-generic-program "/usr/bin/qutebrowser")
 (setq browse-url-browser-function 'browse-url-generic)
-;; (setq gnutls-verify-error 'nil) ;; not necessary any more
 (setq elpher-start-page-url "gemini://warmedal.se/~antenna/")
 
     (setq org-directory "~/Dropbox/sci/"
@@ -122,8 +119,7 @@
     (todo "PROJ" ((org-agenda-overriding-header gtd/project-head)))
     (todo "WAIT" ((org-agenda-overriding-header gtd/waiting-head)))
     (todo "BUY"  ((org-agenda-overriding-header gtd/shop-head)))
-    (todo "SOMEDAY" ((org-agenda-overriding-header gtd/someday-head)))
-    ))))
+    (todo "SOMEDAY" ((org-agenda-overriding-header gtd/someday-head)))))))
 
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode #'org-pretty-table-mode #'org-appear-mode)
 
@@ -160,23 +156,6 @@
     ("PROJ" . "#83a598")
     ("WAIT" . "#a89984")
     ("SOMEDAY" . "#8ec07c"))))
-
-;; (add-hook! 'org-mode-hook #'org-modern-mode)
-;; displays dashes as bullets, taken from https://mstempl.netlify.app/post/beautify-org-mode/
-;; (font-lock-add-keywords 'org-mode
-;;                         '(("^ *\\([-]\\) "
-;;                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-;; (font-lock-add-keywords 'org-mode
-;;                         '(("^ *\\([+]\\) "
-;;                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "◦"))))))
-;; prettify symbols, taken from same source as above
-;; (setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
-;;                                        ("#+END_SRC" . "†")
-;;                                        ("#+begin_src" . "†")
-;;                                        ("#+end_src" . "†")
-;;                                        (">=" . "≥")
-;;                                        ("=>" . "⇨")))
-;; (setq prettify-symbols-unprettify-at-point 'right-edge)
 
 (customize-set-variable 'org-capture-templates '(
     ("t" "Task")
@@ -257,6 +236,7 @@
     ;;;;;;;
 
 (use-package! org-roam
+    :defer t
     :init
     (setq org-roam-v2-ack t)
     (setq org-roam-graph-viewer "/usr/bin/qutebrowser")
@@ -411,3 +391,5 @@
       (:map ledger-mode-map
       "c" #'ledger-clean-and-save))
 (add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))
+
+(set-file-template! "\\.html$" :trigger "__spoolfive.html" :mode 'web-mode)
