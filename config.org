@@ -4,9 +4,10 @@
 * Personal Information
 #+BEGIN_SRC emacs-lisp
 (setq user-full-name "Eoin Carney"
-    user-mail-address "eoincarney0@gmail.com")
+      user-mail-address "eoincarney0@gmail.com")
 #+END_SRC
-* Font
+* Appearance
+** Font and Theme
 #+BEGIN_SRC emacs-lisp
 (setq doom-font
     (font-spec :family "GoMono Nerd Font" :size 16)
@@ -14,12 +15,10 @@
     mixed-pitch-set-height 20
     doom-variable-pitch-font (font-spec :family "ETBembo" :size 20))
 (setq-default line-spacing 0.3)
-#+END_SRC
-* Theme
-#+BEGIN_SRC emacs-lisp
+
 (setq doom-theme 'doom-nord)
 #+END_SRC
-* Dashboard
+** Dashboard
 #+BEGIN_SRC emacs-lisp
 (defun doom-dashboard-draw-ascii-emacs-banner-fn ()
     (let* ((banner
@@ -76,10 +75,6 @@
 (setq super-save-when-idle t)
 (setq display-line-numbers-type nil)
 #+END_SRC
-** Load Path for manual packages
-#+begin_src emacs-lisp
-(add-to-list 'load-path "~/.emacs.d/manual-packages")
-#+end_src
 ** Encryption
 + Enable [[https://orgmode.org/worg/org-tutorials/encrypting-files.html][encryption]]
 #+begin_src emacs-lisp
@@ -359,7 +354,12 @@ See issue here: [[https://github.com/org-roam/org-roam/issues/1728][github issue
     org-roam-ui-follow t
     org-roam-ui-update-on-save t))
 #+end_src
-* Elfeed
+* Packages
+** Load Path for manual packages
+#+begin_src emacs-lisp
+(add-to-list 'load-path "~/.emacs.d/manual-packages")
+#+end_src
+** Elfeed
 #+BEGIN_SRC emacs-lisp
 (setq-default elfeed-search-filter "@1-week-ago +unread ")
 (use-package! elfeed-org
@@ -370,8 +370,8 @@ See issue here: [[https://github.com/org-roam/org-roam/issues/1728][github issue
     (elfeed-goodies/setup)
     (setq elfeed-goodies/entry-pane-size 0.7)
 #+END_SRC
-* Mail
-** Gmail
+** Mail
+*** Gmail
 #+begin_src emacs-lisp
 (after! mu4e
 (setq mu4e-get-mail-command "offlineimap")
@@ -392,6 +392,43 @@ See issue here: [[https://github.com/org-roam/org-roam/issues/1728][github issue
     message-send-mail-function 'message-send-mail-with-sendmail))
 #+end_src
 
+** ERC
+Seems to only work in emacs 28+
+#+begin_src emacs-lisp
+(defun tildechat ()
+    (interactive)
+    (erc-tls :server "irc.tilde.chat"
+    :port 6697
+    :nick "eoin"
+    :full-name "eoin carney"
+    :client-certificate
+    '("/home/eoin/.certs/erc.key"
+    "/home/eoin/.certs/erc.crt")))
+(defun liberachat ()
+    (interactive)
+    (erc-tls :server "irc.libera.chat"
+    :port 6697
+    :nick "loopdreams"
+    :full-name "loopdreams"
+    :client-certificate
+    '("/home/eoin/.certs/erc.key"
+    "/home/eoin/.certs/erc.crt")))
+#+end_src
+** Ledger
+#+begin_src emacs-lisp
+(defun ledger-clean-and-save ()
+  (interactive)
+  (ledger-mode-clean-buffer)
+  (save-buffer))
+(map! :localleader
+      (:map ledger-mode-map
+      "c" #'ledger-clean-and-save))
+(add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))
+#+end_src
+* Html
+#+begin_src emacs-lisp
+(set-file-template! "\\.html$" :trigger "__spoolfive.html" :mode 'web-mode)
+#+end_src
 * Writing
 ** Centered-point mode
 #+begin_src emacs-lisp
@@ -452,41 +489,4 @@ Disabled the 'centered point mode' hook for now. It started getting in the way t
 (add-to-list 'flycheck-checkers 'vale 'append)
 (setq flycheck-checker-error-threshold 2000)
 
-#+end_src
-* ERC
-Seems to only work in emacs 28+
-#+begin_src emacs-lisp
-(defun tildechat ()
-    (interactive)
-    (erc-tls :server "irc.tilde.chat"
-    :port 6697
-    :nick "eoin"
-    :full-name "eoin carney"
-    :client-certificate
-    '("/home/eoin/.certs/erc.key"
-    "/home/eoin/.certs/erc.crt")))
-(defun liberachat ()
-    (interactive)
-    (erc-tls :server "irc.libera.chat"
-    :port 6697
-    :nick "loopdreams"
-    :full-name "loopdreams"
-    :client-certificate
-    '("/home/eoin/.certs/erc.key"
-    "/home/eoin/.certs/erc.crt")))
-#+end_src
-* Ledger
-#+begin_src emacs-lisp
-(defun ledger-clean-and-save ()
-  (interactive)
-  (ledger-mode-clean-buffer)
-  (save-buffer))
-(map! :localleader
-      (:map ledger-mode-map
-      "c" #'ledger-clean-and-save))
-(add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))
-#+end_src
-* Html
-#+begin_src emacs-lisp
-(set-file-template! "\\.html$" :trigger "__spoolfive.html" :mode 'web-mode)
 #+end_src

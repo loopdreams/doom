@@ -1,5 +1,5 @@
 (setq user-full-name "Eoin Carney"
-    user-mail-address "eoincarney0@gmail.com")
+      user-mail-address "eoincarney0@gmail.com")
 
 (setq doom-font
     (font-spec :family "GoMono Nerd Font" :size 16)
@@ -50,8 +50,6 @@
 (super-save-mode 1)
 (setq super-save-when-idle t)
 (setq display-line-numbers-type nil)
-
-(add-to-list 'load-path "~/.emacs.d/manual-packages")
 
 (require 'epa-file)
 (epa-file-enable)
@@ -286,6 +284,8 @@
     org-roam-ui-follow t
     org-roam-ui-update-on-save t))
 
+(add-to-list 'load-path "~/.emacs.d/manual-packages")
+
 (setq-default elfeed-search-filter "@1-week-ago +unread ")
 (use-package! elfeed-org
     :after elfeed
@@ -312,6 +312,36 @@
     message-sendmail-f-is-evil t
     message-sendmail-extra-arguments '("--read-envelope-from")
     message-send-mail-function 'message-send-mail-with-sendmail))
+
+(defun tildechat ()
+    (interactive)
+    (erc-tls :server "irc.tilde.chat"
+    :port 6697
+    :nick "eoin"
+    :full-name "eoin carney"
+    :client-certificate
+    '("/home/eoin/.certs/erc.key"
+    "/home/eoin/.certs/erc.crt")))
+(defun liberachat ()
+    (interactive)
+    (erc-tls :server "irc.libera.chat"
+    :port 6697
+    :nick "loopdreams"
+    :full-name "loopdreams"
+    :client-certificate
+    '("/home/eoin/.certs/erc.key"
+    "/home/eoin/.certs/erc.crt")))
+
+(defun ledger-clean-and-save ()
+  (interactive)
+  (ledger-mode-clean-buffer)
+  (save-buffer))
+(map! :localleader
+      (:map ledger-mode-map
+      "c" #'ledger-clean-and-save))
+(add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))
+
+(set-file-template! "\\.html$" :trigger "__spoolfive.html" :mode 'web-mode)
 
 (defcustom centered-point-position 0.45
     "Percentage of screen where `centered-point-mode' keeps point."
@@ -363,33 +393,3 @@
     )
 (add-to-list 'flycheck-checkers 'vale 'append)
 (setq flycheck-checker-error-threshold 2000)
-
-(defun tildechat ()
-    (interactive)
-    (erc-tls :server "irc.tilde.chat"
-    :port 6697
-    :nick "eoin"
-    :full-name "eoin carney"
-    :client-certificate
-    '("/home/eoin/.certs/erc.key"
-    "/home/eoin/.certs/erc.crt")))
-(defun liberachat ()
-    (interactive)
-    (erc-tls :server "irc.libera.chat"
-    :port 6697
-    :nick "loopdreams"
-    :full-name "loopdreams"
-    :client-certificate
-    '("/home/eoin/.certs/erc.key"
-    "/home/eoin/.certs/erc.crt")))
-
-(defun ledger-clean-and-save ()
-  (interactive)
-  (ledger-mode-clean-buffer)
-  (save-buffer))
-(map! :localleader
-      (:map ledger-mode-map
-      "c" #'ledger-clean-and-save))
-(add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))
-
-(set-file-template! "\\.html$" :trigger "__spoolfive.html" :mode 'web-mode)
