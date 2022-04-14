@@ -44,7 +44,7 @@
     scroll-margin 5)
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
 (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
-(add-to-list 'auto-mode-alist '("\\.gmi\\'" . markdown-mode))
+;; (add-to-list 'auto-mode-alist '("\\.gmi\\'" . markdown-mode))
 (add-hook! markdown-mode 'mixed-pitch-mode)
 (map! :n "SPC o t" 'eshell)
 (super-save-mode 1)
@@ -194,7 +194,13 @@
     "#+title: ${title}\n")
     :unnarrowed t)
     ;; Other roam directories
-    ("p" "work person" plain (file "~/Dropbox/work/templates/people.org")
+    ("w" "work")
+    ("wr" "reference" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
+    :target (file+head "ref/${slug}.org.gpg"
+    "#+title: ${title}\n")
+    :unnarrowed t
+    :jump-to-captured t)
+    ("wp" "person" plain (file "~/Dropbox/work/templates/people.org")
     :target (file "${slug}.org.gpg")
     :unnarrowed t)
     ("l" "The Landlord")
@@ -283,8 +289,6 @@
     (setq org-roam-ui-sync-theme t
     org-roam-ui-follow t
     org-roam-ui-update-on-save t))
-
-(add-to-list 'load-path "~/.emacs.d/manual-packages")
 
 (setq-default elfeed-search-filter "@1-week-ago +unread ")
 (use-package! elfeed-org
@@ -393,3 +397,5 @@
     )
 (add-to-list 'flycheck-checkers 'vale 'append)
 (setq flycheck-checker-error-threshold 2000)
+
+(add-hook! (gemini-mode) #'mixed-pitch-mode)
