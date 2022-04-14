@@ -76,7 +76,7 @@
 ;; (setq gnutls-verify-error 'nil) ;; not necessary any more
 (setq elpher-start-page-url "gemini://warmedal.se/~antenna/")
 
-    (setq org-directory "~/Dropbox/sci/"
+(setq org-directory "~/Dropbox/sci/"
     org-roam-directory (concat org-directory "notes/")
     bibtex-completion-bibliography (concat org-directory "lib.bib"))
 
@@ -217,9 +217,15 @@
     "#+title: ${title}\n")
     :unnarrowed t)
     ;; Other roam directories
-    ("p" "work person" plain (file "~/Dropbox/work/templates/people.org")
+    ("w" "work")
+    ("wp" "work person" plain (file "~/Dropbox/work/templates/people.org")
     :target (file "${slug}.org.gpg")
     :unnarrowed t)
+    ("wr" "work reference" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
+    :target (file+head "ref/${slug}.org"
+    "#+title: ${title}\n")
+    :unnarrowed t
+    :jump-to-captured t)
     ("l" "The Landlord")
     ("lc" "llord - chapter" plain (file "~/Dropbox/llord/templates/chapt.org")
     :target (file+head "chapters/${slug}.org"
