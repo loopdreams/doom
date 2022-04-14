@@ -1,5 +1,5 @@
 (setq user-full-name "Eoin Carney"
-    user-mail-address "eoincarney0@gmail.com")
+      user-mail-address "eoincarney0@gmail.com")
 
 (setq doom-font
     (font-spec :family "GoMono Nerd Font" :size 16)
@@ -8,9 +8,7 @@
     doom-variable-pitch-font (font-spec :family "ETBembo" :size 20))
 (setq-default line-spacing 0.3)
 
-;; (setq doom-theme 'doom-miramare)
-;; (setq doom-theme 'doom-nord-light)
-(setq doom-theme 'modus-operandi)
+(setq doom-theme 'doom-nord)
 
 (defun doom-dashboard-draw-ascii-emacs-banner-fn ()
     (let* ((banner
@@ -46,14 +44,12 @@
     scroll-margin 5)
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
 (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
-(add-to-list 'auto-mode-alist '("\\.gmi\\'" . markdown-mode))
+;; (add-to-list 'auto-mode-alist '("\\.gmi\\'" . markdown-mode))
 (add-hook! markdown-mode 'mixed-pitch-mode)
 (map! :n "SPC o t" 'eshell)
 (super-save-mode 1)
 (setq super-save-when-idle t)
 (setq display-line-numbers-type nil)
-
-(add-to-list 'load-path "~/.emacs.d/manual-packages")
 
 (require 'epa-file)
 (epa-file-enable)
@@ -73,10 +69,9 @@
 
 (setq browse-url-generic-program "/usr/bin/qutebrowser")
 (setq browse-url-browser-function 'browse-url-generic)
-;; (setq gnutls-verify-error 'nil) ;; not necessary any more
 (setq elpher-start-page-url "gemini://warmedal.se/~antenna/")
 
-(setq org-directory "~/Dropbox/sci/"
+    (setq org-directory "~/Dropbox/sci/"
     org-roam-directory (concat org-directory "notes/")
     bibtex-completion-bibliography (concat org-directory "lib.bib"))
 
@@ -122,8 +117,7 @@
     (todo "PROJ" ((org-agenda-overriding-header gtd/project-head)))
     (todo "WAIT" ((org-agenda-overriding-header gtd/waiting-head)))
     (todo "BUY"  ((org-agenda-overriding-header gtd/shop-head)))
-    (todo "SOMEDAY" ((org-agenda-overriding-header gtd/someday-head)))
-    ))))
+    (todo "SOMEDAY" ((org-agenda-overriding-header gtd/someday-head)))))))
 
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode #'org-pretty-table-mode #'org-appear-mode)
 
@@ -160,23 +154,6 @@
     ("PROJ" . "#83a598")
     ("WAIT" . "#a89984")
     ("SOMEDAY" . "#8ec07c"))))
-
-;; (add-hook! 'org-mode-hook #'org-modern-mode)
-;; displays dashes as bullets, taken from https://mstempl.netlify.app/post/beautify-org-mode/
-;; (font-lock-add-keywords 'org-mode
-;;                         '(("^ *\\([-]\\) "
-;;                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-;; (font-lock-add-keywords 'org-mode
-;;                         '(("^ *\\([+]\\) "
-;;                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "◦"))))))
-;; prettify symbols, taken from same source as above
-;; (setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
-;;                                        ("#+END_SRC" . "†")
-;;                                        ("#+begin_src" . "†")
-;;                                        ("#+end_src" . "†")
-;;                                        (">=" . "≥")
-;;                                        ("=>" . "⇨")))
-;; (setq prettify-symbols-unprettify-at-point 'right-edge)
 
 (customize-set-variable 'org-capture-templates '(
     ("t" "Task")
@@ -218,7 +195,12 @@
     :unnarrowed t)
     ;; Other roam directories
     ("w" "work")
-    ("wp" "work person" plain (file "~/Dropbox/work/templates/people.org")
+    ("wr" "reference" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
+    :target (file+head "ref/${slug}.org.gpg"
+    "#+title: ${title}\n")
+    :unnarrowed t
+    :jump-to-captured t)
+    ("wp" "person" plain (file "~/Dropbox/work/templates/people.org")
     :target (file "${slug}.org.gpg")
     :unnarrowed t)
     ("wr" "work reference" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
@@ -263,6 +245,7 @@
     ;;;;;;;
 
 (use-package! org-roam
+    :defer t
     :init
     (setq org-roam-v2-ack t)
     (setq org-roam-graph-viewer "/usr/bin/qutebrowser")
@@ -339,6 +322,36 @@
     message-sendmail-extra-arguments '("--read-envelope-from")
     message-send-mail-function 'message-send-mail-with-sendmail))
 
+(defun tildechat ()
+    (interactive)
+    (erc-tls :server "irc.tilde.chat"
+    :port 6697
+    :nick "eoin"
+    :full-name "eoin carney"
+    :client-certificate
+    '("/home/eoin/.certs/erc.key"
+    "/home/eoin/.certs/erc.crt")))
+(defun liberachat ()
+    (interactive)
+    (erc-tls :server "irc.libera.chat"
+    :port 6697
+    :nick "loopdreams"
+    :full-name "loopdreams"
+    :client-certificate
+    '("/home/eoin/.certs/erc.key"
+    "/home/eoin/.certs/erc.crt")))
+
+(defun ledger-clean-and-save ()
+  (interactive)
+  (ledger-mode-clean-buffer)
+  (save-buffer))
+(map! :localleader
+      (:map ledger-mode-map
+      "c" #'ledger-clean-and-save))
+(add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))
+
+(set-file-template! "\\.html$" :trigger "__spoolfive.html" :mode 'web-mode)
+
 (defcustom centered-point-position 0.45
     "Percentage of screen where `centered-point-mode' keeps point."
     :type 'float)
@@ -390,30 +403,4 @@
 (add-to-list 'flycheck-checkers 'vale 'append)
 (setq flycheck-checker-error-threshold 2000)
 
-(defun tildechat ()
-    (interactive)
-    (erc-tls :server "irc.tilde.chat"
-    :port 6697
-    :nick "eoin"
-    :full-name "eoin carney"
-    :client-certificate
-    '("/home/eoin/.certs/erc.key"
-    "/home/eoin/.certs/erc.crt")))
-(defun liberachat ()
-    (interactive)
-    (erc-tls :server "irc.libera.chat"
-    :port 6697
-    :nick "loopdreams"
-    :full-name "loopdreams"
-    :client-certificate
-    '("/home/eoin/.certs/erc.key"
-    "/home/eoin/.certs/erc.crt")))
-
-(defun ledger-clean-and-save ()
-  (interactive)
-  (ledger-mode-clean-buffer)
-  (save-buffer))
-(map! :localleader
-      (:map ledger-mode-map
-      "c" #'ledger-clean-and-save))
-(add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))
+(add-hook! (gemini-mode) #'mixed-pitch-mode)
