@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: blog-footer
+# uuid: blog-footer
+# key: \blog-footer
+# condition: t
+# --
+        <hr>
+        <div class="footer">
+            <a href="https://spool-five.com/rss.xml" target="_blank">rss feed |</a>
+            <a href="mailto:eoincarney0@gmail.com">email |</a>
+            <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">license</a>
+        </div>
+    </body>
+</html>
