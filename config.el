@@ -87,8 +87,9 @@
 
 (after! org
     (setq org-todo-keywords
-    '((sequence "TODO(t)"
-    "TT"
+    '((sequence
+    "TODO(o)"
+    "TT(t)"
     "PROJ(p)"
     "NEXT(n)"
     "PROG(i!/!)"
@@ -203,11 +204,6 @@
     ("wp" "person" plain (file "~/Dropbox/work/templates/people.org")
     :target (file "${slug}.org.gpg")
     :unnarrowed t)
-    ("wr" "work reference" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
-    :target (file+head "ref/${slug}.org"
-    "#+title: ${title}\n")
-    :unnarrowed t
-    :jump-to-captured t)
     ("l" "The Landlord")
     ("lc" "llord - chapter" plain (file "~/Dropbox/llord/templates/chapt.org")
     :target (file+head "chapters/${slug}.org"

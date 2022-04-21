@@ -1,0 +1,26 @@
+# -*- mode: snippet -*-
+# name: blog-header1
+# key: \blog-header1
+# --
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+        <title>Spool-Five</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <div class="head">
+            <h1>Spool <span class="fade">Fi</span>v<span class="fade">e</span></h1>
+            <ul>
+                <li><a href="index.html"><b>Home</b></a></li>
+                <li><a href="archive.html"><b>Posts</b></a></li>
+                <li><a href="music.html"><b>Music</b></a></li>
+                <li><a href="about.html"><b>About</b></a></li>
+            </ul>
+        </div>
+        <br>
+        <br>
+        <h2>$1</h2>

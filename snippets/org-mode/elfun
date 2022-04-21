@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: elfun
+# uuid: elfun
+# key: .defun
+# condition: t
+# --
+#+begin_src emacs-lisp
+(defun $1 ($2)
+  (cond
+    (($3))
+    ))
+
+#+end_src
