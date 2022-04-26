@@ -71,7 +71,7 @@
 (setq browse-url-browser-function 'browse-url-generic)
 (setq elpher-start-page-url "gemini://warmedal.se/~antenna/")
 
-(setq org-directory "~/Dropbox/sci/"
+    (setq org-directory "~/Dropbox/sci/"
     org-roam-directory (concat org-directory "notes/")
     bibtex-completion-bibliography (concat org-directory "lib.bib"))
 
@@ -128,11 +128,11 @@
     (set-face-attribute 'org-level-7 nil :inherit 'org-level-8)
     (set-face-attribute 'org-level-6 nil :inherit 'org-level-8)
     (set-face-attribute 'org-level-5 nil :inherit 'org-level-8)
-    (set-face-attribute 'org-level-4 nil :inherit 'org-level-8 :height 1.1)
-    (set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.12)
-    (set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.25)
-    (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.4)
-    (set-face-attribute 'org-document-title nil :inherit 'org-level-8 :height 2.0 :foreground 'unspecified)
+    (set-face-attribute 'org-level-4 nil :inherit 'org-level-8 :height 1.02)
+    (set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.08)
+    (set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.12)
+    (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.2)
+    (set-face-attribute 'org-document-title nil :inherit 'org-level-8 :height 1.6 :foreground 'unspecified)
     (setq org-n-level-faces 4)
     (setq org-cycle-level-faces nil))
 

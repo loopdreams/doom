@@ -9,6 +9,7 @@
 *** https://www.jamesrwilliams.net/feed/ :philosophy:
 *** https://feeds.feedburner.com/therestisnoise
 *** https://davidmenestres.com/feed/podcast/
+*** https://gemini.circumlunar.space/news/atom.xml
 ** People :people:
 *** https://anneboyer.substack.com/feed/
 *** https://spool-five.com/rss.xml
