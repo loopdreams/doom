@@ -74,15 +74,19 @@
 (setq org-directory "~/Dropbox/sci/"
     org-roam-directory (concat org-directory "notes/")
     bibtex-completion-bibliography (concat org-directory "lib.bib"))
+(after! org
+  (setq org-agenda-files (append (directory-files-recursively (concat org-directory "act/") "\\.org$")
+                                 (directory-files-recursively (concat org-directory "notes/rafts/") "\\notes.org$"))))
 
+(append '(1 2 3) '(4 5 6))
 (add-to-list 'org-modules 'org-id)
 (require 'ox-gemini)
 
 (map!
     :n "<f5>" 'org-agenda
-    :n "<f6>" (lambda() (interactive)(find-file (concat org-directory "todo.org")))
-    :n "<f7>" (lambda() (interactive)(find-file (concat org-directory "notes/20211019-projects.org")))
-    :n "<f8>" (lambda() (interactive)(find-file (concat org-directory "notes/20211019-actions.org")))
+    :n "<f6>" (lambda() (interactive)(find-file (concat org-directory "act/todo.org")))
+    :n "<f7>" (lambda() (interactive)(find-file (concat org-directory "act/projects.org")))
+    :n "<f8>" (lambda() (interactive)(find-file (concat org-directory "act/actions.org")))
     :n "<f9>" '+calendar/open-calendar)
 
 (after! org
@@ -156,13 +160,17 @@
     ("WAIT" . "#a89984")
     ("SOMEDAY" . "#8ec07c"))))
 
+(font-lock-add-keywords 'org-mode
+                          '(("^ *\\([-]\\) "
+                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
 (customize-set-variable 'org-capture-templates '(
     ("t" "Task")
     ("tt" "TT" entry (id "cd9ffc7d-d197-4521-b74d-4b1f93b301ca")
     "* TT %?\n%i\n%a" :prepend t)
-    ("ti" "Inbox (Store Link)" entry (file+headline +org-capture-todo-file "Inbox")
+    ("ti" "Inbox (Store Link)" entry (id "84c646ea-11de-4593-99a5-39f3f8ead4ef")
     "* TODO %?\n%i\n%a" :prepend t)
-    ("to" "Inbox (No Link)" entry (file+headline +org-capture-todo-file "Inbox")
+    ("to" "Inbox (No Link)" entry (id "84c646ea-11de-4593-99a5-39f3f8ead4ef")
     "* TODO %?\n%i" :prepend t)
     ("p" "Project")
     ("pp" "Project" entry (id "a359813e-8bde-463d-8406-0d5fa76357dd")
@@ -173,72 +181,48 @@
     "* PROJ %? :fiction:\n%i- [ ] Next Action:\n%a" :prepend t)
     ("pc" "Project (Config)" entry (id "a359813e-8bde-463d-8406-0d5fa76357dd")
     "* PROJ %? :config:\n%i- [ ] Next Action:\n%a" :prepend t)))
+
 (after! org-roam
     (setq org-roam-capture-templates
     '(("d" "default" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
-    :target (file+head "%<%Y%m%d>-${slug}.org"
+    :target (file+head "rafts/%<%Y%m%d>-${slug}.org"
     "#+title: ${title}\n")
     :unnarrowed t
     :jump-to-captured t)
     ("e" "encrypted" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
-    :target (file+head "%<%Y%m%d>-${slug}.org.gpg"
+    :target (file+head "rafts/%<%Y%m%d>-${slug}.org.gpg"
     "#+title: ${title}\n")
     :unnarrowed t
     :jump-to-captured t)
-    ("r" "reference" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
-    :target (file+head "ref/%<%Y%m%d>-${slug}.org"
+    ("r" "reference" plain "#+created: %u\n#+filetags: ref: %^G\n\n* ${title}\n%?"
+    :target (file+head "rafts/%<%Y%m%d>-${slug}.org"
     "#+title: ${title}\n")
     :unnarrowed t
     :jump-to-captured t)
     ("q" "quick" plain "#+created: %u\n#+filetags: %^G\n\n%?"
-    :target (file+head "%<%Y%m%d>-${slug}.org"
+    :target (file+head "rafts/%<%Y%m%d>-${slug}.org"
     "#+title: ${title}\n")
-    :unnarrowed t)
-    ;; Other roam directories
-    ("w" "work")
-    ("wr" "reference" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
-    :target (file+head "ref/${slug}.org.gpg"
-    "#+title: ${title}\n")
-    :unnarrowed t
-    :jump-to-captured t)
-    ("wp" "person" plain (file "~/Dropbox/work/templates/people.org")
-    :target (file "${slug}.org.gpg")
-    :unnarrowed t)
-    ("l" "The Landlord")
-    ("lc" "llord - chapter" plain (file "~/Dropbox/llord/templates/chapt.org")
-    :target (file+head "chapters/${slug}.org"
-    "#+title: ${title}\n")
-    :jump-to-captured t
-    :unnarrowed t)
-    ("lp" "llord - character" plain (file "~/Dropbox/llord/templates/char.org")
-    :target (file+head "%<%Y%m%d>-${slug}.org"
-    "#+title: ${title}\n")
-    :jump-to-captured t
     :unnarrowed t)))
     (setq org-roam-dailies-capture-templates
     '(("d" "default" entry "* %<%H:%M> -  [[id:477e986a-2fba-4982-8158-b309baf0b14b][%?]]"
     :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")))))
-    ;;;;;;;;;;;;;;;;;;;
-    ;; Unused
-    ;; ("a" "aws" plain "#+created: %u\n#+filetags:training:SSA-CO2\n"
-    ;;  :target (file+head "%<%Y%m%d>-${slug}.org"
-    ;;                     "#+title: ${title}\n")
-    ;;  :unnarrowed t
-    ;;  :jump-to-captured t)
-    ;; ("c" "ccna" plain "#+created: %u\n#+filetags:training:ccna\n"
-    ;;  :target (file+head "%<%Y%m%d>-${slug}.org"
-    ;;                     "#+title: ${title}\n")
-    ;;  :unnarrowed t
-    ;;  :jump-to-captured t)
-    ;; ("b" "bridge" plain "#+filetags: bridge\n\n* Question :drill:\n%?\n** Answer"
-    ;;  :target (file+head "bridge/${slug}.org"
-    ;;                     "#+title: ${title}\n")
-    ;;  :unnarrowed t)
-    ;; ("t" "test" plain (file "~/Dropbox/sci/notes/templates/test.org")
-    ;;  :target (file+head "%<%Y%m%d>-${slug}.org"
-    ;;                     "#+title: ${title}\n")
-    ;;   :unnarrowed t)))
-    ;;;;;;;
+
+(defun my/org-roam-insert-no-capture ()
+  (interactive)
+  (let ((org-roam-capture-templates
+         (mapcar
+          #'(lambda (tmpl) (append tmpl '(:immediate-finish t)))
+          org-roam-capture-templates)))
+    (funcall-interactively 'org-roam-node-insert)))
+
+(use-package! org-transclusion
+              :after org
+              :init
+              (map!
+               :map global-map "<f12>" #'org-transclusion-add
+               :leader
+               :prefix "n"
+               :desc "Org Transclusion Mode" "t" #'org-transclusion-mode))
 
 (use-package! org-roam
     :defer t
@@ -263,6 +247,7 @@
     :prefix "r"
     :desc "Find Note"         "r"     'org-roam-node-find
     :desc "Insert Note"       "i"     'org-roam-node-insert
+    :desc "Insert immediate"  "m"     'my/org-roam-insert-no-capture
     :desc "Toggle Buffer"     "b"     'org-roam-buffer-toggle
     :desc "Add Tag"           "t"     'org-roam-tag-add
     :desc "Bibtex Link"       "c"     'orb-insert-link)
@@ -300,6 +285,7 @@
     (elfeed-goodies/setup)
     (setq elfeed-goodies/entry-pane-size 0.7)
 
+(setq +org-capture-emails-file (concat org-directory "act/inbox.org"))
 (after! mu4e
 (setq mu4e-get-mail-command "offlineimap")
 (setq mu4e-update-interval 300)
@@ -396,7 +382,7 @@
     ((error line-start (file-name) ":" line ":" column ":" (id (one-or-more (not (any ":")))) ":" (message) line-end))
     :modes (markdown-mode org-mode text-mode)
     )
-(add-to-list 'flycheck-checkers 'vale 'append)
+;; (add-to-list 'flycheck-checkers 'vale 'append)
 (setq flycheck-checker-error-threshold 2000)
 
 (add-hook! (gemini-mode) #'mixed-pitch-mode)
