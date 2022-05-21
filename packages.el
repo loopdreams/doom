@@ -97,3 +97,4 @@
 (package! gnuplot)
 (package! gemini-mode
   :recipe (:host nil :repo "http://git.carcosa.net/jmcbray/gemini.el.git"))
+(package! org-transclusion)
