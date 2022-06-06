@@ -256,6 +256,10 @@ Seems to slow down the first time you open an org file, but then no delay.
     "#+title: ${title}\n")
     :unnarrowed t
     :jump-to-captured t)
+    ("w" "wiki" plain "#+created: %u\n#+filetags: %^G\n\n%?"
+    :target (file+head "%<%Y%m%d>-${slug}.org"
+    "#+title: ${title}\n")
+    :unnarrowed t)
     ("q" "quick" plain "#+created: %u\n#+filetags: %^G\n\n%?"
     :target (file+head "rafts/%<%Y%m%d>-${slug}.org"
     "#+title: ${title}\n")

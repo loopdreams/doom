@@ -71,7 +71,7 @@
 (setq browse-url-browser-function 'browse-url-generic)
 (setq elpher-start-page-url "gemini://warmedal.se/~antenna/")
 
-(setq org-directory "~/Dropbox/sci/"
+    (setq org-directory "~/Dropbox/sci/"
     org-roam-directory (concat org-directory "notes/")
     bibtex-completion-bibliography (concat org-directory "lib.bib"))
 (after! org
@@ -199,6 +199,10 @@
     "#+title: ${title}\n")
     :unnarrowed t
     :jump-to-captured t)
+    ("w" "wiki" plain "#+created: %u\n#+filetags: %^G\n\n%?"
+    :target (file+head "%<%Y%m%d>-${slug}.org"
+    "#+title: ${title}\n")
+    :unnarrowed t)
     ("q" "quick" plain "#+created: %u\n#+filetags: %^G\n\n%?"
     :target (file+head "rafts/%<%Y%m%d>-${slug}.org"
     "#+title: ${title}\n")
