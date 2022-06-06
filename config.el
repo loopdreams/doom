@@ -81,6 +81,7 @@
 (append '(1 2 3) '(4 5 6))
 (add-to-list 'org-modules 'org-id)
 (require 'ox-gemini)
+(require 'ox-hugo)
 
 (map!
     :n "<f5>" 'org-agenda
@@ -199,10 +200,10 @@
     "#+title: ${title}\n")
     :unnarrowed t
     :jump-to-captured t)
-    ("w" "wiki" plain "#+created: %u\n#+filetags: %^G\n\n%?"
-    :target (file+head "%<%Y%m%d>-${slug}.org"
+    ("b" "box3" plain "#+created: %u\n#+filetags: %^G\n\n%?"
+    :target (file+head "ref/org/%<%Y%m%d>-${slug}.org"
     "#+title: ${title}\n")
-    :unnarrowed t)
+    :unnarrowed t )
     ("q" "quick" plain "#+created: %u\n#+filetags: %^G\n\n%?"
     :target (file+head "rafts/%<%Y%m%d>-${slug}.org"
     "#+title: ${title}\n")
