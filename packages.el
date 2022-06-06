@@ -99,3 +99,5 @@
   :recipe (:host nil :repo "http://git.carcosa.net/jmcbray/gemini.el.git"))
 (package! org-transclusion)
 (package! ox-hugo)
+(package! mw-thesaurus)
+(package! org-wc)
