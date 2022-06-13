@@ -71,7 +71,7 @@
 (setq browse-url-browser-function 'browse-url-generic)
 (setq elpher-start-page-url "gemini://warmedal.se/~antenna/")
 
-    (setq org-directory "~/Dropbox/sci/"
+(setq org-directory "~/Dropbox/sci/"
     org-roam-directory (concat org-directory "notes/")
     bibtex-completion-bibliography (concat org-directory "lib.bib"))
 
