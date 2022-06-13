@@ -71,7 +71,7 @@
 (setq browse-url-browser-function 'browse-url-generic)
 (setq elpher-start-page-url "gemini://warmedal.se/~antenna/")
 
-(setq org-directory "~/Dropbox/sci/"
+    (setq org-directory "~/Dropbox/sci/"
     org-roam-directory (concat org-directory "notes/")
     bibtex-completion-bibliography (concat org-directory "lib.bib"))
 (after! org
@@ -127,19 +127,19 @@
 
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode #'org-superstar-mode #'org-pretty-table-mode #'org-appear-mode)
 
-(add-hook! org-mode
-    (setq org-hidden-keywords '(title))
-    (set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default)
-    (set-face-attribute 'org-level-7 nil :inherit 'org-level-8)
-    (set-face-attribute 'org-level-6 nil :inherit 'org-level-8)
-    (set-face-attribute 'org-level-5 nil :inherit 'org-level-8)
-    (set-face-attribute 'org-level-4 nil :inherit 'org-level-8 :height 1.02)
-    (set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.08)
-    (set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.12)
-    (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.2)
-    (set-face-attribute 'org-document-title nil :inherit 'org-level-8 :height 1.6 :foreground 'unspecified)
-    (setq org-n-level-faces 4)
-    (setq org-cycle-level-faces nil))
+;; (add-hook! org-mode
+;;     (setq org-hidden-keywords '(title))
+;;     (set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default)
+;;     (set-face-attribute 'org-level-7 nil :inherit 'org-level-8)
+;;     (set-face-attribute 'org-level-6 nil :inherit 'org-level-8)
+;;     (set-face-attribute 'org-level-5 nil :inherit 'org-level-8)
+;;     (set-face-attribute 'org-level-4 nil :inherit 'org-level-8 :height 1.02)
+;;     (set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.08)
+;;     (set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.12)
+;;     (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.2)
+;;     (set-face-attribute 'org-document-title nil :inherit 'org-level-8 :height 1.6 :foreground 'unspecified)
+;;     (setq org-n-level-faces 4)
+;;     (setq org-cycle-level-faces nil))
 
 (after! org
     (setq org-superstar-headline-bullets-list '("◉" "○" "✹" "◦"))
@@ -385,9 +385,30 @@
     :standard-input nil
     :error-patterns
     ((error line-start (file-name) ":" line ":" column ":" (id (one-or-more (not (any ":")))) ":" (message) line-end))
-    :modes (markdown-mode org-mode text-mode)
+    :modes (markdown-mode)
     )
-;; (add-to-list 'flycheck-checkers 'vale 'append)
+(add-to-list 'flycheck-checkers 'vale 'append)
 (setq flycheck-checker-error-threshold 2000)
 
 (add-hook! (gemini-mode) #'mixed-pitch-mode)
+
+(defun my/writing ()
+  (interactive)
+  (setq org-hidden-keywords '(title))
+  (set-face-attribute 'org-level-8 nil :weight 'bold :inherit 'default)
+  (set-face-attribute 'org-level-7 nil :inherit 'org-level-8)
+  (set-face-attribute 'org-level-6 nil :inherit 'org-level-8)
+  (set-face-attribute 'org-level-5 nil :inherit 'org-level-8)
+  (set-face-attribute 'org-level-4 nil :inherit 'org-level-8 :height 1.02)
+  (set-face-attribute 'org-level-3 nil :inherit 'org-level-8 :height 1.08)
+  (set-face-attribute 'org-level-2 nil :inherit 'org-level-8 :height 1.12)
+  (set-face-attribute 'org-level-1 nil :inherit 'org-level-8 :height 1.2)
+  (set-face-attribute 'org-document-title nil :inherit 'org-level-8 :height 1.6 :foreground 'unspecified)
+  (setq org-n-level-faces 4)
+  (setq org-cycle-level-faces nil))
+
+(defun my/edit ()
+  (interactive)
+  (call-interactively #'org-wc-display)
+;; set up flycheck vale to only start here
+                )
