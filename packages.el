@@ -57,47 +57,45 @@
 ;;              :files (:defaults "extensions/*")
 ;;              :build (:not compile))))
 (package! org-roam)
-;; (package! org :pin "73875939a8b5545ac53a86ec467239f510d14de8")
+(package! org-roam-bibtex
+  :recipe (:host github :repo "org-roam/org-roam-bibtex"))
+(package! org-ref)
 (package! org-superstar)
-(package! org-appear)
-(package! super-save)
+(package! org-transclusion)
+(package! org-appear) ;; toggles visibility of hidden elements such as emphasis markers
+(package! org-pretty-table
+  :recipe (:host github :repo "Fuco1/org-pretty-table"))
+(package! org-wc)
+(package! org-modern
+  :recipe (:host github :repo "minad/org-modern"))
+(package! ox-gemini)
+(package! ox-rss)
+(package! ox-hugo)
+(package! super-save) ;; like auto-save
 (package! elfeed)
 (package! elfeed-org)
 (package! elpher)
 (package! pandoc-mode)
-(package! ox-reveal)
+;; (package! ox-reveal) ;; presentations with reveal.js
 (package! olivetti)
-(package! eww)
+;; (package! eww)
 (package! dashboard)
-(package! org-drill)
-(package! simple-mpc)
+;; (package! org-drill)
+;; (package! simple-mpc)
 (package! websocket)
 (package! org-roam-ui
   :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out")))
-;; (package! gemini-mode)
-(package! org-roam-bibtex
-  :recipe (:host github :repo "org-roam/org-roam-bibtex"))
 ; this is recommended on the org-roam-bibtex github, not sure why
 (unpin! org-roam)
 (unpin! bibtex-completion helm-bibtex ivy-bibtex)
-(package! org-pretty-table
-  :recipe (:host github :repo "Fuco1/org-pretty-table"))
 (package! elfeed-goodies)
 (package! helm-bibtex) ;this is the general name for both helm/ivy bibtex completion
-(package! org-ref)
-(package! ox-gemini)
-(package! ox-rss)
-(package! pass)
+;; (package! pass)
 (package! ivy-posframe)
-(package! org-modern
-  :recipe (:host github :repo "minad/org-modern"))
-(package! svg-lib)
-(package! svg-tag-mode)
+;; (package! svg-lib)
+;; (package! svg-tag-mode)
 (package! mermaid-mode) ; for graphs
 (package! gnuplot)
 (package! gemini-mode
   :recipe (:host nil :repo "http://git.carcosa.net/jmcbray/gemini.el.git"))
-(package! org-transclusion)
-(package! ox-hugo)
 (package! mw-thesaurus)
-(package! org-wc)
