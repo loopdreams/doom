@@ -16,7 +16,7 @@
     doom-variable-pitch-font (font-spec :family "ETBembo" :size 20))
 (setq-default line-spacing 0.3)
 
-(setq doom-theme 'doom-nord)
+(setq doom-theme 'doom-one)
 #+END_SRC
 ** Dashboard
 #+BEGIN_SRC emacs-lisp
@@ -257,7 +257,7 @@ Seems to slow down the first time you open an org file, but then no delay.
     "#+title: ${title}\n")
     :unnarrowed t
     :jump-to-captured t)
-    ("b" "box3" plain "#+created: %u\n#+filetags: %^G\n\n%?"
+    ("b" "box3" plain "#+created: %u\n#+filetags: :box3: %^G\n\n%?"
     :target (file+head "ref/org/%<%Y%m%d>-${slug}.org"
     "#+title: ${title}\n")
     :unnarrowed t )
@@ -518,5 +518,13 @@ Disabled the 'centered point mode' hook for now. It started getting in the way t
   (call-interactively #'org-wc-display)
 ;; set up flycheck vale to only start here
                 )
+
+#+end_src
+* Evil-nerd-commenter
+For dealing with comments in Xresources file
+#+begin_src emacs-lisp
+(add-hook! conf-xdefaults-mode
+  (setq comment-start "/* "
+        comment-end "*/"))
 
 #+end_src

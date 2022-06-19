@@ -8,7 +8,7 @@
     doom-variable-pitch-font (font-spec :family "ETBembo" :size 20))
 (setq-default line-spacing 0.3)
 
-(setq doom-theme 'doom-nord)
+(setq doom-theme 'doom-one)
 
 (defun doom-dashboard-draw-ascii-emacs-banner-fn ()
     (let* ((banner
@@ -200,7 +200,7 @@
     "#+title: ${title}\n")
     :unnarrowed t
     :jump-to-captured t)
-    ("b" "box3" plain "#+created: %u\n#+filetags: %^G\n\n%?"
+    ("b" "box3" plain "#+created: %u\n#+filetags: :box3: %^G\n\n%?"
     :target (file+head "ref/org/%<%Y%m%d>-${slug}.org"
     "#+title: ${title}\n")
     :unnarrowed t )
@@ -412,3 +412,7 @@
   (call-interactively #'org-wc-display)
 ;; set up flycheck vale to only start here
                 )
+
+(add-hook! conf-xdefaults-mode
+  (setq comment-start "/* "
+        comment-end "*/"))
