@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: orgcss
+# uuid: orgcss
+# key: \css
+# condition: t
+# --
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="orgstyle.css" />

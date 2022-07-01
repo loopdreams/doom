@@ -191,6 +191,16 @@ Seems to slow down the first time you open an org file, but then no delay.
 ;;     (set-face-attribute 'org-document-title nil :inherit 'org-level-8 :height 1.6 :foreground 'unspecified)
 ;;     (setq org-n-level-faces 4)
 ;;     (setq org-cycle-level-faces nil))
+(add-hook! org-mode
+           (setq org-hidden-keywords '(title))
+           (custom-set-faces
+            '(org-document-title ((t (:height 2.0))))
+            '(org-level-1 ((t (:inherit outline-1 :height 1.15))))
+            '(org-level-2 ((t (:inherit outline-2 :height 1.12))))
+            '(org-level-3 ((t (:inherit outline-3 :height 1.08))))
+            '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
+            '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
+            ))
 #+END_SRC
 *** Bullets and keyword faces
 #+begin_src emacs-lisp
@@ -306,12 +316,23 @@ A workaround solution to enable 'immediate' node inserts (without opening new bu
 *** Buffer
 Adding the hook seems to fix the problem of the buffer not loading in the right place on start-up. It still doesn't load properly the first time you open a roam file, but does so on the second file (good enough for now).
 #+begin_src emacs-lisp
+(setq org-roam-mode-sections
+      (list #'org-roam-backlinks-section
+            #'org-roam-reflinks-section
+            #'org-roam-unlinked-references-section
+            ))
+;; (add-hook! 'org-roam-mode-hook (add-to-list 'display-buffer-alist
+;;              '("\\*org-roam\\*"
+;;                (display-buffer-in-direction)
+;;                (direction . right)
+;;                (window-width . 0.33)
+;;                (window-height . fit-window-to-buffer))))
 (add-hook! 'org-roam-mode-hook (add-to-list 'display-buffer-alist
     '("\\*org-roam\\*"
     (display-buffer-in-side-window)
     (side . right)
     (slot . 0)
-    (window-width . 0.33)
+    (window-width . 0.25)
     (window-parameters . ((no-other-window . t)
     (no-delete-other-windows . t))))))
 #+end_src

@@ -71,7 +71,7 @@
 (setq browse-url-browser-function 'browse-url-generic)
 (setq elpher-start-page-url "gemini://warmedal.se/~antenna/")
 
-    (setq org-directory "~/Dropbox/sci/"
+(setq org-directory "~/Dropbox/sci/"
     org-roam-directory (concat org-directory "notes/")
     bibtex-completion-bibliography (concat org-directory "lib.bib"))
 (after! org
@@ -140,6 +140,16 @@
 ;;     (set-face-attribute 'org-document-title nil :inherit 'org-level-8 :height 1.6 :foreground 'unspecified)
 ;;     (setq org-n-level-faces 4)
 ;;     (setq org-cycle-level-faces nil))
+(add-hook! org-mode
+           (setq org-hidden-keywords '(title))
+           (custom-set-faces
+            '(org-document-title ((t (:height 2.0))))
+            '(org-level-1 ((t (:inherit outline-1 :height 1.15))))
+            '(org-level-2 ((t (:inherit outline-2 :height 1.12))))
+            '(org-level-3 ((t (:inherit outline-3 :height 1.08))))
+            '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
+            '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
+            ))
 
 (after! org
     (setq org-superstar-headline-bullets-list '("◉" "○" "✹" "◦"))
@@ -238,12 +248,23 @@
     (org-roam-setup))
 (setq org-roam-completion-everywhere t)
 
+(setq org-roam-mode-sections
+      (list #'org-roam-backlinks-section
+            #'org-roam-reflinks-section
+            #'org-roam-unlinked-references-section
+            ))
+;; (add-hook! 'org-roam-mode-hook (add-to-list 'display-buffer-alist
+;;              '("\\*org-roam\\*"
+;;                (display-buffer-in-direction)
+;;                (direction . right)
+;;                (window-width . 0.33)
+;;                (window-height . fit-window-to-buffer))))
 (add-hook! 'org-roam-mode-hook (add-to-list 'display-buffer-alist
     '("\\*org-roam\\*"
     (display-buffer-in-side-window)
     (side . right)
     (slot . 0)
-    (window-width . 0.33)
+    (window-width . 0.25)
     (window-parameters . ((no-other-window . t)
     (no-delete-other-windows . t))))))
 
