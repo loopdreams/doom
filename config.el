@@ -53,6 +53,7 @@
 
 (require 'epa-file)
 (epa-file-enable)
+(setq epa-pinentry-mode 'loopback)
 (require 'org-crypt)
 (org-crypt-use-before-save-magic)
 (setq org-tags-exclude-from-inheritance (quote ("crypt")))
@@ -85,10 +86,10 @@
 
 (map!
     :n "<f5>" 'org-agenda
-    :n "<f6>" (lambda() (interactive)(find-file (concat org-directory "act/todo.org")))
+    :n "<f6>" (lambda() (interactive)(find-file (concat org-directory "act/inbox.org")))
     :n "<f7>" (lambda() (interactive)(find-file (concat org-directory "act/projects.org")))
     :n "<f8>" (lambda() (interactive)(find-file (concat org-directory "act/actions.org")))
-    :n "<f9>" '+calendar/open-calendar)
+    :n "<f9>" (lambda() (interactive)(find-file (concat org-directory "act/archive.org"))))
 
 (after! org
     (setq org-todo-keywords
@@ -210,7 +211,7 @@
     "#+title: ${title}\n")
     :unnarrowed t
     :jump-to-captured t)
-    ("b" "box3" plain "#+created: %u\n#+filetags: :box3: %^G\n\n%?"
+    ("b" "box3" plain "#+created: %u\n#+filetags: :box3: %^G\n#+hugo_custom_front_matter: :layout note\n\n%?"
     :target (file+head "ref/org/%<%Y%m%d>-${slug}.org"
     "#+title: ${title}\n")
     :unnarrowed t )
@@ -238,6 +239,20 @@
                :leader
                :prefix "n"
                :desc "Org Transclusion Mode" "t" #'org-transclusion-mode))
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((ledger . t)))
+
+;; New link type for Org-Hugo internal links
+(defun md-hugo-insert-link ()
+    "Create link with Hugo ref shortcode"
+    (interactive)
+    (insert (concat "[" (read-string "Text for link: ") "]" "\({{< ref \"" (file-relative-name (read-file-name "File: ")) "\" >}}\)")))
+
+(map! :map markdown-mode-map
+    :leader
+    :desc "Insert Hugo Link"         "m l"     'md-hugo-insert-link)
 
 (use-package! org-roam
     :defer t
@@ -306,7 +321,7 @@
 (use-package! elfeed-org
     :after elfeed
     :init
-    (setq rmh-elfeed-org-files (list "~/.doom.d/elfeed.org")))
+    (setq rmh-elfeed-org-files (list "~/.config/doom/elfeed.org")))
 (require 'elfeed-goodies)
     (elfeed-goodies/setup)
     (setq elfeed-goodies/entry-pane-size 0.7)
@@ -337,8 +352,8 @@
     :nick "eoin"
     :full-name "eoin carney"
     :client-certificate
-    '("/home/eoin/.certs/erc.key"
-    "/home/eoin/.certs/erc.crt")))
+    '("/home/eoin/.local/share/certs/erc.key"
+    "/home/eoin/.local/share/certs/erc.crt")))
 (defun liberachat ()
     (interactive)
     (erc-tls :server "irc.libera.chat"
@@ -346,8 +361,8 @@
     :nick "loopdreams"
     :full-name "loopdreams"
     :client-certificate
-    '("/home/eoin/.certs/erc.key"
-    "/home/eoin/.certs/erc.crt")))
+    '("/home/eoin/.local/share/certs/erc.key"
+    "/home/eoin/.local/share/certs/erc.crt")))
 
 (defun ledger-clean-and-save ()
   (interactive)
@@ -410,6 +425,7 @@
     )
 (add-to-list 'flycheck-checkers 'vale 'append)
 (setq flycheck-checker-error-threshold 2000)
+(global-flycheck-mode -1)
 
 (add-hook! (gemini-mode) #'mixed-pitch-mode)
 

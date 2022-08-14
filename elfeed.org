@@ -13,6 +13,7 @@
 ** People :people:
 *** https://anneboyer.substack.com/feed/
 *** https://spool-five.com/rss.xml
+*** https://spool-five.com/posts/index.xml
 *** https://100r.co/links/rss.xml
 *** http://ajroach42.com/feed.xml
 *** https://cdn.jwz.org/blog/feed/
@@ -26,6 +27,7 @@
 *** https://astrid.tech/atom.xml
 *** https://ranprieur.com/feed.php
 *** https://helpdeskheadesk.net/index.xml
+*** https://portal.mozz.us/gemini/republic.circumlunar.space/users/flexibeast/gemlog/atom-https.xml
 ** Philosophy :philosophy:
 *** https://bluelabyrinths.com/feed/
 *** https://www.philosophy2u.com/blog-feed.xml

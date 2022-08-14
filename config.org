@@ -80,6 +80,7 @@
 #+begin_src emacs-lisp
 (require 'epa-file)
 (epa-file-enable)
+(setq epa-pinentry-mode 'loopback)
 (require 'org-crypt)
 (org-crypt-use-before-save-magic)
 (setq org-tags-exclude-from-inheritance (quote ("crypt")))
@@ -123,10 +124,10 @@ Set qutebrowser as default and elpher start page
 #+begin_src emacs-lisp
 (map!
     :n "<f5>" 'org-agenda
-    :n "<f6>" (lambda() (interactive)(find-file (concat org-directory "act/todo.org")))
+    :n "<f6>" (lambda() (interactive)(find-file (concat org-directory "act/inbox.org")))
     :n "<f7>" (lambda() (interactive)(find-file (concat org-directory "act/projects.org")))
     :n "<f8>" (lambda() (interactive)(find-file (concat org-directory "act/actions.org")))
-    :n "<f9>" '+calendar/open-calendar)
+    :n "<f9>" (lambda() (interactive)(find-file (concat org-directory "act/archive.org"))))
 #+end_src
 ** To-do keywords
 #+BEGIN_SRC emacs-lisp
@@ -267,7 +268,7 @@ Seems to slow down the first time you open an org file, but then no delay.
     "#+title: ${title}\n")
     :unnarrowed t
     :jump-to-captured t)
-    ("b" "box3" plain "#+created: %u\n#+filetags: :box3: %^G\n\n%?"
+    ("b" "box3" plain "#+created: %u\n#+filetags: :box3: %^G\n#+hugo_custom_front_matter: :layout note\n\n%?"
     :target (file+head "ref/org/%<%Y%m%d>-${slug}.org"
     "#+title: ${title}\n")
     :unnarrowed t )
@@ -300,6 +301,26 @@ A workaround solution to enable 'immediate' node inserts (without opening new bu
                :leader
                :prefix "n"
                :desc "Org Transclusion Mode" "t" #'org-transclusion-mode))
+#+end_src
+** Org-babel
+Not working - See [[https://github.com/doomemacs/doomemacs/issues/6457][github issue]]
+#+begin_src emacs-lisp
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((ledger . t)))
+#+end_src
+** Hugo
+Based on a post from reddit, allows for link completion when entering a hugo-style link
+#+begin_src emacs-lisp
+;; New link type for Org-Hugo internal links
+(defun md-hugo-insert-link ()
+    "Create link with Hugo ref shortcode"
+    (interactive)
+    (insert (concat "[" (read-string "Text for link: ") "]" "\({{< ref \"" (file-relative-name (read-file-name "File: ")) "\" >}}\)")))
+
+(map! :map markdown-mode-map
+    :leader
+    :desc "Insert Hugo Link"         "m l"     'md-hugo-insert-link)
 #+end_src
 ** Org Roam
 *** Org Roam V2
@@ -386,7 +407,7 @@ See issue here: [[https://github.com/org-roam/org-roam/issues/1728][github issue
 (use-package! elfeed-org
     :after elfeed
     :init
-    (setq rmh-elfeed-org-files (list "~/.doom.d/elfeed.org")))
+    (setq rmh-elfeed-org-files (list "~/.config/doom/elfeed.org")))
 (require 'elfeed-goodies)
     (elfeed-goodies/setup)
     (setq elfeed-goodies/entry-pane-size 0.7)
@@ -424,8 +445,8 @@ Seems to only work in emacs 28+
     :nick "eoin"
     :full-name "eoin carney"
     :client-certificate
-    '("/home/eoin/.certs/erc.key"
-    "/home/eoin/.certs/erc.crt")))
+    '("/home/eoin/.local/share/certs/erc.key"
+    "/home/eoin/.local/share/certs/erc.crt")))
 (defun liberachat ()
     (interactive)
     (erc-tls :server "irc.libera.chat"
@@ -433,8 +454,8 @@ Seems to only work in emacs 28+
     :nick "loopdreams"
     :full-name "loopdreams"
     :client-certificate
-    '("/home/eoin/.certs/erc.key"
-    "/home/eoin/.certs/erc.crt")))
+    '("/home/eoin/.local/share/certs/erc.key"
+    "/home/eoin/.local/share/certs/erc.crt")))
 #+end_src
 ** Ledger
 #+begin_src emacs-lisp
@@ -509,6 +530,7 @@ Disabled the 'centered point mode' hook for now. It started getting in the way t
     )
 (add-to-list 'flycheck-checkers 'vale 'append)
 (setq flycheck-checker-error-threshold 2000)
+(global-flycheck-mode -1)
 
 #+end_src
 ** Gemtext
