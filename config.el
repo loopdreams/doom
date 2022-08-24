@@ -6,9 +6,11 @@
     ;; (font-spec :family "FuraMono Nerd Font" :size 16)
     mixed-pitch-set-height 20
     doom-variable-pitch-font (font-spec :family "ETBembo" :size 20))
-(setq-default line-spacing 0.3)
+;; (set-default line-spacing 0.3)
 
-(setq doom-theme 'doom-one)
+(setq doom-theme 'doom-solarized-light)
+(add-to-list 'load-path "/home/eoin/.emacs.d/themes/ef-themes")
+(require 'ef-themes)
 
 (defun doom-dashboard-draw-ascii-emacs-banner-fn ()
     (let* ((banner
@@ -231,14 +233,14 @@
           org-roam-capture-templates)))
     (funcall-interactively 'org-roam-node-insert)))
 
-(use-package! org-transclusion
-              :after org
-              :init
-              (map!
-               :map global-map "<f12>" #'org-transclusion-add
-               :leader
-               :prefix "n"
-               :desc "Org Transclusion Mode" "t" #'org-transclusion-mode))
+;; (use-package! org-transclusion
+;;               :after org
+;;               :init
+;;               (map!
+;;                :map global-map "<f12>" #'org-transclusion-add
+;;                :leader
+;;                :prefix "n"
+;;                :desc "Org Transclusion Mode" "t" #'org-transclusion-mode))
 
 (org-babel-do-load-languages
  'org-babel-load-languages
