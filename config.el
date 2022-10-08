@@ -2,13 +2,13 @@
       user-mail-address "eoincarney0@gmail.com")
 
 (setq doom-font
-    (font-spec :family "GoMono Nerd Font" :size 16)
+    (font-spec :family "FiraMono Nerd Font" :size 16)
     ;; (font-spec :family "FuraMono Nerd Font" :size 16)
     mixed-pitch-set-height 20
     doom-variable-pitch-font (font-spec :family "ETBembo" :size 20))
 ;; (set-default line-spacing 0.3)
 
-(setq doom-theme 'doom-solarized-light)
+(setq doom-theme 'doom-one)
 (add-to-list 'load-path "/home/eoin/.emacs.d/themes/ef-themes")
 (require 'ef-themes)
 
@@ -330,22 +330,22 @@
 
 (setq +org-capture-emails-file (concat org-directory "act/inbox.org"))
 (after! mu4e
-(setq mu4e-get-mail-command "offlineimap")
-(setq mu4e-update-interval 300)
-(setq mail-user-agent 'mu4e-user-agent)
+  (setq mu4e-get-mail-command "offlineimap")
+  (setq mu4e-update-interval 300)
+  (setq mail-user-agent 'mu4e-user-agent)
 
-(setq mu4e-sent-folder "/[Gmail].Sent Mail")
-(setq mu4e-drafts-folder "/[Gmail].Drafts")
-(setq mu4e-trash-folder "/[Gmail].Bin")
-(setq mu4e-maildir-shortcuts
-    '((:maildir "/INBOX"      :key ?i)))
-(setq user-mail-address "eoincarney0@gmail.com"
-    user-full-name "Eoin Carney")
-(setq sendmail-program "/usr/bin/msmtp"
-    send-mail-function 'smtpmail-send-it
-    message-sendmail-f-is-evil t
-    message-sendmail-extra-arguments '("--read-envelope-from")
-    message-send-mail-function 'message-send-mail-with-sendmail))
+  (setq mu4e-sent-folder "/[Gmail].Sent Mail")
+  (setq mu4e-drafts-folder "/[Gmail].Drafts")
+  (setq mu4e-trash-folder "/[Gmail].Bin")
+  (setq mu4e-maildir-shortcuts
+        '((:maildir "/INBOX" :key ?i)))
+  (setq user-mail-address "eoincarney0@gmail.com"
+        user-full-name "Eoin Carney")
+  (setq sendmail-program "/usr/bin/msmtp"
+        send-mail-function 'smtpmail-send-it
+        message-sendmail-f-is-evil t
+        message-sendmail-extra-arguments '("--read-envelope-from")
+        message-send-mail-function 'message-send-mail-with-sendmail))
 
 (defun tildechat ()
     (interactive)

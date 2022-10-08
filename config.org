@@ -9,13 +9,13 @@
 ** Font and Theme
 #+BEGIN_SRC emacs-lisp
 (setq doom-font
-    (font-spec :family "GoMono Nerd Font" :size 16)
+    (font-spec :family "FiraMono Nerd Font" :size 16)
     ;; (font-spec :family "FuraMono Nerd Font" :size 16)
     mixed-pitch-set-height 20
     doom-variable-pitch-font (font-spec :family "ETBembo" :size 20))
 ;; (set-default line-spacing 0.3)
 
-(setq doom-theme 'doom-solarized-light)
+(setq doom-theme 'doom-one)
 (add-to-list 'load-path "/home/eoin/.emacs.d/themes/ef-themes")
 (require 'ef-themes)
 #+END_SRC
@@ -418,22 +418,22 @@ See issue here: [[https://github.com/org-roam/org-roam/issues/1728][github issue
 #+begin_src emacs-lisp
 (setq +org-capture-emails-file (concat org-directory "act/inbox.org"))
 (after! mu4e
-(setq mu4e-get-mail-command "offlineimap")
-(setq mu4e-update-interval 300)
-(setq mail-user-agent 'mu4e-user-agent)
+  (setq mu4e-get-mail-command "offlineimap")
+  (setq mu4e-update-interval 300)
+  (setq mail-user-agent 'mu4e-user-agent)
 
-(setq mu4e-sent-folder "/[Gmail].Sent Mail")
-(setq mu4e-drafts-folder "/[Gmail].Drafts")
-(setq mu4e-trash-folder "/[Gmail].Bin")
-(setq mu4e-maildir-shortcuts
-    '((:maildir "/INBOX"      :key ?i)))
-(setq user-mail-address "eoincarney0@gmail.com"
-    user-full-name "Eoin Carney")
-(setq sendmail-program "/usr/bin/msmtp"
-    send-mail-function 'smtpmail-send-it
-    message-sendmail-f-is-evil t
-    message-sendmail-extra-arguments '("--read-envelope-from")
-    message-send-mail-function 'message-send-mail-with-sendmail))
+  (setq mu4e-sent-folder "/[Gmail].Sent Mail")
+  (setq mu4e-drafts-folder "/[Gmail].Drafts")
+  (setq mu4e-trash-folder "/[Gmail].Bin")
+  (setq mu4e-maildir-shortcuts
+        '((:maildir "/INBOX" :key ?i)))
+  (setq user-mail-address "eoincarney0@gmail.com"
+        user-full-name "Eoin Carney")
+  (setq sendmail-program "/usr/bin/msmtp"
+        send-mail-function 'smtpmail-send-it
+        message-sendmail-f-is-evil t
+        message-sendmail-extra-arguments '("--read-envelope-from")
+        message-send-mail-function 'message-send-mail-with-sendmail))
 #+end_src
 
 ** ERC
@@ -518,6 +518,9 @@ Disabled the 'centered point mode' hook for now. It started getting in the way t
 ;; (add-hook! 'writeroom-mode-enable-hook '(lambda () (display-line-numbers-mode -1)))
 (remove-hook! (writeroom-mode) #'+zen-enable-mixed-pitch-mode-h) ;; added this since mixed-pitch is defaul on most 'writing' files (org, md). Otherwise, when exiting writeroom mode, font switched back to fixed-pitch
 #+END_SRC
+
+#+RESULTS:
+
 ** Prose Liniting with Vale
 #+begin_src emacs-lisp
 (flycheck-define-checker vale

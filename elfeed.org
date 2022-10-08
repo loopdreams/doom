@@ -12,7 +12,6 @@
 *** https://gemini.circumlunar.space/news/atom.xml
 ** People :people:
 *** https://anneboyer.substack.com/feed/
-*** https://spool-five.com/rss.xml
 *** https://spool-five.com/posts/index.xml
 *** https://100r.co/links/rss.xml
 *** http://ajroach42.com/feed.xml
@@ -23,7 +22,6 @@
 *** https://computer.rip/rss.xml
 *** https://efforg.libsyn.com/rss
 *** https://sachachua.com/blog/feed/
-*** https://www.lunduke.com/feed/
 *** https://astrid.tech/atom.xml
 *** https://ranprieur.com/feed.php
 *** https://helpdeskheadesk.net/index.xml
