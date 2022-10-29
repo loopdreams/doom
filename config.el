@@ -9,8 +9,6 @@
 ;; (set-default line-spacing 0.3)
 
 (setq doom-theme 'doom-solarized-light)
-(add-to-list 'load-path "/home/eoin/.emacs.d/themes/ef-themes")
-(require 'ef-themes)
 
 (defun doom-dashboard-draw-ascii-emacs-banner-fn ()
     (let* ((banner
@@ -51,7 +49,7 @@
 (map! :n "SPC o t" 'eshell)
 (super-save-mode 1)
 (setq super-save-when-idle t)
-(setq display-line-numbers-type nil)
+(setq display-line-numbers-type t)
 
 (require 'epa-file)
 (epa-file-enable)
@@ -213,7 +211,7 @@
     "#+title: ${title}\n")
     :unnarrowed t
     :jump-to-captured t)
-    ("b" "box3" plain "#+created: %u\n#+filetags: :box3: %^G\n#+hugo_custom_front_matter: :layout note\n\n%?"
+    ("b" "box3" plain "#+date: %u\n#+filetags: :box3: %^G\n#+hugo_custom_front_matter: :layout note\n\n%?"
     :target (file+head "ref/org/%<%Y%m%d>-${slug}.org"
     "#+title: ${title}\n")
     :unnarrowed t )
@@ -223,7 +221,8 @@
     :unnarrowed t)))
     (setq org-roam-dailies-capture-templates
     '(("d" "default" entry "* %<%H:%M> -  [[id:477e986a-2fba-4982-8158-b309baf0b14b][%?]]"
-    :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")))))
+    :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")
+    :jump-to-captured t))))
 
 (defun my/org-roam-insert-no-capture ()
   (interactive)

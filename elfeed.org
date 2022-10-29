@@ -38,6 +38,7 @@
 *** https://www.urbanomic.com/feed/
 *** https://aeon.co/feed.rss
 *** https://www.3ammagazine.com/3am/feed/
+*** https://newsocialist.org.uk/rss/
 ** Music :music:
 *** https://www.outofyourheadrecords.com/news?format=rss
 *** http://schoenblog.com/?feed=rss2

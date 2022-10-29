@@ -16,8 +16,6 @@
 ;; (set-default line-spacing 0.3)
 
 (setq doom-theme 'doom-solarized-light)
-(add-to-list 'load-path "/home/eoin/.emacs.d/themes/ef-themes")
-(require 'ef-themes)
 #+END_SRC
 ** Dashboard
 #+BEGIN_SRC emacs-lisp
@@ -74,7 +72,7 @@
 (map! :n "SPC o t" 'eshell)
 (super-save-mode 1)
 (setq super-save-when-idle t)
-(setq display-line-numbers-type nil)
+(setq display-line-numbers-type t)
 #+END_SRC
 ** Encryption
 + Enable [[https://orgmode.org/worg/org-tutorials/encrypting-files.html][encryption]]
@@ -269,7 +267,7 @@ Seems to slow down the first time you open an org file, but then no delay.
     "#+title: ${title}\n")
     :unnarrowed t
     :jump-to-captured t)
-    ("b" "box3" plain "#+created: %u\n#+filetags: :box3: %^G\n#+hugo_custom_front_matter: :layout note\n\n%?"
+    ("b" "box3" plain "#+date: %u\n#+filetags: :box3: %^G\n#+hugo_custom_front_matter: :layout note\n\n%?"
     :target (file+head "ref/org/%<%Y%m%d>-${slug}.org"
     "#+title: ${title}\n")
     :unnarrowed t )
@@ -279,7 +277,8 @@ Seems to slow down the first time you open an org file, but then no delay.
     :unnarrowed t)))
     (setq org-roam-dailies-capture-templates
     '(("d" "default" entry "* %<%H:%M> -  [[id:477e986a-2fba-4982-8158-b309baf0b14b][%?]]"
-    :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")))))
+    :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")
+    :jump-to-captured t))))
 #+end_src
 ** Capture - immediate
 A workaround solution to enable 'immediate' node inserts (without opening new buffer)
