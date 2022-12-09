@@ -8,7 +8,7 @@
     doom-variable-pitch-font (font-spec :family "ETBembo" :size 20))
 ;; (set-default line-spacing 0.3)
 
-(setq doom-theme 'doom-solarized-light)
+(setq doom-theme 'doom-one)
 
 (defun doom-dashboard-draw-ascii-emacs-banner-fn ()
     (let* ((banner
@@ -71,6 +71,30 @@
 (setq browse-url-generic-program "/usr/bin/qutebrowser")
 (setq browse-url-browser-function 'browse-url-generic)
 (setq elpher-start-page-url "gemini://warmedal.se/~antenna/")
+
+(defcustom youtube-viewer-program "youtube-viewer"
+        "Progam path to youtube-viewer")
+(defcustom youtube-viewer-args nil "Extra arguments for youtube-viewer")
+
+(defun view-youtube-url (url &rest _)
+  "Open Youtube-Viewer to browse the given URL."
+  (interactive (browse-url-interactive-arg "URL: "))
+  (setq url (browse-url-encode-url url))
+  (let* ((process-environment (browse-url-process-environment)))
+    (apply #'start-process
+           (concat "youtube-viewer " url) nil
+           youtube-viewer-program
+           (append
+            youtube-viewer-args
+            (list url)))))
+
+(with-eval-after-load 'browse-url
+  (add-to-list 'browse-url-handlers
+       (cons "youtu\\.?be" #'view-youtube-url)))
+;; (setq browse-url-browser-function
+;;   (quote
+;;     (("youtu\\.?be" . mpv-play-url)
+;;      ("." . 'browse-url-generic))))
 
 (setq org-directory "~/Dropbox/sci/"
     org-roam-directory (concat org-directory "notes/")
@@ -324,8 +348,8 @@
     :init
     (setq rmh-elfeed-org-files (list "~/.config/doom/elfeed.org")))
 (require 'elfeed-goodies)
-    (elfeed-goodies/setup)
-    (setq elfeed-goodies/entry-pane-size 0.7)
+(elfeed-goodies/setup)
+(setq elfeed-goodies/entry-pane-size 0.7)
 
 (setq +org-capture-emails-file (concat org-directory "act/inbox.org"))
 (after! mu4e
