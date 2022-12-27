@@ -40,7 +40,7 @@
     "\n"))
     'face 'doom-dashboard-banner)))
 
-;; (unless (display-graphic-p) ; for some reason this messes up the graphical splash screen atm
+;; unless (display-graphic-p) ; for some reason this messes up the graphical splash screen atm
     (setq +doom-dashboard-ascii-banner-fn #'doom-dashboard-draw-ascii-emacs-banner-fn)
 
 (custom-set-faces!
@@ -63,16 +63,22 @@
 ;; (setq doom-modeline-enable-word-count t)
 (display-time-mode 1)
 (add-to-list 'default-frame-alist '(alpha . 90))
-(setq display-line-numbers-type 'relative
-    scroll-margin 5)
+(setq display-line-numbers 'relative
+      scroll-margin 5)
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
 (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
 ;; (add-to-list 'auto-mode-alist '("\\.gmi\\'" . markdown-mode))
 (add-hook! markdown-mode 'mixed-pitch-mode)
 (map! :n "SPC o t" 'eshell)
+;; center line on scroll
+(map! :n "C-d" (lambda ()(interactive)(evil-scroll-down 0)(recenter)))
+(map! :n "C-u" (lambda ()(interactive)(evil-scroll-up 0)(recenter)))
 (super-save-mode 1)
 (setq super-save-when-idle t)
 (setq display-line-numbers-type t)
+
+;; denote test
+(setq denote-directory (expand-file-name "~/docs/org/denote-test/"))
 #+END_SRC
 ** Encryption
 + Enable [[https://orgmode.org/worg/org-tutorials/encrypting-files.html][encryption]]
@@ -135,9 +141,9 @@ Youtube-viewer seems to work far better than just directly using mpv. I think be
 * Org
 ** Directories and misc
 #+BEGIN_SRC emacs-lisp
-    (setq org-directory "~/Dropbox/sci/"
-    org-roam-directory (concat org-directory "notes/")
-    bibtex-completion-bibliography (concat org-directory "lib.bib"))
+(setq org-directory "~/docs/org/"
+      org-roam-directory (concat org-directory "notes/")
+      bibtex-completion-bibliography (concat org-directory "lib.bib"))
 (after! org
   (setq org-agenda-files (append (directory-files-recursively (concat org-directory "act/") "\\.org$")
                                  (directory-files-recursively (concat org-directory "notes/rafts/") "\\notes.org$"))))
@@ -150,50 +156,57 @@ Youtube-viewer seems to work far better than just directly using mpv. I think be
 ** Extra keybindings
 #+begin_src emacs-lisp
 (map!
-    :n "<f5>" 'org-agenda
-    :n "<f6>" (lambda() (interactive)(find-file (concat org-directory "act/inbox.org")))
-    :n "<f7>" (lambda() (interactive)(find-file (concat org-directory "act/projects.org")))
-    :n "<f8>" (lambda() (interactive)(find-file (concat org-directory "act/actions.org")))
-    :n "<f9>" (lambda() (interactive)(find-file (concat org-directory "act/archive.org"))))
+ :n "<f5>" 'org-agenda
+ :n "<f6>" (lambda() (interactive)(find-file (concat org-directory "act/inbox.org")))
+ :n "<f7>" (lambda() (interactive)(find-file (concat org-directory "act/projects.org")))
+ :n "<f8>" (lambda() (interactive)(find-file (concat org-directory "act/actions.org")))
+ :n "<f9>" (lambda() (interactive)(find-file (concat org-directory "act/archive.org"))))
 #+end_src
 ** To-do keywords
 #+BEGIN_SRC emacs-lisp
 (after! org
-    (setq org-todo-keywords
-    '((sequence
-    "TODO(o)"
-    "TT(t)"
-    "PROJ(p)"
-    "NEXT(n)"
-    "PROG(i!/!)"
-    "WAIT(w)"
-    "SOMEDAY(s)"
-    "RLX(r)"
-    "STUCK(x)"
-    "BUY(b)"
-    "|"
-    "DONE(d!/!)"
-    "CANCELLED(c!/!)"))))
+  (setq org-todo-keywords
+     '((sequence
+        "TODO(o)"
+        "TT(t)"
+        "PROJ(p)"
+        "NEXT(n)"
+        "PROG(i!/!)"
+        "WAIT(w)"
+        "SOMEDAY(s)"
+        "RLX(r)"
+        "STUCK(x)"
+        "BUY(b)"
+        "|"
+        "DONE(d!/!)"
+        "CANCELLED(c!/!)"))))
 #+END_SRC
 ** Org Agenda
 #+begin_src emacs-lisp
 (setq gtd/next-action-head "Next actions"
-    gtd/waiting-head "Waiting on"
-    gtd/project-head "Projects"
-    gtd/shop-head "Shopping"
-    gtd/someday-head "Someday/maybe")
+      gtd/waiting-head "Waiting on"
+      gtd/project-head "Projects"
+      gtd/read-head "Reading List"
+      gtd/watch-head "Watch List"
+      gtd/shop-head "Shopping"
+      gtd/someday-head "Someday/maybe")
 
 (setq org-agenda-custom-commands
-    '(
-    ("g" "GTD view"
-    (
-    (todo "TT" ((org-agenda-overriding-header gtd/next-action-head)))
-    (agenda "" ((org-agenda-span 'day)
-    (org-agenda-start-day 'nil))) ;; this is needed because doom starts agenda with day set to -3d
-    (todo "PROJ" ((org-agenda-overriding-header gtd/project-head)))
-    (todo "WAIT" ((org-agenda-overriding-header gtd/waiting-head)))
-    (todo "BUY"  ((org-agenda-overriding-header gtd/shop-head)))
-    (todo "SOMEDAY" ((org-agenda-overriding-header gtd/someday-head)))))))
+      '(
+        ("g" "GTD view"
+         (
+          (todo "TT" ((org-agenda-overriding-header gtd/next-action-head)))
+          (agenda "" ((org-agenda-span 'day)
+                      (org-agenda-start-day 'nil))) ;; this is needed because doom starts agenda with day set to -3d
+          (todo "PROJ" ((org-agenda-overriding-header gtd/project-head)))
+          (todo "WAIT" ((org-agenda-overriding-header gtd/waiting-head)))
+          (tags-todo "read" ((org-agenda-overriding-header gtd/read-head)))
+          (tags-todo "watch" ((org-agenda-overriding-header gtd/watch-head)))
+          (todo "BUY"  ((org-agenda-overriding-header gtd/shop-head)))))
+        ("s" "Someday"
+         ((todo "SOMEDAY" ((org-agenda-overriding-header gtd/someday-head)))))))
+
+
 #+end_src
 ** Aesthetics
 Org superstar and changing height of headings
@@ -220,37 +233,38 @@ Seems to slow down the first time you open an org file, but then no delay.
 ;;     (setq org-n-level-faces 4)
 ;;     (setq org-cycle-level-faces nil))
 (add-hook! org-mode
-           (setq org-hidden-keywords '(title))
-           (custom-set-faces
-            '(org-document-title ((t (:height 2.0))))
-            '(org-level-1 ((t (:inherit outline-1 :height 1.15))))
-            '(org-level-2 ((t (:inherit outline-2 :height 1.12))))
-            '(org-level-3 ((t (:inherit outline-3 :height 1.08))))
-            '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
-            '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
-            ))
+  (setq org-hidden-keywords '(title))
+  (custom-set-faces
+   '(org-document-title ((t (:height 2.0))))
+   '(org-level-1 ((t (:inherit outline-1 :height 1.15))))
+   '(org-level-2 ((t (:inherit outline-2 :height 1.12))))
+   '(org-level-3 ((t (:inherit outline-3 :height 1.08))))
+   '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
+   '(org-level-5 ((t (:inherit outline-5 :height 1.0))))))
+
 #+END_SRC
 *** Bullets and keyword faces
 #+begin_src emacs-lisp
 (after! org
-    (setq org-superstar-headline-bullets-list '("◉" "○" "✹" "◦"))
+  (setq org-superstar-headline-bullets-list '("◉" "○" "✹" "◦"))
     ;; Other bullets I liked: "❁" "❃" "✹" "✦" "❁" "◉" "○" "◦" "♠" "♥" "♦" "♣"
-    (setq org-superstar-special-todo-items t)
-    (setq org-superstar-todo-bullet-alist '(
-    ("TODO" . 9744)
-    ("TT"   . 9744)
-    ("NEXT" . 9744)
-    ("CONFIG" . 9744)
-    ("DONE" . 9747)))
-    (setq org-ellipsis " ▼")
-    (setq org-list-demote-modify-bullet
-    '(("+" . "*")("*" . "-")("-" . "+")))
-    (setq org-todo-keyword-faces '(
-    ("TODO" . "#b16286")
-    ("TT"   . "#b16286")
-    ("PROJ" . "#83a598")
-    ("WAIT" . "#a89984")
-    ("SOMEDAY" . "#8ec07c"))))
+  (setq org-superstar-special-todo-items t)
+  (setq org-superstar-todo-bullet-alist '(
+                                          ("TODO" . 9744)
+                                          ("TT"   . 9744)
+                                          ("NEXT" . 9744)
+                                          ("CONFIG" . 9744)
+                                          ("DONE" . 9747)))
+  (setq org-ellipsis " ▼")
+  (setq org-list-demote-modify-bullet
+        '(("+" . "*")("*" . "-")("-" . "+")))
+  (setq org-todo-keyword-faces '(
+                                 ("TODO" . "#b16286")
+                                 ("TT"   . "#b16286")
+                                 ("PROJ" . "#83a598")
+                                 ("WAIT" . "#a89984")
+                                 ("SOMEDAY" . "#8ec07c")
+                                 ("RLX" . "#6495ed"))))
 #+end_src
 *** Bullets for lists
 #+begin_src emacs-lisp
@@ -260,55 +274,71 @@ Seems to slow down the first time you open an org file, but then no delay.
 #+end_src
 ** Capture templates - Org and Org Roam
 #+begin_src emacs-lisp
-(customize-set-variable 'org-capture-templates '(
-    ("t" "Task")
-    ("tt" "TT" entry (id "cd9ffc7d-d197-4521-b74d-4b1f93b301ca")
-    "* TT %?\n%i\n%a" :prepend t)
-    ("ti" "Inbox (Store Link)" entry (id "84c646ea-11de-4593-99a5-39f3f8ead4ef")
-    "* TODO %?\n%i\n%a" :prepend t)
-    ("to" "Inbox (No Link)" entry (id "84c646ea-11de-4593-99a5-39f3f8ead4ef")
-    "* TODO %?\n%i" :prepend t)
-    ("p" "Project")
-    ("pp" "Project" entry (id "a359813e-8bde-463d-8406-0d5fa76357dd")
-    "* PROJ %?\n%i- [ ] Next Action:\n%a" :prepend t)
-    ("pb" "Project (Blog)" entry (id "a359813e-8bde-463d-8406-0d5fa76357dd")
-    "* PROJ %? :blog:\n%i- [ ] Next Action:\n%a" :prepend t)
-    ("pf" "Project (Fiction)" entry (id "a359813e-8bde-463d-8406-0d5fa76357dd")
-    "* PROJ %? :fiction:\n%i- [ ] Next Action:\n%a" :prepend t)
-    ("pc" "Project (Config)" entry (id "a359813e-8bde-463d-8406-0d5fa76357dd")
-    "* PROJ %? :config:\n%i- [ ] Next Action:\n%a" :prepend t)))
+
+(customize-set-variable
+ 'org-capture-templates '(("t" "Task")
+                          ("tt" "TT" entry (id "cd9ffc7d-d197-4521-b74d-4b1f93b301ca")
+                           "* TT %?\n%i\n%a" :prepend t)
+                          ("ti" "Inbox (Store Link)" entry (id "84c646ea-11de-4593-99a5-39f3f8ead4ef")
+                           "* TODO %?\n%i\n%a" :prepend t)
+                          ("to" "Inbox (No Link)" entry (id "84c646ea-11de-4593-99a5-39f3f8ead4ef")
+                           "* TODO %?\n%i" :prepend t)
+                          ;; Projects
+                          ("p" "Project")
+                          ("pp" "Project" entry (id "a359813e-8bde-463d-8406-0d5fa76357dd")
+                           "* PROJ %?\n%i- [ ] Next Action:\n%a" :prepend t)
+                          ("pb" "Project (Blog)" entry (id "a359813e-8bde-463d-8406-0d5fa76357dd")
+                           "* PROJ %? :blog:\n%i- [ ] Next Action:\n%a" :prepend t)
+                          ("pf" "Project (Fiction)" entry (id "a359813e-8bde-463d-8406-0d5fa76357dd")
+                           "* PROJ %? :fiction:\n%i- [ ] Next Action:\n%a" :prepend t)
+                          ("pc" "Project (Config)" entry (id "a359813e-8bde-463d-8406-0d5fa76357dd")
+                           "* PROJ %? :config:\n%i- [ ] Next Action:\n%a" :prepend t)
+                          ;; Shopping
+                          ("s" "Shopping" entry (id "18eb88f1-b6df-4775-98ed-5852a8d3a3e1")
+                           "** BUY %?" :prepend t)
+                          ;; Downtime
+                          ("d" "Downtime")
+                          ("dw" "Watch" entry (id "0433acd7-424a-4e85-ad0d-d8d915ae6b1f")
+                           "** RLX %?" :prepend t)
+                          ("dr" "Read" entry (id "0b68cd14-d647-4d06-98aa-dc8bfa7e819a")
+                           "** RLX %?" :prepend t)
+                          ("dl" "Listen" entry (id "574f5fc4-4632-4eb8-8613-6fe105849dde")
+                           "** RLX %?" :prepend t)
+                          ("w" "weekly-review" entry (id "8c8faea9-b85b-4b90-845e-dfdbefb55442")
+                           "* Week %(format-time-string \"%W\")")))
+
 
 (after! org-roam
-    (setq org-roam-capture-templates
-    '(("d" "default" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
-    :target (file+head "rafts/%<%Y%m%d>-${slug}.org"
-    "#+title: ${title}\n")
-    :unnarrowed t
-    :jump-to-captured t)
-    ("e" "encrypted" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
-    :target (file+head "rafts/%<%Y%m%d>-${slug}.org.gpg"
-    "#+title: ${title}\n")
-    :unnarrowed t
-    :jump-to-captured t)
-    ("r" "reference" plain "#+created: %u\n#+filetags: ref: %^G\n\n* ${title}\n%?"
-    :target (file+head "rafts/%<%Y%m%d>-${slug}.org"
-    "#+title: ${title}\n")
-    :unnarrowed t
-    :jump-to-captured t)
-    ("b" "box3" plain "#+date: %u\n#+filetags: :box3: %^G\n#+hugo_custom_front_matter: :layout note\n\n%?"
-    :target (file+head "ref/org/%<%Y%m%d>-${slug}.org"
-    "#+title: ${title}\n")
-    :unnarrowed t )
-    ("q" "quick" plain "#+created: %u\n#+filetags: %^G\n\n%?"
-    :target (file+head "rafts/%<%Y%m%d>-${slug}.org"
-    "#+title: ${title}\n")
-    :unnarrowed t)))
-    (setq org-roam-dailies-capture-templates
-    '(("d" "default" entry "* %<%H:%M> -  [[id:477e986a-2fba-4982-8158-b309baf0b14b][%?]]"
-    :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")
-    :jump-to-captured t))))
+  (setq org-roam-capture-templates
+        '(("d" "default" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
+           :target (file+head "rafts/%<%Y%m%d>-${slug}.org"
+                              "#+title: ${title}\n")
+           :unnarrowed t
+           :jump-to-captured t)
+          ("e" "encrypted" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
+           :target (file+head "rafts/%<%Y%m%d>-${slug}.org.gpg"
+                              "#+title: ${title}\n")
+           :unnarrowed t
+           :jump-to-captured t)
+          ("r" "reference" plain "#+created: %u\n#+filetags: ref: %^G\n\n* ${title}\n%?"
+           :target (file+head "rafts/%<%Y%m%d>-${slug}.org"
+                              "#+title: ${title}\n")
+           :unnarrowed t
+           :jump-to-captured t)
+          ("b" "box3" plain "#+date: %u\n#+filetags: :box3: %^G\n#+hugo_custom_front_matter: :layout note\n\n%?"
+           :target (file+head "ref/org/%<%Y%m%d>-${slug}.org"
+                              "#+title: ${title}\n")
+           :unnarrowed t)
+          ("q" "quick" plain "#+created: %u\n#+filetags: %^G\n\n%?"
+           :target (file+head "rafts/%<%Y%m%d>-${slug}.org"
+                              "#+title: ${title}\n")
+           :unnarrowed t)))
+  (setq org-roam-dailies-capture-templates
+        '(("d" "default" entry "* %<%H:%M> -  [[id:477e986a-2fba-4982-8158-b309baf0b14b][%?]]"
+           :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")
+           :jump-to-captured t))))
 #+end_src
-** Capture - immediate
+** Roam Capture - immediate
 A workaround solution to enable 'immediate' node inserts (without opening new buffer)
 #+begin_src emacs-lisp
 (defun my/org-roam-insert-no-capture ()
