@@ -36,6 +36,7 @@
 *** https://www.urbanomic.com/feed/
 *** https://aeon.co/feed.rss
 *** https://www.3ammagazine.com/3am/feed/
+*** https://newsocialist.org.uk/rss/
 ** Music :music:
 *** https://www.outofyourheadrecords.com/news?format=rss
 *** http://schoenblog.com/?feed=rss2
@@ -61,3 +62,37 @@
 *** https://solar.lowtechmagazine.com/feeds/all-en.atom.xml
 *** https://blog.tecosaur.com/tmio/rss.xml
 *** https://jcs.org/rss
+*** https://www.wired.com/feed/category/security/latest/rss
+*** https://www.wired.com/feed/category/backchannel/latest/rss
+*** https://www.wired.com/feed/category/ideas/latest/rss
+*** https://www.wired.com/feed/category/business/latest/rss
+*** https://0pointer.net/blog/index.rss20
+*** https://www.phoronix.com/rss.php
+*** https://www.markusdosch.com/index.xml
+** youtube :youtube:
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCg6gPGh8HU2U01vaFCAsvmQ][Christ Titus]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCWeZ5bG_ifLA1L9PnGcUOGA][Bridge Lesson]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCXuqSBlHAE6Xw-yeJA0Tunw][Linus Tech Tips]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCqFLoLfntLktDO4A0j2UKWA][Gavin Wolpert]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC0uTPqBCFIpZxlz_Lv1tk_g][Protesilaos Stavrou]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA][Fireship]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC8ENHE5xdFSwx71u3fDH5Xw][ThePrimeagen]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCngn7SVujlvskHRvRKc1cTw][BugsWriter]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCR-DXc1voovS8nhAvccRZhg][Jeff Geerling]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCv6J_jJa8GJqFwQNgNrMuww][ServeTheHome]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC05XpvbHZUQOfA6xk4dlmcw][DJ Ware]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCOzMAa6IhV6uwYQATYG_2kg][Novara Media]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA][Mental Outlaw]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCld68syR8Wi-GY_n4CaoJGA][Brodie Robertson]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCDLD_zxiuyh1IMasq9nbjrA][DAVID LYNCH THEATER]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCHnyfMqiRRG1u-2MsSQLbXA][Veritasium]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCKlYSDBb1KBcZyCRbniW1ig][on the code again]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCsnGwSIHyoYN0kiINAGUKxg][Wolfgang's Channel]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC9x0AN7BWHpCDHSm9NiJFJQ][NetworkChuck]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA][Luke Smith]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCbTp1BYjpuhDRG5OmgIT8iw][James Tomasino]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCnkp4xDOwqqJD7sSM3xdUiQ][Adam Neely]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCqNpjt_UcMPgm_9gphZgHYA][münecat]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC2RCcnTltR3HMQOYVqwmweA][Steve Yegge]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCAiiOTio8Yu69c3XnR7nQBQ][System Crafters]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCYO_jab_esuFRV4b17AJtAw][3Blue1Brown]]

@@ -9,8 +9,6 @@
 ;; (set-default line-spacing 0.3)
 
 (setq doom-theme 'doom-one)
-(add-to-list 'load-path "/home/eoin/.emacs.d/themes/ef-themes")
-(require 'ef-themes)
 
 (defun doom-dashboard-draw-ascii-emacs-banner-fn ()
     (let* ((banner
@@ -51,7 +49,7 @@
 (map! :n "SPC o t" 'eshell)
 (super-save-mode 1)
 (setq super-save-when-idle t)
-(setq display-line-numbers-type nil)
+(setq display-line-numbers-type t)
 
 (require 'epa-file)
 (epa-file-enable)
@@ -73,6 +71,30 @@
 (setq browse-url-generic-program "/usr/bin/qutebrowser")
 (setq browse-url-browser-function 'browse-url-generic)
 (setq elpher-start-page-url "gemini://warmedal.se/~antenna/")
+
+(defcustom youtube-viewer-program "youtube-viewer"
+        "Progam path to youtube-viewer")
+(defcustom youtube-viewer-args nil "Extra arguments for youtube-viewer")
+
+(defun view-youtube-url (url &rest _)
+  "Open Youtube-Viewer to browse the given URL."
+  (interactive (browse-url-interactive-arg "URL: "))
+  (setq url (browse-url-encode-url url))
+  (let* ((process-environment (browse-url-process-environment)))
+    (apply #'start-process
+           (concat "youtube-viewer " url) nil
+           youtube-viewer-program
+           (append
+            youtube-viewer-args
+            (list url)))))
+
+(with-eval-after-load 'browse-url
+  (add-to-list 'browse-url-handlers
+       (cons "youtu\\.?be" #'view-youtube-url)))
+;; (setq browse-url-browser-function
+;;   (quote
+;;     (("youtu\\.?be" . mpv-play-url)
+;;      ("." . 'browse-url-generic))))
 
 (setq org-directory "~/Dropbox/sci/"
     org-roam-directory (concat org-directory "notes/")
@@ -213,7 +235,7 @@
     "#+title: ${title}\n")
     :unnarrowed t
     :jump-to-captured t)
-    ("b" "box3" plain "#+created: %u\n#+filetags: :box3: %^G\n#+hugo_custom_front_matter: :layout note\n\n%?"
+    ("b" "box3" plain "#+date: %u\n#+filetags: :box3: %^G\n#+hugo_custom_front_matter: :layout note\n\n%?"
     :target (file+head "ref/org/%<%Y%m%d>-${slug}.org"
     "#+title: ${title}\n")
     :unnarrowed t )
@@ -223,7 +245,8 @@
     :unnarrowed t)))
     (setq org-roam-dailies-capture-templates
     '(("d" "default" entry "* %<%H:%M> -  [[id:477e986a-2fba-4982-8158-b309baf0b14b][%?]]"
-    :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")))))
+    :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")
+    :jump-to-captured t))))
 
 (defun my/org-roam-insert-no-capture ()
   (interactive)
@@ -325,8 +348,8 @@
     :init
     (setq rmh-elfeed-org-files (list "~/.config/doom/elfeed.org")))
 (require 'elfeed-goodies)
-    (elfeed-goodies/setup)
-    (setq elfeed-goodies/entry-pane-size 0.7)
+(elfeed-goodies/setup)
+(setq elfeed-goodies/entry-pane-size 0.7)
 
 (setq +org-capture-emails-file (concat org-directory "act/inbox.org"))
 (after! mu4e
