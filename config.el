@@ -2,7 +2,7 @@
       user-mail-address "eoincarney0@gmail.com")
 
 (setq doom-font
-    (font-spec :family "FiraMono Nerd Font" :size 16)
+    (font-spec :family "FuraMono Nerd Font" :size 16)
     ;; (font-spec :family "FuraMono Nerd Font" :size 16)
     mixed-pitch-set-height 20
     doom-variable-pitch-font (font-spec :family "ETBembo" :size 20))
