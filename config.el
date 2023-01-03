@@ -78,9 +78,11 @@
 (setq browse-url-browser-function 'browse-url-generic)
 (setq elpher-start-page-url "gemini://warmedal.se/~antenna/")
 
-(defcustom youtube-viewer-program "youtube-viewer"
-        "Progam path to youtube-viewer")
+(defcustom youtube-viewer-program "youtube-viewer" "Progam path to youtube-viewer")
 (defcustom youtube-viewer-args nil "Extra arguments for youtube-viewer")
+(defcustom web-article-viewer-program "qutebrowser" "Program path to readable")
+(defcustom web-article-viewer-args nil "Extra args for qutebrowser")
+(defcustom web-article-css "/home/eoin/.config/qutebrowser/minimal.css" "path to minimal stylesheet")
 
 (defun view-youtube-url (url &rest _)
   "Open Youtube-Viewer to browse the given URL."
@@ -94,13 +96,29 @@
             youtube-viewer-args
             (list url)))))
 
+(defun readable-url (url)
+  (let ((html-file "/tmp/elfeed.html"))
+    (progn
+     (call-process "readable" nil nil nil (concat "-o " html-file " -s " web-article-css " \""url"\""))
+          html-file )))
+
+
+(defun view-readable-webpage-handler (url &rest _)
+  (interactive (browse-url-interactive-arg "URL: "))
+  (setq url (browse-url-encode-url (readable-url url)))
+  (let* ((process-environment (browse-url-process-environment)))
+    (apply #'start-process
+           (concat "qutebrowser " url) nil
+           web-article-viewer-program
+           (append
+            web-article-viewer-args
+            (list url)))))
+
+
 (with-eval-after-load 'browse-url
   (add-to-list 'browse-url-handlers
-       (cons "youtu\\.?be" #'view-youtube-url)))
-;; (setq browse-url-browser-function
-;;   (quote
-;;     (("youtu\\.?be" . mpv-play-url)
-;;      ("." . 'browse-url-generic))))
+                '(("youtu\\.?be" . view-youtube-url)
+                  ("." . view-readable-webpage-handler))))
 
 (setq org-directory "~/docs/org/"
       org-roam-directory (concat org-directory "notes/")
@@ -119,7 +137,7 @@
  :n "<f6>" (lambda() (interactive)(find-file (concat org-directory "act/inbox.org")))
  :n "<f7>" (lambda() (interactive)(find-file (concat org-directory "act/projects.org")))
  :n "<f8>" (lambda() (interactive)(find-file (concat org-directory "act/actions.org")))
- :n "<f9>" (lambda() (interactive)(find-file (concat org-directory "act/archive.org"))))
+ :n "<f9>" (lambda() (interactive)(find-file (concat org-directory "act/2023Goals.org"))))
 
 (after! org
   (setq org-todo-keywords
