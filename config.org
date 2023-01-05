@@ -9,7 +9,7 @@
 ** Font and Theme
 #+BEGIN_SRC emacs-lisp
 (setq doom-font
-    (font-spec :family "GoMono Nerd Font" :size 16)
+    (font-spec :family "FuraMono Nerd Font" :size 16)
     ;; (font-spec :family "FuraMono Nerd Font" :size 16)
     mixed-pitch-set-height 20
     doom-variable-pitch-font (font-spec :family "ETBembo" :size 20))
@@ -153,9 +153,9 @@ Added another function for browsing urls using 'readable'.
 
 (with-eval-after-load 'browse-url
   (add-to-list 'browse-url-handlers
-                  (cons "." #'view-readable-webpage-handler))
+                (cons "." #'view-readable-webpage-handler))
   (add-to-list 'browse-url-handlers
-                (cons "youtu\\.?be" #'view-youtube-url)))
+                  (cons "youtu\\.?be" #'view-youtube-url)))
       #+end_src
 * Org
 ** Directories and misc
@@ -345,7 +345,7 @@ Seems to slow down the first time you open an org file, but then no delay.
            :unnarrowed t
            :jump-to-captured t)
           ("b" "box3" plain "#+date: %u\n#+filetags: :box3: %^G\n#+hugo_custom_front_matter: :layout note\n\n%?"
-           :target (file+head "ref/org/%<%Y%m%d>-${slug}.org"
+           :target (file+head "ref/%<%Y%m%d>-${slug}.org"
                               "#+title: ${title}\n")
            :unnarrowed t)
           ("q" "quick" plain "#+created: %u\n#+filetags: %^G\n\n%?"
@@ -496,22 +496,22 @@ See issue here: [[https://github.com/org-roam/org-roam/issues/1728][github issue
 #+begin_src emacs-lisp
 (setq +org-capture-emails-file (concat org-directory "act/inbox.org"))
 (after! mu4e
-(setq mu4e-get-mail-command "offlineimap")
-(setq mu4e-update-interval 300)
-(setq mail-user-agent 'mu4e-user-agent)
+  (setq mu4e-get-mail-command "offlineimap")
+  (setq mu4e-update-interval 300)
+  (setq mail-user-agent 'mu4e-user-agent)
 
-(setq mu4e-sent-folder "/[Gmail].Sent Mail")
-(setq mu4e-drafts-folder "/[Gmail].Drafts")
-(setq mu4e-trash-folder "/[Gmail].Bin")
-(setq mu4e-maildir-shortcuts
-    '((:maildir "/INBOX"      :key ?i)))
-(setq user-mail-address "eoincarney0@gmail.com"
-    user-full-name "Eoin Carney")
-(setq sendmail-program "/usr/bin/msmtp"
-    send-mail-function 'smtpmail-send-it
-    message-sendmail-f-is-evil t
-    message-sendmail-extra-arguments '("--read-envelope-from")
-    message-send-mail-function 'message-send-mail-with-sendmail))
+  (setq mu4e-sent-folder "/[Gmail].Sent Mail")
+  (setq mu4e-drafts-folder "/[Gmail].Drafts")
+  (setq mu4e-trash-folder "/[Gmail].Bin")
+  (setq mu4e-maildir-shortcuts
+        '((:maildir "/INBOX" :key ?i)))
+  (setq user-mail-address "eoincarney0@gmail.com"
+        user-full-name "Eoin Carney")
+  (setq sendmail-program "/usr/bin/msmtp"
+        send-mail-function 'smtpmail-send-it
+        message-sendmail-f-is-evil t
+        message-sendmail-extra-arguments '("--read-envelope-from")
+        message-send-mail-function 'message-send-mail-with-sendmail))
 #+end_src
 
 ** ERC
@@ -597,6 +597,9 @@ Disabled the 'centered point mode' hook for now. It started getting in the way t
 ;; (add-hook! 'writeroom-mode-enable-hook '(lambda () (display-line-numbers-mode -1)))
 (remove-hook! (writeroom-mode) #'+zen-enable-mixed-pitch-mode-h) ;; added this since mixed-pitch is defaul on most 'writing' files (org, md). Otherwise, when exiting writeroom mode, font switched back to fixed-pitch
 #+END_SRC
+
+#+RESULTS:
+
 ** Prose Liniting with Vale
 #+begin_src emacs-lisp
 (flycheck-define-checker vale
