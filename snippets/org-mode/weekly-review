@@ -4,17 +4,17 @@
 # key: \weekly
 # condition: t
 # --
-Previous week
-** Checklist [/]
-*** TODO Objectives [/]
-*** TODO [[id:1e96ff8d-77ec-4364-a162-c5e2625b91b6][New Objectives]] for Coming Week
-*** TODO Ledger
-*** TODO Backup Notes to Dropbox
-*** TODO Clean Room
-*** TODO Clean Home Directory
-*** TODO Clean Notes Directory
-*** TODO GTD Review [/]
-- [ ] Projects
-- [ ] Actions
-- [ ] Someday
-** Notes
+***  Checklist [/]
+**** TODO Ledger
+**** TODO Backup Notes to Dropbox
+**** TODO Clean Room
+
+*** Stats
+Time-exercising,`(format-time-string "%W")`,
+Time-coding,`(format-time-string "%W")`,
+Home-cooked-meals,`(format-time-string "%W")`,
+Blog-posts,`(format-time-string "%W")`,
+Box-3,`(format-time-string "%W")`,
+Books-finished,`(format-time-string "%W")`,
+
+*** Notes
