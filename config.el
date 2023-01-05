@@ -117,8 +117,9 @@
 
 (with-eval-after-load 'browse-url
   (add-to-list 'browse-url-handlers
-                '(("youtu\\.?be" . view-youtube-url)
-                  ("." . view-readable-webpage-handler))))
+                (cons "." #'view-readable-webpage-handler))
+  (add-to-list 'browse-url-handlers
+                  (cons "youtu\\.?be" #'view-youtube-url)))
 
 (setq org-directory "~/docs/org/"
       org-roam-directory (concat org-directory "notes/")
@@ -280,7 +281,7 @@
            :unnarrowed t
            :jump-to-captured t)
           ("b" "box3" plain "#+date: %u\n#+filetags: :box3: %^G\n#+hugo_custom_front_matter: :layout note\n\n%?"
-           :target (file+head "ref/org/%<%Y%m%d>-${slug}.org"
+           :target (file+head "ref/%<%Y%m%d>-${slug}.org"
                               "#+title: ${title}\n")
            :unnarrowed t)
           ("q" "quick" plain "#+created: %u\n#+filetags: %^G\n\n%?"
