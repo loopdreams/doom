@@ -114,11 +114,11 @@
             web-article-viewer-args
             (list url)))))
 
-
 (with-eval-after-load 'browse-url
   (add-to-list 'browse-url-handlers
-                '(("youtu\\.?be" . view-youtube-url)
-                  ("." . view-readable-webpage-handler))))
+                  (cons "." #'view-readable-webpage-handler))
+  (add-to-list 'browse-url-handlers
+                (cons "youtu\\.?be" #'view-youtube-url)))
 
 (setq org-directory "~/docs/org/"
       org-roam-directory (concat org-directory "notes/")
