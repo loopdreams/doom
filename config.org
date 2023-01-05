@@ -135,7 +135,7 @@ Youtube-viewer seems to work far better than just directly using mpv. I think be
 * Org
 ** Directories and misc
 #+BEGIN_SRC emacs-lisp
-    (setq org-directory "~/Dropbox/sci/"
+    (setq org-directory "~/docs/org/"
     org-roam-directory (concat org-directory "notes/")
     bibtex-completion-bibliography (concat org-directory "lib.bib"))
 (after! org

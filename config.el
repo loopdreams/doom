@@ -96,7 +96,7 @@
 ;;     (("youtu\\.?be" . mpv-play-url)
 ;;      ("." . 'browse-url-generic))))
 
-(setq org-directory "~/Dropbox/sci/"
+(setq org-directory "~/docs/org/"
     org-roam-directory (concat org-directory "notes/")
     bibtex-completion-bibliography (concat org-directory "lib.bib"))
 (after! org
