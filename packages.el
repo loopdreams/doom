@@ -101,3 +101,4 @@
 (package! mw-thesaurus)
 (package! ef-themes)
 (package! denote)
+(package! nov)

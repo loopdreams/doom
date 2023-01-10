@@ -78,48 +78,6 @@
 (setq browse-url-browser-function 'browse-url-generic)
 (setq elpher-start-page-url "gemini://warmedal.se/~antenna/")
 
-(defcustom youtube-viewer-program "youtube-viewer" "Progam path to youtube-viewer")
-(defcustom youtube-viewer-args nil "Extra arguments for youtube-viewer")
-(defcustom web-article-viewer-program "qutebrowser" "Program path to readable")
-(defcustom web-article-viewer-args nil "Extra args for qutebrowser")
-(defcustom web-article-css "/home/eoin/.config/qutebrowser/minimal.css" "path to minimal stylesheet")
-
-(defun view-youtube-url (url &rest _)
-  "Open Youtube-Viewer to browse the given URL."
-  (interactive (browse-url-interactive-arg "URL: "))
-  (setq url (browse-url-encode-url url))
-  (let* ((process-environment (browse-url-process-environment)))
-    (apply #'start-process
-           (concat "youtube-viewer " url) nil
-           youtube-viewer-program
-           (append
-            youtube-viewer-args
-            (list url)))))
-
-(defun readable-url (url)
-  (let ((html-file "/tmp/elfeed.html"))
-    (progn
-     (call-process "readable" nil nil nil (concat "-o " html-file " -s " web-article-css " \""url"\""))
-          html-file )))
-
-
-(defun view-readable-webpage-handler (url &rest _)
-  (interactive (browse-url-interactive-arg "URL: "))
-  (setq url (browse-url-encode-url (readable-url url)))
-  (let* ((process-environment (browse-url-process-environment)))
-    (apply #'start-process
-           (concat "qutebrowser " url) nil
-           web-article-viewer-program
-           (append
-            web-article-viewer-args
-            (list url)))))
-
-(with-eval-after-load 'browse-url
-  (add-to-list 'browse-url-handlers
-                (cons "." #'view-readable-webpage-handler))
-  (add-to-list 'browse-url-handlers
-                  (cons "youtu\\.?be" #'view-youtube-url)))
-
 (setq org-directory "~/docs/org/"
       org-roam-directory (concat org-directory "notes/")
       bibtex-completion-bibliography (concat org-directory "lib.bib"))
@@ -156,7 +114,16 @@
         "DONE(d!/!)"
         "CANCELLED(c!/!)"))))
 
-(setq gtd/next-action-head "Next actions"
+(defun no-of-TTs ()
+  (number-to-string (length (org-map-entries t "/+TT" 'agenda))))
+
+(defun completed-YTD ()
+  (number-to-string
+   (- (length
+       (org-map-entries t "/+DONE"
+                        '("~/docs/org/act/archive.org"))) 4)))
+
+(setq gtd/next-action-head (concat "NEXT ACTIONS " "-" (no-of-TTs) " -" (completed-YTD))
       gtd/waiting-head "Waiting on"
       gtd/project-head "Projects"
       gtd/read-head "Reading List"
@@ -394,6 +361,48 @@
 (require 'elfeed-goodies)
 (elfeed-goodies/setup)
 (setq elfeed-goodies/entry-pane-size 0.7)
+
+(defcustom youtube-viewer-program "youtube-viewer" "Progam path to youtube-viewer")
+(defcustom youtube-viewer-args nil "Extra arguments for youtube-viewer")
+(defcustom web-article-viewer-program "qutebrowser" "Program path to readable")
+(defcustom web-article-viewer-args nil "Extra args for qutebrowser")
+(defcustom web-article-css "/home/eoin/.config/qutebrowser/minimal.css" "path to minimal stylesheet")
+
+(defun view-youtube-url (url &rest _)
+  "Open Youtube-Viewer to browse the given URL."
+  (interactive (browse-url-interactive-arg "URL: "))
+  (setq url (browse-url-encode-url url))
+  (let* ((process-environment (browse-url-process-environment)))
+    (apply #'start-process
+           (concat "youtube-viewer " url) nil
+           youtube-viewer-program
+           (append
+            youtube-viewer-args
+            (list url)))))
+
+(defun readable-url (url)
+  (let ((html-file "/tmp/elfeed.html"))
+    (progn
+     (call-process "readable" nil nil nil (concat "-o " html-file " -s " web-article-css " \""url"\""))
+          html-file )))
+
+
+(defun view-readable-webpage-handler (url &rest _)
+  (interactive (browse-url-interactive-arg "URL: "))
+  (setq url (browse-url-encode-url (readable-url url)))
+  (let* ((process-environment (browse-url-process-environment)))
+    (apply #'start-process
+           (concat "qutebrowser " url) nil
+           web-article-viewer-program
+           (append
+            web-article-viewer-args
+            (list url)))))
+
+(with-eval-after-load 'browse-url
+  (add-to-list 'browse-url-handlers
+                (cons "." #'view-readable-webpage-handler))
+  (add-to-list 'browse-url-handlers
+                  (cons "youtu\\.?be" #'view-youtube-url)))
 
 (setq +org-capture-emails-file (concat org-directory "act/inbox.org"))
 (after! mu4e
