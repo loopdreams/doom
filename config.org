@@ -15,7 +15,7 @@
     doom-variable-pitch-font (font-spec :family "ETBembo" :size 20))
 ;; (set-default line-spacing 0.3)
 
-(setq doom-theme 'doom-one)
+(setq doom-theme 'ef-day)
 #+END_SRC
 ** Dashboard
 #+BEGIN_SRC emacs-lisp
@@ -483,7 +483,7 @@ Added another function for browsing urls using 'readable'.
   (let ((html-file "/tmp/elfeed.html"))
     (progn
      (call-process "readable" nil nil nil (concat "-o " html-file " -s " web-article-css " \""url"\""))
-          html-file )))
+     html-file)))
 
 
 (defun view-readable-webpage-handler (url &rest _)
@@ -502,7 +502,11 @@ Added another function for browsing urls using 'readable'.
                 (cons "." #'view-readable-webpage-handler))
   (add-to-list 'browse-url-handlers
                   (cons "youtu\\.?be" #'view-youtube-url)))
+
+(map! :leader
+        "y l" 'shr-copy-url)
       #+end_src
+
 ** Mail
 *** Gmail
 #+begin_src emacs-lisp

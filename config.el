@@ -8,7 +8,7 @@
     doom-variable-pitch-font (font-spec :family "ETBembo" :size 20))
 ;; (set-default line-spacing 0.3)
 
-(setq doom-theme 'doom-one)
+(setq doom-theme 'ef-day)
 
 (defun doom-dashboard-draw-ascii-emacs-banner-fn ()
     (let* ((banner
@@ -384,7 +384,7 @@
   (let ((html-file "/tmp/elfeed.html"))
     (progn
      (call-process "readable" nil nil nil (concat "-o " html-file " -s " web-article-css " \""url"\""))
-          html-file )))
+     html-file)))
 
 
 (defun view-readable-webpage-handler (url &rest _)
@@ -403,6 +403,9 @@
                 (cons "." #'view-readable-webpage-handler))
   (add-to-list 'browse-url-handlers
                   (cons "youtu\\.?be" #'view-youtube-url)))
+
+(map! :leader
+        "y l" 'shr-copy-url)
 
 (setq +org-capture-emails-file (concat org-directory "act/inbox.org"))
 (after! mu4e
