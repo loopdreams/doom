@@ -15,7 +15,7 @@
     doom-variable-pitch-font (font-spec :family "ETBembo" :size 20))
 ;; (set-default line-spacing 0.3)
 
-(setq doom-theme 'ef-day)
+(setq doom-theme 'doom-miramare)
 #+END_SRC
 ** Dashboard
 #+BEGIN_SRC emacs-lisp
@@ -505,6 +505,8 @@ Added another function for browsing urls using 'readable'.
 
 (map! :leader
         "y l" 'shr-copy-url)
+(map! :leader
+      "y L" 'eww-open-in-new-buffer)
       #+end_src
 
 ** Mail

@@ -8,7 +8,7 @@
     doom-variable-pitch-font (font-spec :family "ETBembo" :size 20))
 ;; (set-default line-spacing 0.3)
 
-(setq doom-theme 'ef-day)
+(setq doom-theme 'doom-miramare)
 
 (defun doom-dashboard-draw-ascii-emacs-banner-fn ()
     (let* ((banner
@@ -406,6 +406,8 @@
 
 (map! :leader
         "y l" 'shr-copy-url)
+(map! :leader
+      "y L" 'eww-open-in-new-buffer)
 
 (setq +org-capture-emails-file (concat org-directory "act/inbox.org"))
 (after! mu4e
