@@ -10,6 +10,7 @@
 *** https://feeds.feedburner.com/therestisnoise
 *** https://davidmenestres.com/feed/podcast/
 *** https://gemini.circumlunar.space/news/atom.xml
+*** [[https://davidmenestres.com/feed/podcast/][Tone Science]]
 ** People :people:
 *** https://anneboyer.substack.com/feed/
 *** https://spool-five.com/posts/index.xml
@@ -26,6 +27,9 @@
 *** https://ranprieur.com/feed.php
 *** https://helpdeskheadesk.net/index.xml
 *** https://portal.mozz.us/gemini/republic.circumlunar.space/users/flexibeast/gemlog/atom-https.xml
+*** [[https://brr.fyi/feed.xml][Brr - blog in south pole]]
+*** [[https://www.pcjs.org/feed.xml][pcjs project]]
+*** [[https://mathenchant.wordpress.com/feed/][maths]]
 ** Philosophy :philosophy:
 *** https://bluelabyrinths.com/feed/
 *** https://www.philosophy2u.com/blog-feed.xml
@@ -37,6 +41,7 @@
 *** https://aeon.co/feed.rss
 *** https://www.3ammagazine.com/3am/feed/
 *** https://newsocialist.org.uk/rss/
+*** [[https://dailynous.com/feed/][daily nous]]
 ** Music :music:
 *** https://www.outofyourheadrecords.com/news?format=rss
 *** http://schoenblog.com/?feed=rss2
@@ -71,6 +76,7 @@
 *** https://www.markusdosch.com/index.xml
 *** [[https://hnrss.org/frontpage][Hacker News]]
 *** [[https://aphyr.com/posts.atom][Kyle Kingsbury]]
+*** [[https://tilde.news/rss][Tilde News]]
 ** Science :science:
 *** [[https://tritonstation.com/feed/][TritonStation]]
 ** youtube :youtube:
@@ -103,3 +109,5 @@
 *** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCbiGcwDWZjz05njNPrJU7jA][ExplainingComputers]]
 *** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCXUPKJO5MZQN11PqgIvyuvQ][Andrej Karpathy]]
 *** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCJetJ7nDNLlEzDLXv7KIo0w][Gavin Freeborn]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCUQo7nzH1sXVpzL92VesANw][DIY Perks]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC9-y-6csu5WGm29I7JiwpnA][Computerphile]]

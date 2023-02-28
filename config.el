@@ -5,10 +5,10 @@
     (font-spec :family "FuraMono Nerd Font" :size 16)
     ;; (font-spec :family "FuraMono Nerd Font" :size 16)
     mixed-pitch-set-height 20
-    doom-variable-pitch-font (font-spec :family "ETBembo" :size 20))
+    doom-variable-pitch-font (font-spec :family "ETbb" :size 20))
 ;; (set-default line-spacing 0.3)
 
-(setq doom-theme 'doom-miramare)
+(setq doom-theme 'ef-cyprus)
 
 (defun doom-dashboard-draw-ascii-emacs-banner-fn ()
     (let* ((banner
@@ -36,6 +36,8 @@
 
 (custom-set-faces!
     '(doom-dashboard-banner :foreground "slategray"))
+
+(load! "my.el")
 
 ;; (setq doom-modeline-enable-word-count t)
 (display-time-mode 1)
@@ -74,7 +76,7 @@
     (+ivy/switch-buffer))
 (setq +ivy-buffer-preview t)
 
-(setq browse-url-generic-program "/usr/bin/qutebrowser")
+(setq browse-url-generic-program "/usr/bin/brave")
 (setq browse-url-browser-function 'browse-url-generic)
 (setq elpher-start-page-url "gemini://warmedal.se/~antenna/")
 
@@ -135,6 +137,7 @@
       '(
         ("g" "GTD view"
          (
+          (my/print-elements-of-list (my/agenda-past-dailies))
           (todo "TT" ((org-agenda-overriding-header gtd/next-action-head)))
           (agenda "" ((org-agenda-span 'day)
                       (org-agenda-start-day 'nil))) ;; this is needed because doom starts agenda with day set to -3d
@@ -256,7 +259,7 @@
            :unnarrowed t)))
   (setq org-roam-dailies-capture-templates
         '(("d" "default" entry "* %<%H:%M> -  [[id:477e986a-2fba-4982-8158-b309baf0b14b][%?]]"
-           :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")
+           :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n#+filetags: :dailies:\n")
            :jump-to-captured t))))
 
 (defun my/org-roam-insert-no-capture ()
@@ -362,42 +365,6 @@
 (elfeed-goodies/setup)
 (setq elfeed-goodies/entry-pane-size 0.7)
 
-(defcustom youtube-viewer-program "youtube-viewer" "Progam path to youtube-viewer")
-(defcustom youtube-viewer-args nil "Extra arguments for youtube-viewer")
-(defcustom web-article-viewer-program "qutebrowser" "Program path to readable")
-(defcustom web-article-viewer-args nil "Extra args for qutebrowser")
-(defcustom web-article-css "/home/eoin/.config/qutebrowser/minimal.css" "path to minimal stylesheet")
-
-(defun view-youtube-url (url &rest _)
-  "Open Youtube-Viewer to browse the given URL."
-  (interactive (browse-url-interactive-arg "URL: "))
-  (setq url (browse-url-encode-url url))
-  (let* ((process-environment (browse-url-process-environment)))
-    (apply #'start-process
-           (concat "youtube-viewer " url) nil
-           youtube-viewer-program
-           (append
-            youtube-viewer-args
-            (list url)))))
-
-(defun readable-url (url)
-  (let ((html-file "/tmp/elfeed.html"))
-    (progn
-     (call-process "readable" nil nil nil (concat "-o " html-file " -s " web-article-css " \""url"\""))
-     html-file)))
-
-
-(defun view-readable-webpage-handler (url &rest _)
-  (interactive (browse-url-interactive-arg "URL: "))
-  (setq url (browse-url-encode-url (readable-url url)))
-  (let* ((process-environment (browse-url-process-environment)))
-    (apply #'start-process
-           (concat "qutebrowser " url) nil
-           web-article-viewer-program
-           (append
-            web-article-viewer-args
-            (list url)))))
-
 (with-eval-after-load 'browse-url
   (add-to-list 'browse-url-handlers
                 (cons "." #'view-readable-webpage-handler))
@@ -405,9 +372,11 @@
                   (cons "youtu\\.?be" #'view-youtube-url)))
 
 (map! :leader
-        "y l" 'shr-copy-url)
-(map! :leader
-      "y L" 'eww-open-in-new-buffer)
+        "y y" #'my/get-url-at-point
+        "y e" #'my/eww-browse-url
+        "y E" #'my/eww-readable-url
+        "y o" #'browse-url-generic
+        "y O" #'my/view-readable-webpage-handler)
 
 (setq +org-capture-emails-file (concat org-directory "act/inbox.org"))
 (after! mu4e
