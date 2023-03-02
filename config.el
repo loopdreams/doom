@@ -481,6 +481,8 @@
 
 (add-hook! (gemini-mode) #'mixed-pitch-mode)
 
+(setq writeroom-width 60)
+
 (defun my/writing ()
   (interactive)
   (setq org-hidden-keywords '(title))

@@ -612,6 +612,10 @@ Disabled the 'centered point mode' hook for now. It started getting in the way t
 #+begin_src emacs-lisp
 (add-hook! (gemini-mode) #'mixed-pitch-mode)
 #+end_src
+** Writeroom
+#+begin_src emacs-lisp
+(setq writeroom-width 60)
+#+end_src
 ** Writing Mode
 :todo: Make these toggleable...
 #+begin_src emacs-lisp
