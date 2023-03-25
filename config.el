@@ -5,34 +5,34 @@
     (font-spec :family "FuraMono Nerd Font" :size 16)
     ;; (font-spec :family "FuraMono Nerd Font" :size 16)
     mixed-pitch-set-height 20
-    doom-variable-pitch-font (font-spec :family "ETbb" :size 20))
+    doom-variable-pitch-font (font-spec :family "Source Sans Pro" :size 20))
 ;; (set-default line-spacing 0.3)
 
-(setq doom-theme 'ef-cyprus)
+(setq doom-theme 'doom-challenger-deep)
 
 (defun doom-dashboard-draw-ascii-emacs-banner-fn ()
     (let* ((banner
-    '(" Y88b      /     "
-    "  Y88b    /      "
-    "   Y88b  /       "
-    "    Y888/        "
-    "     Y8/         "
-    "      Y          "))
+            '(" Y88b      /     "
+              "  Y88b    /      "
+              "   Y88b  /       "
+              "    Y888/        "
+              "     Y8/         "
+              "      Y          "))
 
-    (longest-line (apply #'max (mapcar #'length banner))))
-    (put-text-property
-    (point)
-    (dolist (line banner (point))
-    (insert (+doom-dashboard--center
-    +doom-dashboard--width
-    (concat
-    line (make-string (max 0 (- longest-line (length line)))
-    32)))
-    "\n"))
-    'face 'doom-dashboard-banner)))
+           (longest-line (apply #'max (mapcar #'length banner))))
+     (put-text-property
+      (point)
+      (dolist (line banner (point))
+       (insert (+doom-dashboard--center
+                +doom-dashboard--width
+                (concat
+                 line (make-string (max 0 (- longest-line (length line)))
+                       32)))
+        "\n"))
+      'face 'doom-dashboard-banner)))
 
 ;; unless (display-graphic-p) ; for some reason this messes up the graphical splash screen atm
-    (setq +doom-dashboard-ascii-banner-fn #'doom-dashboard-draw-ascii-emacs-banner-fn)
+(setq +doom-dashboard-ascii-banner-fn #'doom-dashboard-draw-ascii-emacs-banner-fn)
 
 (custom-set-faces!
     '(doom-dashboard-banner :foreground "slategray"))
@@ -41,7 +41,7 @@
 
 ;; (setq doom-modeline-enable-word-count t)
 (display-time-mode 1)
-(add-to-list 'default-frame-alist '(alpha . 90))
+;; (add-to-list 'default-frame-alist '(alpha . 90))
 (setq display-line-numbers 'relative
       scroll-margin 5)
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
@@ -55,9 +55,6 @@
 (super-save-mode 1)
 (setq super-save-when-idle t)
 (setq display-line-numbers-type t)
-
-;; denote test
-(setq denote-directory (expand-file-name "~/docs/org/denote-test/"))
 
 (require 'epa-file)
 (epa-file-enable)
@@ -81,13 +78,12 @@
 (setq elpher-start-page-url "gemini://warmedal.se/~antenna/")
 
 (setq org-directory "~/docs/org/"
-      org-roam-directory (concat org-directory "notes/")
+      ;; org-roam-directory (concat org-directory "notes/")
       bibtex-completion-bibliography (concat org-directory "lib.bib"))
 (after! org
   (setq org-agenda-files (append (directory-files-recursively (concat org-directory "act/") "\\.org$")
-                                 (directory-files-recursively (concat org-directory "notes/rafts/") "\\notes.org$"))))
+                                 (directory-files-recursively (concat org-directory "notes/") "\\notes.org$"))))
 
-(append '(1 2 3) '(4 5 6))
 (add-to-list 'org-modules 'org-id)
 (require 'ox-gemini)
 (require 'ox-hugo)
@@ -98,6 +94,8 @@
  :n "<f7>" (lambda() (interactive)(find-file (concat org-directory "act/projects.org")))
  :n "<f8>" (lambda() (interactive)(find-file (concat org-directory "act/actions.org")))
  :n "<f9>" (lambda() (interactive)(find-file (concat org-directory "act/2023Goals.org"))))
+
+(map! :leader :desc "Toggle Org Link Display" :n "t L" #'org-toggle-link-display)
 
 (after! org
   (setq org-todo-keywords
@@ -232,56 +230,121 @@
                            "* Week %(format-time-string \"%W\")")))
 
 
-(after! org-roam
-  (setq org-roam-capture-templates
-        '(("d" "default" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
-           :target (file+head "rafts/%<%Y%m%d>-${slug}.org"
-                              "#+title: ${title}\n")
-           :unnarrowed t
-           :jump-to-captured t)
-          ("e" "encrypted" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
-           :target (file+head "rafts/%<%Y%m%d>-${slug}.org.gpg"
-                              "#+title: ${title}\n")
-           :unnarrowed t
-           :jump-to-captured t)
-          ("r" "reference" plain "#+created: %u\n#+filetags: ref: %^G\n\n* ${title}\n%?"
-           :target (file+head "rafts/%<%Y%m%d>-${slug}.org"
-                              "#+title: ${title}\n")
-           :unnarrowed t
-           :jump-to-captured t)
-          ("b" "box3" plain "#+date: %u\n#+filetags: :box3: %^G\n#+hugo_custom_front_matter: :layout note\n\n%?"
-           :target (file+head "ref/%<%Y%m%d>-${slug}.org"
-                              "#+title: ${title}\n")
-           :unnarrowed t)
-          ("q" "quick" plain "#+created: %u\n#+filetags: %^G\n\n%?"
-           :target (file+head "rafts/%<%Y%m%d>-${slug}.org"
-                              "#+title: ${title}\n")
-           :unnarrowed t)))
-  (setq org-roam-dailies-capture-templates
-        '(("d" "default" entry "* %<%H:%M> -  [[id:477e986a-2fba-4982-8158-b309baf0b14b][%?]]"
-           :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n#+filetags: :dailies:\n")
-           :jump-to-captured t))))
+;; (after! org-roam
+;;   (setq org-roam-capture-templates
+;;         '(("d" "default" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
+;;            :target (file+head "rafts/%<%Y%m%d>-${slug}.org"
+;;                               "#+title: ${title}\n")
+;;            :unnarrowed t
+;;            :jump-to-captured t)
+;;           ("e" "encrypted" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
+;;            :target (file+head "rafts/%<%Y%m%d>-${slug}.org.gpg"
+;;                               "#+title: ${title}\n")
+;;            :unnarrowed t
+;;            :jump-to-captured t)
+;;           ("r" "reference" plain "#+created: %u\n#+filetags: ref: %^G\n\n* ${title}\n%?"
+;;            :target (file+head "rafts/%<%Y%m%d>-${slug}.org"
+;;                               "#+title: ${title}\n")
+;;            :unnarrowed t
+;;            :jump-to-captured t)
+;;           ("b" "box3" plain "#+date: %u\n#+filetags: :box3: %^G\n#+hugo_custom_front_matter: :layout note\n\n%?"
+;;            :target (file+head "ref/%<%Y%m%d>-${slug}.org"
+;;                               "#+title: ${title}\n")
+;;            :unnarrowed t)
+;;           ("q" "quick" plain "#+created: %u\n#+filetags: %^G\n\n%?"
+;;            :target (file+head "rafts/%<%Y%m%d>-${slug}.org"
+;;                               "#+title: ${title}\n")
+;;            :unnarrowed t)))
+;;   (setq org-roam-dailies-capture-templates
+;;         '(("d" "default" entry "* %<%H:%M> -  [[id:477e986a-2fba-4982-8158-b309baf0b14b][%?]]"
+;;            :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n#+filetags: :dailies:\n")
+;;            :jump-to-captured t))))
 
-(defun my/org-roam-insert-no-capture ()
+(require 'denote-org-dblock)
+(setq denote-directory (expand-file-name "~/docs/org/notes/"))
+(setq denote-templates
+        '((box3 . "#+hugo_custom_front_matter: :layout note\n\n")))
+(setq denote-infer-keywords t)
+(setq denote-sort-keywords t)
+
+(defun denote-journal-with-title ()
+  "Create an entry tagged 'journal', while prompting for a title."
   (interactive)
-  (let ((org-roam-capture-templates
-         (mapcar
-          #'(lambda (tmpl) (append tmpl '(:immediate-finish t)))
-          org-roam-capture-templates)))
-    (funcall-interactively 'org-roam-node-insert)))
+  (denote
+   (denote--title-prompt) ; ask for title, instead of using human-readable date
+   '("journal")))
 
-;; (use-package! org-transclusion
-;;               :after org
-;;               :init
-;;               (map!
-;;                :map global-map "<f12>" #'org-transclusion-add
-;;                :leader
-;;                :prefix "n"
-;;                :desc "Org Transclusion Mode" "t" #'org-transclusion-mode))
+;; Like `denote-subdirectory' but also ask for a template
+(defun denote-subdirectory-with-template ()
+  "Create note while also prompting for a template and subdirectory.
 
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((ledger . t)))
+This is equivalent to calling `denote' when `denote-prompts' is
+set to '(template subdirectory title keywords)."
+  (declare (interactive-only t))
+  (interactive)
+  (let ((denote-prompts '(template subdirectory title keywords)))
+    (call-interactively #'denote)))
+
+
+(setq denote-dired-directories
+      (list denote-directory))
+
+
+(add-hook 'dired-mode-hook #'denote-dired-mode-in-directories)
+
+(defun my-denote-org-extract-subtree ()
+  "Create new Denote note using current Org subtree.
+Make the new note use the Org file type, regardless of the value
+of `denote-file-type'.
+
+Use the subtree title as the note's title.  If available, use the
+tags of the heading are used as note keywords.
+
+Delete the original subtree."
+  (interactive)
+  (if-let ((text (org-get-entry))
+           (heading (org-get-heading :no-tags :no-todo :no-priority :no-comment)))
+      (progn
+        (delete-region (org-entry-beginning-position) (org-entry-end-position))
+        (denote heading (org-get-tags) 'org)
+        (insert text))
+    (user-error "No subtree to extract; aborting")))
+
+;; (map! :map org-roam-mode-map
+;;     :leader
+;;     :prefix "r"
+;;     :desc "Find Note"         "r"     'org-roam-node-find
+;;     :desc "Insert Note"       "i"     'org-roam-node-insert
+;;     :desc "Insert immediate"  "m"     'my/org-roam-insert-no-capture
+;;     :desc "Toggle Buffer"     "b"     'org-roam-buffer-toggle
+;;     :desc "Add Tag"           "t"     'org-roam-tag-add
+;;     :desc "Bibtex Link"       "c"     'orb-insert-link)
+;; (map! :map org-roam-mode-map
+;;     :leader
+;;     :prefix "r d"
+;;     :desc "Daily Capture"     "c"     'org-roam-dailies-capture-today
+;;     :desc "Daily Find"        "f"     'org-roam-dailies-find-directory
+;;     :desc "Daily Today"       "t"     'org-roam-dailies-find-today
+;;     :desc "Daily Date"        "d"     'org-roam-dailies-goto-date)
+
+(map!
+    :leader
+    :prefix "r"
+    :desc "Find Note"                   "r"     'denote-open-or-create
+    :desc "Insert Note with signature"  "I"     'denote-signature
+    :desc "Insert Note"                 "i"     'denote
+    :desc "Insert Link to note"         "l"     'denote-link
+    :desc "Toggle Buffer"               "b"     'denote-link-backlinks
+    :desc "Box3 Entry"                  "x"     'denote-subdirectory-with-template
+    :desc "Journal Entry"               "j"     'denote-journal-with-title)
+(map!
+    :leader
+    :prefix "r n"
+    :desc "Add Keywords"                 "t"    'denote-keywords-add
+    :desc "Rename File using Frontmatter""r"    'denote-rename-file-using-front-matter
+    :desc "Rename File and Frontmatter"  "R"    'denote-rename-file
+    :desc "Insert Links matching regx"   "i"    'denote-link-add-links
+    :desc "convert org subhead 2 note"   "c"    'my-denote-org-extract-subtree)
 
 ;; New link type for Org-Hugo internal links
 (defun md-hugo-insert-link ()
@@ -293,68 +356,9 @@
     :leader
     :desc "Insert Hugo Link"         "m l"     'md-hugo-insert-link)
 
-(use-package! org-roam
-    :defer t
-    :init
-    (setq org-roam-v2-ack t)
-    (setq org-roam-graph-viewer "/usr/bin/qutebrowser")
-    :config
-    (org-roam-setup))
-(setq org-roam-completion-everywhere t)
-
-(setq org-roam-mode-sections
-      (list #'org-roam-backlinks-section
-            #'org-roam-reflinks-section
-            #'org-roam-unlinked-references-section
-            ))
-;; (add-hook! 'org-roam-mode-hook (add-to-list 'display-buffer-alist
-;;              '("\\*org-roam\\*"
-;;                (display-buffer-in-direction)
-;;                (direction . right)
-;;                (window-width . 0.33)
-;;                (window-height . fit-window-to-buffer))))
-(add-hook! 'org-roam-mode-hook (add-to-list 'display-buffer-alist
-    '("\\*org-roam\\*"
-    (display-buffer-in-side-window)
-    (side . right)
-    (slot . 0)
-    (window-width . 0.25)
-    (window-parameters . ((no-other-window . t)
-    (no-delete-other-windows . t))))))
-
-(map! :map org-roam-mode-map
-    :leader
-    :prefix "r"
-    :desc "Find Note"         "r"     'org-roam-node-find
-    :desc "Insert Note"       "i"     'org-roam-node-insert
-    :desc "Insert immediate"  "m"     'my/org-roam-insert-no-capture
-    :desc "Toggle Buffer"     "b"     'org-roam-buffer-toggle
-    :desc "Add Tag"           "t"     'org-roam-tag-add
-    :desc "Bibtex Link"       "c"     'orb-insert-link)
-(map! :map org-roam-mode-map
-    :leader
-    :prefix "r d"
-    :desc "Daily Capture"     "c"     'org-roam-dailies-capture-today
-    :desc "Daily Find"        "f"     'org-roam-dailies-find-directory
-    :desc "Daily Today"       "t"     'org-roam-dailies-find-today
-    :desc "Daily Date"        "d"     'org-roam-dailies-goto-date)
-
-(setq org-roam-node-display-template "${title:*} ${tags:30}") ;the format here is $(field-name:length). Including the 'length' integer causes the alignment of the tags to the right, ommitting it leaves them on the left.
-
-(use-package! org-roam-bibtex
-    :after org-roam
-    :hook (org-roam-mode . org-roam-bibtex-mode)
-    :config
-    (require 'org-ref))
-
-(use-package! websocket
-    :after org-roam)
-(use-package! org-roam-ui
-    :after org-roam
-    :config
-    (setq org-roam-ui-sync-theme t
-    org-roam-ui-follow t
-    org-roam-ui-update-on-save t))
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((ledger . t)))
 
 (setq-default elfeed-search-filter "@1-week-ago +unread ")
 (use-package! elfeed-org
@@ -367,7 +371,7 @@
 
 (with-eval-after-load 'browse-url
   (add-to-list 'browse-url-handlers
-                (cons "." #'view-readable-webpage-handler))
+                (cons "." #'browse-url-generic))
   (add-to-list 'browse-url-handlers
                   (cons "youtu\\.?be" #'view-youtube-url)))
 
@@ -400,21 +404,21 @@
 (defun tildechat ()
     (interactive)
     (erc-tls :server "irc.tilde.chat"
-    :port 6697
-    :nick "eoin"
-    :full-name "eoin carney"
-    :client-certificate
-    '("/home/eoin/.local/share/certs/erc.key"
-    "/home/eoin/.local/share/certs/erc.crt")))
+     :port 6697
+     :nick "eoin"
+     :full-name "eoin carney"
+     :client-certificate
+     '("/home/eoin/.local/share/certs/erc.key"
+       "/home/eoin/.local/share/certs/erc.crt")))
 (defun liberachat ()
     (interactive)
     (erc-tls :server "irc.libera.chat"
-    :port 6697
-    :nick "loopdreams"
-    :full-name "loopdreams"
-    :client-certificate
-    '("/home/eoin/.local/share/certs/erc.key"
-    "/home/eoin/.local/share/certs/erc.crt")))
+     :port 6697
+     :nick "loopdreams"
+     :full-name "loopdreams"
+     :client-certificate
+     '("/home/eoin/.local/share/certs/erc.key"
+       "/home/eoin/.local/share/certs/erc.crt")))
 
 (defun ledger-clean-and-save ()
   (interactive)
@@ -422,7 +426,7 @@
   (save-buffer))
 (map! :localleader
       (:map ledger-mode-map
-      "c" #'ledger-clean-and-save))
+       "c" #'ledger-clean-and-save))
 (add-to-list 'auto-mode-alist '("\\.dat\\'" . ledger-mode))
 
 (set-file-template! "\\.html$" :trigger "__spoolfive.html" :mode 'web-mode)
@@ -437,19 +441,19 @@
     "Keep the cursor at `centered-point-position' in the window"
     :lighter " centerpoint"
     (cond (centered-point-mode (add-hook 'post-command-hook 'center-point nil t)
-    (setq centered-point--preserve-pos
-    scroll-preserve-screen-position)
-    (setq-local scroll-preserve-screen-position 'all))
-    (t (remove-hook 'post-command-hook 'center-point t)
-    (setq-local scroll-preserve-screen-position
-    centered-point--preserve-pos))))
+           (setq centered-point--preserve-pos
+            scroll-preserve-screen-position)
+           (setq-local scroll-preserve-screen-position 'all))
+     (t (remove-hook 'post-command-hook 'center-point t)
+      (setq-local scroll-preserve-screen-position
+       centered-point--preserve-pos))))
 
 (defun center-point ()
     "Move point to the line at `centered-point-position'."
     (interactive)
     (when (eq (current-buffer) (window-buffer))
-    (let ((recenter-positions (list centered-point-position)))
-    (recenter-top-bottom))))
+     (let ((recenter-positions (list centered-point-position)))
+      (recenter-top-bottom))))
 
 (defun centered-point-mode-on ()
     (centered-point-mode 1))
@@ -469,12 +473,12 @@
 (flycheck-define-checker vale
     "A checker for prose"
     :command ("vale" "--output" "line"
-    source)
+              source)
     :standard-input nil
     :error-patterns
     ((error line-start (file-name) ":" line ":" column ":" (id (one-or-more (not (any ":")))) ":" (message) line-end))
-    :modes (markdown-mode)
-    )
+    :modes (markdown-mode))
+    
 (add-to-list 'flycheck-checkers 'vale 'append)
 (setq flycheck-checker-error-threshold 2000)
 (global-flycheck-mode -1)
@@ -500,9 +504,8 @@
 
 (defun my/edit ()
   (interactive)
-  (call-interactively #'org-wc-display)
+  (call-interactively #'org-wc-display))
 ;; set up flycheck vale to only start here
-                )
 
 (add-hook! conf-xdefaults-mode
   (setq comment-start "/* "

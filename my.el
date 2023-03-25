@@ -1,12 +1,23 @@
 ;;; my.el -*- lexical-binding: t; -*-
 
+;;;  MACROS
+
+(defmacro measure-time (&rest body)
+  "Measure the time it takes to evaluate BODY."
+  `(let ((time (current-time)))
+     ,@body
+     (message "%.06f" (float-time (time-since time)))))
+
+(defun my/interleave (l1 l2)
+  (cl-mapcar #'cons l1 l2))
 ;;;  Disiplay related dailies - used with org agenda
 
-(setq my/daily-dir "~/docs/org/notes/daily/")
-(setq my/daily-files (directory-files my/daily-dir nil ".org$" t))
+(setq my/daily-dir "~/docs/org/notes/")
+(setq my/daily-files (seq-filter (lambda (x) (string-match "_journal" x))
+                                 (directory-files my/daily-dir nil ".org$" t)))
 
-(defun my/insert-current-date () (interactive)
-     (shell-command-to-string "echo -n $(date +%m-%d)"))
+(defun my/insert-current-date-MonthDayT () (interactive)
+       (shell-command-to-string "echo -n $(date +%m%d)T"))
 
 (defun my/get-matching-dailies (date)
     (seq-filter (lambda (x) (string-match date x)) my/daily-files))
@@ -19,12 +30,13 @@
             year "]]" "\n")))
 
 (defun my/agenda-past-dailies ()
-  (let ((x (my/get-matching-dailies (my/insert-current-date))))
+  (let ((x (my/get-matching-dailies (my/insert-current-date-MonthDayT))))
     (if x
         (mapcar
          (lambda (x)
            (my/make-dailies-link x))
          x) "")))
+
 
 (defun my/print-elements-of-list (list)
   "Print each element of LIST on a line of its own."

@@ -56,12 +56,12 @@
 ;;     :recipe (:host github :repo "org-roam/org-roam"
 ;;              :files (:defaults "extensions/*")
 ;;              :build (:not compile))))
-(package! org-roam)
-(package! org-roam-bibtex
-  :recipe (:host github :repo "org-roam/org-roam-bibtex"))
+;; (package! org-roam)
+;; (package! org-roam-bibtex
+;;   :recipe (:host github :repo "org-roam/org-roam-bibtex"))
 (package! org-ref)
 (package! org-superstar)
-(package! org-transclusion)
+;; (package! org-transclusion)
 (package! org-appear) ;; toggles visibility of hidden elements such as emphasis markers
 (package! org-pretty-table
   :recipe (:host github :repo "Fuco1/org-pretty-table"))
@@ -83,10 +83,10 @@
 ;; (package! org-drill)
 ;; (package! simple-mpc)
 (package! websocket)
-(package! org-roam-ui
-  :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out")))
+;; (package! org-roam-ui
+;;   :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out")))
 ; this is recommended on the org-roam-bibtex github, not sure why
-(unpin! org-roam)
+;; (unpin! org-roam)
 (unpin! bibtex-completion helm-bibtex ivy-bibtex)
 (package! elfeed-goodies)
 (package! helm-bibtex) ;this is the general name for both helm/ivy bibtex completion
@@ -100,5 +100,9 @@
   :recipe (:host nil :repo "http://git.carcosa.net/jmcbray/gemini.el.git"))
 (package! mw-thesaurus)
 (package! ef-themes)
-(package! denote)
+(package! denote 
+          :recipe 
+          (:host nil :repo "https://git.sr.ht/~protesilaos/denote"))
 (package! nov)
+(package! eglot)
+(package! lorem-ipsum)

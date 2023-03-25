@@ -1,7 +1,6 @@
 #+TITLE: Elfeed
 
 * Blogs :elfeed:
-
 ** Favorites :fav:
 *** https://pluralistic.net/feed/
 *** https://cosmic.voyage/rss.xml
@@ -30,6 +29,7 @@
 *** [[https://brr.fyi/feed.xml][Brr - blog in south pole]]
 *** [[https://www.pcjs.org/feed.xml][pcjs project]]
 *** [[https://mathenchant.wordpress.com/feed/][maths]]
+*** [[https://the.scapegoat.dev/feed/?type=rss][scapegoat]]
 ** Philosophy :philosophy:
 *** https://bluelabyrinths.com/feed/
 *** https://www.philosophy2u.com/blog-feed.xml
@@ -74,9 +74,12 @@
 *** https://0pointer.net/blog/index.rss20
 *** https://www.phoronix.com/rss.php
 *** https://www.markusdosch.com/index.xml
-*** [[https://hnrss.org/frontpage][Hacker News]]
 *** [[https://aphyr.com/posts.atom][Kyle Kingsbury]]
 *** [[https://tilde.news/rss][Tilde News]]
+*** [[https://bt.ht/atom.xml][Brad Taunt]]
+*** [[https://anarchosolarpunk.substack.com/feed][anarcho solarpunk]]
+** Hacker News :hn:
+*** [[https://hnrss.org/frontpage][Hacker News]]
 ** Science :science:
 *** [[https://tritonstation.com/feed/][TritonStation]]
 ** youtube :youtube:
@@ -111,3 +114,4 @@
 *** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCJetJ7nDNLlEzDLXv7KIo0w][Gavin Freeborn]]
 *** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCUQo7nzH1sXVpzL92VesANw][DIY Perks]]
 *** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC9-y-6csu5WGm29I7JiwpnA][Computerphile]]
+*** [[https://share.tube/feeds/videos.xml?videoChannelId=916][Sharetube - Gabbo]]
