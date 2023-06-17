@@ -56,6 +56,21 @@
 (defcustom web-article-viewer-program "brave" "Program path to readable")
 (defcustom web-article-viewer-args nil "Extra args for qutebrowser")
 (defcustom web-article-css "/home/eoin/.config/qutebrowser/minimal.css" "path to minimal stylesheet")
+(defcustom lagrange-program "lagrange" "The program path to Lagrange.")
+(defcustom lagrange-arguments nil "Extra arguments for Lagrange.")
+
+(defun lagrange-browse-url-lagrange (url &rest _)
+  "Open Lagrange to browse the given URL."
+  (interactive (browse-url-interactive-arg "URL: "))
+  (setq url (browse-url-encode-url url))
+  (let* ((process-environment (browse-url-process-environment)))
+    (apply #'start-process
+           (concat "lagrange " url) nil
+           lagrange-program
+           (append
+            lagrange-arguments
+            (list url)))))
+
 
 (defun view-youtube-url (url &rest _)
   "Open Youtube-Viewer to browse the given URL."

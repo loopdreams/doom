@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: abella-log
+# uuid: abella-log
+# key: \ablog
+# condition: t
+# --
+---Abela's Log #00$0
+Days at Sea: $1
+Mood: $2
+---

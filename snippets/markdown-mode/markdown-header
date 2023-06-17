@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: markdown-header
+# uuid: markdown-header
+# key: \mdh
+# condition: t
+# --
+---
+title: $0
+date: `(format-time-string "%Y-%m-%d")`
+---

@@ -1,5 +1,5 @@
 #+TITLE: Emacs Config
-
+https://www.minnpost.com/business/2016/08/rise-and-fall-gopher-protocol/
 * Personal Information
 #+BEGIN_SRC emacs-lisp
 (setq user-full-name "Eoin Carney"
@@ -10,12 +10,11 @@
 #+BEGIN_SRC emacs-lisp
 (setq doom-font
     (font-spec :family "FuraMono Nerd Font" :size 16)
-    ;; (font-spec :family "FuraMono Nerd Font" :size 16)
     mixed-pitch-set-height 20
     doom-variable-pitch-font (font-spec :family "Source Sans Pro" :size 20))
 ;; (set-default line-spacing 0.3)
 
-(setq doom-theme 'doom-challenger-deep)
+(setq doom-theme 'modus-operandi)
 #+END_SRC
 ** Dashboard
 #+BEGIN_SRC emacs-lisp
@@ -117,7 +116,6 @@ Set qutebrowser as default and elpher start page
 ** Directories and misc
 #+BEGIN_SRC emacs-lisp
 (setq org-directory "~/docs/org/"
-      ;; org-roam-directory (concat org-directory "notes/")
       bibtex-completion-bibliography (concat org-directory "lib.bib"))
 (after! org
   (setq org-agenda-files (append (directory-files-recursively (concat org-directory "act/") "\\.org$")
@@ -126,6 +124,7 @@ Set qutebrowser as default and elpher start page
 (add-to-list 'org-modules 'org-id)
 (require 'ox-gemini)
 (require 'ox-hugo)
+;; (setq org-use-speed-commands t)
 #+END_SRC
 ** Extra keybindings
 #+begin_src emacs-lisp
@@ -192,8 +191,6 @@ Set qutebrowser as default and elpher start page
           (todo "BUY"  ((org-agenda-overriding-header gtd/shop-head)))))
         ("s" "Someday"
          ((todo "SOMEDAY" ((org-agenda-overriding-header gtd/someday-head)))))))
-
-
 #+end_src
 ** Aesthetics
 Org superstar and changing height of headings
@@ -261,7 +258,6 @@ Seems to slow down the first time you open an org file, but then no delay.
 #+end_src
 ** Capture templates
 #+begin_src emacs-lisp
-
 (customize-set-variable
  'org-capture-templates '(("t" "Task")
                           ("tt" "TT" entry (id "cd9ffc7d-d197-4521-b74d-4b1f93b301ca")
@@ -293,37 +289,6 @@ Seems to slow down the first time you open an org file, but then no delay.
                            "** RLX %?" :prepend t)
                           ("w" "weekly-review" entry (id "8c8faea9-b85b-4b90-845e-dfdbefb55442")
                            "* Week %(format-time-string \"%W\")")))
-
-
-;; (after! org-roam
-;;   (setq org-roam-capture-templates
-;;         '(("d" "default" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
-;;            :target (file+head "rafts/%<%Y%m%d>-${slug}.org"
-;;                               "#+title: ${title}\n")
-;;            :unnarrowed t
-;;            :jump-to-captured t)
-;;           ("e" "encrypted" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
-;;            :target (file+head "rafts/%<%Y%m%d>-${slug}.org.gpg"
-;;                               "#+title: ${title}\n")
-;;            :unnarrowed t
-;;            :jump-to-captured t)
-;;           ("r" "reference" plain "#+created: %u\n#+filetags: ref: %^G\n\n* ${title}\n%?"
-;;            :target (file+head "rafts/%<%Y%m%d>-${slug}.org"
-;;                               "#+title: ${title}\n")
-;;            :unnarrowed t
-;;            :jump-to-captured t)
-;;           ("b" "box3" plain "#+date: %u\n#+filetags: :box3: %^G\n#+hugo_custom_front_matter: :layout note\n\n%?"
-;;            :target (file+head "ref/%<%Y%m%d>-${slug}.org"
-;;                               "#+title: ${title}\n")
-;;            :unnarrowed t)
-;;           ("q" "quick" plain "#+created: %u\n#+filetags: %^G\n\n%?"
-;;            :target (file+head "rafts/%<%Y%m%d>-${slug}.org"
-;;                               "#+title: ${title}\n")
-;;            :unnarrowed t)))
-;;   (setq org-roam-dailies-capture-templates
-;;         '(("d" "default" entry "* %<%H:%M> -  [[id:477e986a-2fba-4982-8158-b309baf0b14b][%?]]"
-;;            :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n#+filetags: :dailies:\n")
-;;            :jump-to-captured t))))
 #+end_src
 ** Denote
 #+begin_src emacs-lisp
@@ -379,23 +344,6 @@ Delete the original subtree."
 #+end_src
 ** Note Keybindings
 #+begin_src emacs-lisp
-;; (map! :map org-roam-mode-map
-;;     :leader
-;;     :prefix "r"
-;;     :desc "Find Note"         "r"     'org-roam-node-find
-;;     :desc "Insert Note"       "i"     'org-roam-node-insert
-;;     :desc "Insert immediate"  "m"     'my/org-roam-insert-no-capture
-;;     :desc "Toggle Buffer"     "b"     'org-roam-buffer-toggle
-;;     :desc "Add Tag"           "t"     'org-roam-tag-add
-;;     :desc "Bibtex Link"       "c"     'orb-insert-link)
-;; (map! :map org-roam-mode-map
-;;     :leader
-;;     :prefix "r d"
-;;     :desc "Daily Capture"     "c"     'org-roam-dailies-capture-today
-;;     :desc "Daily Find"        "f"     'org-roam-dailies-find-directory
-;;     :desc "Daily Today"       "t"     'org-roam-dailies-find-today
-;;     :desc "Daily Date"        "d"     'org-roam-dailies-goto-date)
-
 (map!
     :leader
     :prefix "r"
@@ -529,8 +477,6 @@ See issue here: [[https://github.com/org-roam/org-roam/issues/1728][github issue
 (require 'elfeed-goodies)
 (elfeed-goodies/setup)
 (setq elfeed-goodies/entry-pane-size 0.7)
-
-
 #+END_SRC
 
 *** Link Handling
@@ -542,9 +488,11 @@ Now moved to [[file:my.el][my.el]]
 #+begin_src emacs-lisp
 (with-eval-after-load 'browse-url
   (add-to-list 'browse-url-handlers
-                (cons "." #'browse-url-generic))
+               (cons "." #'browse-url-generic))
   (add-to-list 'browse-url-handlers
-                  (cons "youtu\\.?be" #'view-youtube-url)))
+               (cons "youtu\\.?be" #'view-youtube-url)))
+  ;; (add-to-list 'browse-url-handlers
+  ;;              (cons "^\\(gopher\\|finger\\|gemini\\)://" #'lagrange-browse-url-lagrange)))
 
 (map! :leader
         "y y" #'my/get-url-at-point
@@ -718,5 +666,4 @@ For dealing with comments in Xresources file
 (add-hook! conf-xdefaults-mode
   (setq comment-start "/* "
         comment-end "*/"))
-
 #+end_src

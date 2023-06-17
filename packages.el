@@ -104,5 +104,6 @@
           :recipe 
           (:host nil :repo "https://git.sr.ht/~protesilaos/denote"))
 (package! nov)
-(package! eglot)
+;; (package! eglot)
 (package! lorem-ipsum)
+(package! sly-quicklisp)

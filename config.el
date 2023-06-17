@@ -3,12 +3,11 @@
 
 (setq doom-font
     (font-spec :family "FuraMono Nerd Font" :size 16)
-    ;; (font-spec :family "FuraMono Nerd Font" :size 16)
     mixed-pitch-set-height 20
     doom-variable-pitch-font (font-spec :family "Source Sans Pro" :size 20))
 ;; (set-default line-spacing 0.3)
 
-(setq doom-theme 'doom-challenger-deep)
+(setq doom-theme 'modus-operandi)
 
 (defun doom-dashboard-draw-ascii-emacs-banner-fn ()
     (let* ((banner
@@ -78,7 +77,6 @@
 (setq elpher-start-page-url "gemini://warmedal.se/~antenna/")
 
 (setq org-directory "~/docs/org/"
-      ;; org-roam-directory (concat org-directory "notes/")
       bibtex-completion-bibliography (concat org-directory "lib.bib"))
 (after! org
   (setq org-agenda-files (append (directory-files-recursively (concat org-directory "act/") "\\.org$")
@@ -87,6 +85,7 @@
 (add-to-list 'org-modules 'org-id)
 (require 'ox-gemini)
 (require 'ox-hugo)
+;; (setq org-use-speed-commands t)
 
 (map!
  :n "<f5>" 'org-agenda
@@ -229,37 +228,6 @@
                           ("w" "weekly-review" entry (id "8c8faea9-b85b-4b90-845e-dfdbefb55442")
                            "* Week %(format-time-string \"%W\")")))
 
-
-;; (after! org-roam
-;;   (setq org-roam-capture-templates
-;;         '(("d" "default" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
-;;            :target (file+head "rafts/%<%Y%m%d>-${slug}.org"
-;;                               "#+title: ${title}\n")
-;;            :unnarrowed t
-;;            :jump-to-captured t)
-;;           ("e" "encrypted" plain "#+created: %u\n#+filetags: %^G\n\n* ${title}\n%?"
-;;            :target (file+head "rafts/%<%Y%m%d>-${slug}.org.gpg"
-;;                               "#+title: ${title}\n")
-;;            :unnarrowed t
-;;            :jump-to-captured t)
-;;           ("r" "reference" plain "#+created: %u\n#+filetags: ref: %^G\n\n* ${title}\n%?"
-;;            :target (file+head "rafts/%<%Y%m%d>-${slug}.org"
-;;                               "#+title: ${title}\n")
-;;            :unnarrowed t
-;;            :jump-to-captured t)
-;;           ("b" "box3" plain "#+date: %u\n#+filetags: :box3: %^G\n#+hugo_custom_front_matter: :layout note\n\n%?"
-;;            :target (file+head "ref/%<%Y%m%d>-${slug}.org"
-;;                               "#+title: ${title}\n")
-;;            :unnarrowed t)
-;;           ("q" "quick" plain "#+created: %u\n#+filetags: %^G\n\n%?"
-;;            :target (file+head "rafts/%<%Y%m%d>-${slug}.org"
-;;                               "#+title: ${title}\n")
-;;            :unnarrowed t)))
-;;   (setq org-roam-dailies-capture-templates
-;;         '(("d" "default" entry "* %<%H:%M> -  [[id:477e986a-2fba-4982-8158-b309baf0b14b][%?]]"
-;;            :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n#+filetags: :dailies:\n")
-;;            :jump-to-captured t))))
-
 (require 'denote-org-dblock)
 (setq denote-directory (expand-file-name "~/docs/org/notes/"))
 (setq denote-templates
@@ -310,23 +278,6 @@ Delete the original subtree."
         (insert text))
     (user-error "No subtree to extract; aborting")))
 
-;; (map! :map org-roam-mode-map
-;;     :leader
-;;     :prefix "r"
-;;     :desc "Find Note"         "r"     'org-roam-node-find
-;;     :desc "Insert Note"       "i"     'org-roam-node-insert
-;;     :desc "Insert immediate"  "m"     'my/org-roam-insert-no-capture
-;;     :desc "Toggle Buffer"     "b"     'org-roam-buffer-toggle
-;;     :desc "Add Tag"           "t"     'org-roam-tag-add
-;;     :desc "Bibtex Link"       "c"     'orb-insert-link)
-;; (map! :map org-roam-mode-map
-;;     :leader
-;;     :prefix "r d"
-;;     :desc "Daily Capture"     "c"     'org-roam-dailies-capture-today
-;;     :desc "Daily Find"        "f"     'org-roam-dailies-find-directory
-;;     :desc "Daily Today"       "t"     'org-roam-dailies-find-today
-;;     :desc "Daily Date"        "d"     'org-roam-dailies-goto-date)
-
 (map!
     :leader
     :prefix "r"
@@ -371,9 +322,11 @@ Delete the original subtree."
 
 (with-eval-after-load 'browse-url
   (add-to-list 'browse-url-handlers
-                (cons "." #'browse-url-generic))
+               (cons "." #'browse-url-generic))
   (add-to-list 'browse-url-handlers
-                  (cons "youtu\\.?be" #'view-youtube-url)))
+               (cons "youtu\\.?be" #'view-youtube-url)))
+  ;; (add-to-list 'browse-url-handlers
+  ;;              (cons "^\\(gopher\\|finger\\|gemini\\)://" #'lagrange-browse-url-lagrange)))
 
 (map! :leader
         "y y" #'my/get-url-at-point

@@ -82,6 +82,8 @@
 *** [[https://hnrss.org/frontpage][Hacker News]]
 ** Science :science:
 *** [[https://tritonstation.com/feed/][TritonStation]]
+** Reddit :reddit:
+***  *[[https://www.reddit.com/r/Clojure.rss][r/clojure]]
 ** youtube :youtube:
 *** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCg6gPGh8HU2U01vaFCAsvmQ][Christ Titus]]
 *** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCWeZ5bG_ifLA1L9PnGcUOGA][Bridge Lesson]]
@@ -115,3 +117,9 @@
 *** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCUQo7nzH1sXVpzL92VesANw][DIY Perks]]
 *** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC9-y-6csu5WGm29I7JiwpnA][Computerphile]]
 *** [[https://share.tube/feeds/videos.xml?videoChannelId=916][Sharetube - Gabbo]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCUyeluBRhGPCW4rPe_UvBZQ][ThePrimeTime]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC2Xd-TjJByJyK2w1zNwY0zQ][Beyond Fireship]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCrqM0Ym_NbK1fqeQG2VIohg][Tsoding Daily]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCEqYjPJdmEcUVfHmQwJVM9A][Emacs Elements]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UCCuoqzrsHlwv1YyPKLuMDUQ][Jonathan Blow]]
+*** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC-pYfofTyvVDMwM4ttfFGqw][London Clojurians]]

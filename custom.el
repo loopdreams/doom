@@ -21,6 +21,8 @@
  '(jdee-db-requested-breakpoint-face-colors (cons "#1B2229" "#98be65"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#1B2229" "#3f444a"))
  '(objed-cursor-color "#ff6c6b")
+ '(org-agenda-files
+   '("/home/eoin/docs/org/act/2022-archive.org" "/home/eoin/docs/org/act/20230109-life_lessons_from_gaming.org" "/home/eoin/docs/org/act/2023Goals.org" "/home/eoin/docs/org/act/2023weekly.org" "/home/eoin/docs/org/act/actions.org" "/home/eoin/docs/org/act/archive.org" "/home/eoin/docs/org/act/downtime.org" "/home/eoin/docs/org/act/exercise-routine.org" "/home/eoin/docs/org/act/inbox.org" "/home/eoin/docs/org/act/projects.org" "/home/eoin/docs/org/act/recurring_todo.org" "/home/eoin/docs/org/act/shopping.org" "/home/eoin/docs/org/act/someday.org" "/home/eoin/docs/org/act/subscriptions.org" "/home/eoin/docs/org/act/trash.org" "/home/eoin/docs/org/notes/20220606T000000--ideanotes.org" "/home/eoin/docs/org/notes/20220606T000001--blognotes.org" "/home/eoin/docs/org/notes/20220606T000002--storynotes.org"))
  '(org-safe-remote-resources
    '("\\`https://fniessen\\.github\\.io/org-html-themes/org/theme-readtheorg\\.setup\\'"))
  '(pdf-view-midnight-colors (cons "#bbc2cf" "#282c34"))
